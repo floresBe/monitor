@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Deployment.Application;
 
 namespace monitor
 {
@@ -23,6 +24,24 @@ namespace monitor
             mainPage.NavigationService.Navigate(page);
             lblPageTitle.Content = page.Title;
             LoadMenus();
+            LoadCurrentVersion();
+        }
+
+        private void LoadCurrentVersion()
+        {
+            string version = string.Empty;
+            try
+            {
+                //// get deployment version
+                version = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+            }
+            catch (InvalidDeploymentException)
+            {
+                //// you cannot read publish version when app isn't installed 
+                //// (e.g. during debug)
+                version = "debug";
+            }
+            Title = $"{Title} - {version}";
         }
         public void LoadMenus()
         {
