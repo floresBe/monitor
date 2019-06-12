@@ -13,6 +13,10 @@ namespace monitor
         private const int MINIMUM_SPLASH_TIME = 2500; // Miliseconds
         private const int SPLASH_FADE_TIME = 500;     // Miliseconds
 
+        public App()
+        {
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             // Step 1 - Load the splash screen

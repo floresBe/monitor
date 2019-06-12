@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Monitor" Height="450" Width="800" WindowState="Maximized">
     <Window.Content>
-        <Grid Background="#e8f4fd">
+        <Grid Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".25*"/>
                 <ColumnDefinition Width="*"/>
@@ -15,9 +15,47 @@
                 <RowDefinition Height=".1*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Rectangle Fill="#2196f3" Grid.ColumnSpan="2"></Rectangle>
-            <Rectangle Fill="#2196f3" Grid.Row="1"></Rectangle>
-            <Grid Grid.Row="1" Grid.Column="1" >
+
+            <Grid Name="gridHeader" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width=".25*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Gray" BlurRadius="10"/>
+                    </Border.Effect>
+                </Border>
+                <Border Grid.ColumnSpan="2">
+                    <Rectangle Fill="#3071A9"></Rectangle>
+                </Border>
+
+                <Label Name="lblVersion" Foreground="White" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+
+                <Label Name="lblDate" Grid.Column="1" Foreground="White" Margin="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Border BorderBrush="Black" BorderThickness="2">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Gray"  BlurRadius="10"/>
+                    </Border.Effect>
+                </Border>
+                <Border>
+                    <Rectangle Fill="#3071A9"></Rectangle>
+                </Border>
+
+                <StackPanel Name="stackMenu">
+                    
+                </StackPanel>
+
+
+
+            </Grid>
+
+
+            <Grid Grid.Row="1" Grid.Column="1"  Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>

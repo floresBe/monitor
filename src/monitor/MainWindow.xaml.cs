@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Deployment.Application;
+using System;
+using System.Windows.Controls;
 
 namespace monitor
 {
@@ -15,6 +17,7 @@ namespace monitor
         public MainWindow()
         {
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Window));
             Loaded += MainWindow_Loaded;
         }
 
@@ -42,6 +45,8 @@ namespace monitor
                 version = "debug";
             }
             Title = $"{Title} - {version}";
+            lblVersion.Content = $"Monitor - v{version}";
+            lblDate.Content = DateTime.Now.ToLongDateString();
         }
         public void LoadMenus()
         {
@@ -53,7 +58,7 @@ namespace monitor
             }
             foreach (var item in items)
             {
-
+                
             }
         }
 
