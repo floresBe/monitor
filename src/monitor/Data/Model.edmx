@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MonitoreoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Estacion">
+          <Key>
+            <PropertyRef Name="EstacionId" />
+          </Key>
+          <Property Name="EstacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
+          <Property Name="Monitor" Type="varchar" MaxLength="50" />
+          <Property Name="IPPLC" Type="varchar" MaxLength="50" />
+          <Property Name="Soldador" Type="tinyint" />
+          <Property Name="IPSoldador" Type="varchar" MaxLength="50" />
+          <Property Name="Estatus" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="ModeloId" />
+          </Key>
+          <Property Name="ModeloId" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="NumeroModelo" Type="varchar" MaxLength="30" />
+          <Property Name="Routing" Type="float" />
+          <Property Name="RutaAyudaVisual" Type="varchar" MaxLength="200" />
+          <Property Name="Estatus" Type="tinyint" />
+          <Property Name="FechaHora" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Pieza">
+          <Key>
+            <PropertyRef Name="PiezaId" />
+          </Key>
+          <Property Name="PiezaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModeloId" Type="varchar" MaxLength="5" />
+          <Property Name="Operadores" Type="int" />
+          <Property Name="Estacion" Type="int" />
+          <Property Name="Estado" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="NumeroEmpleado" />
+          </Key>
+          <Property Name="NumeroEmpleado" Type="int" Nullable="false" />
+          <Property Name="TipoEmpleado" Type="int" />
+          <Property Name="HuellaDigita" Type="varbinary(max)" />
+          <Property Name="Activo" Type="tinyint" />
+          <Property Name="Estatus" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="MonitoreoModelStoreContainer">
+          <EntitySet Name="Estacion" EntityType="Self.Estacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pieza" EntityType="Self.Pieza" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MonitoreoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estacion">
+          <Key>
+            <PropertyRef Name="EstacionId" />
+          </Key>
+          <Property Name="EstacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Monitor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IPPLC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Soldador" Type="Byte" />
+          <Property Name="IPSoldador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estatus" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="ModeloId" />
+          </Key>
+          <Property Name="ModeloId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroModelo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Routing" Type="Double" />
+          <Property Name="RutaAyudaVisual" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Estatus" Type="Byte" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Pieza">
+          <Key>
+            <PropertyRef Name="PiezaId" />
+          </Key>
+          <Property Name="PiezaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModeloId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Operadores" Type="Int32" />
+          <Property Name="Estacion" Type="Int32" />
+          <Property Name="Estado" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="NumeroEmpleado" />
+          </Key>
+          <Property Name="NumeroEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="TipoEmpleado" Type="Int32" />
+          <Property Name="HuellaDigita" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Activo" Type="Byte" />
+          <Property Name="Estatus" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="MonitoreoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estacion" EntityType="Self.Estacion" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+          <EntitySet Name="Pieza" EntityType="Self.Pieza" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MonitoreoModelStoreContainer" CdmEntityContainer="MonitoreoEntities">
+          <EntitySetMapping Name="Estacion">
+            <EntityTypeMapping TypeName="MonitoreoModel.Estacion">
+              <MappingFragment StoreEntitySet="Estacion">
+                <ScalarProperty Name="EstacionId" ColumnName="EstacionId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Monitor" ColumnName="Monitor" />
+                <ScalarProperty Name="IPPLC" ColumnName="IPPLC" />
+                <ScalarProperty Name="Soldador" ColumnName="Soldador" />
+                <ScalarProperty Name="IPSoldador" ColumnName="IPSoldador" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modelo">
+            <EntityTypeMapping TypeName="MonitoreoModel.Modelo">
+              <MappingFragment StoreEntitySet="Modelo">
+                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+                <ScalarProperty Name="NumeroModelo" ColumnName="NumeroModelo" />
+                <ScalarProperty Name="Routing" ColumnName="Routing" />
+                <ScalarProperty Name="RutaAyudaVisual" ColumnName="RutaAyudaVisual" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pieza">
+            <EntityTypeMapping TypeName="MonitoreoModel.Pieza">
+              <MappingFragment StoreEntitySet="Pieza">
+                <ScalarProperty Name="PiezaId" ColumnName="PiezaId" />
+                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+                <ScalarProperty Name="Operadores" ColumnName="Operadores" />
+                <ScalarProperty Name="Estacion" ColumnName="Estacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="MonitoreoModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="NumeroEmpleado" ColumnName="NumeroEmpleado" />
+                <ScalarProperty Name="TipoEmpleado" ColumnName="TipoEmpleado" />
+                <ScalarProperty Name="HuellaDigita" ColumnName="HuellaDigita" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

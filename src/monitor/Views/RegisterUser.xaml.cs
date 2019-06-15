@@ -1,6 +1,9 @@
 ﻿using DPFP;
 using DPFP.Capture;
+using DPFP.Error;
 using DPFP.Processing;
+using DPFP.Verification;
+using monitor.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -31,12 +34,13 @@ namespace monitor.Fingerprint.Views
         public string typeProcces = "checkin"; // tipo de proceso que ejecutara el lector (register/validation/checkin) 
         //public delegate void OnTemplateEventHandler(DPFP.Template template);
         //public event OnTemplateEventHandler OnTemplate;
-        public DPFP.Template Template;
-
+        public Template Template;
+        private MonitoreoEntities _monitoreoEntities;
 
         public RegisterUser()
         {
             InitializeComponent();
+            _monitoreoEntities = new MonitoreoEntities();
         }
 
         protected virtual void Init()
@@ -87,8 +91,6 @@ namespace monitor.Fingerprint.Views
 
         public void OnComplete(object Capture, string ReaderSerialNumber, Sample Sample)
         {
-            //MakeReport("Huella capturada correctamente.");
-            //SetPrompt("Capture la misma huella nuevamente.");
             Process(Sample);
         }
 
@@ -98,13 +100,18 @@ namespace monitor.Fingerprint.Views
             DrawPicture(ConvertSampleToBitmap(Sample));
 
             // Process the sample and create a feature set for the enrollment purpose.
-            DPFP.FeatureSet features = ExtractFeatures(Sample, DPFP.Processing.DataPurpose.Enrollment);
+            FeatureSet features = ExtractFeatures(Sample, DataPurpose.Enrollment);
 
             // Check quality of the sample and add to enroller if it's good
             if (features != null) try
                 {
-                    // MakeReport("The fingerprint feature set was created.");
+
                     Enroller.AddFeatures(features);     // Add feature set to template.
+                }
+                catch (SDKException ex)
+                {
+                    MessageBox.Show("Error al capturar huella, intente de nuevo.");
+                    ResetFingerprint();
                 }
                 finally
                 {
@@ -123,7 +130,6 @@ namespace monitor.Fingerprint.Views
                             Enroller.Clear();
                             Stop();
                             UpdateStatus();
-                            OnTemplate(null);
                             Start();
                             break;
                     }
@@ -135,6 +141,7 @@ namespace monitor.Fingerprint.Views
         {
             Dispatcher.Invoke(() =>
             {
+
                 Template = template;
                 //VerifyButton.Enabled = SaveButton.Enabled = (Template != null);
                 if (Template != null)
@@ -258,6 +265,71 @@ namespace monitor.Fingerprint.Views
             Init();
             Start();
             gridFingerprint.Visibility = Visibility.Visible;
+        }
+
+        private void BtnGuardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (ValidateFields())
+            {
+                Usuarios usuario = new Usuarios()
+                {
+                    Activo = 1,
+                    Estatus = 1,
+                    FechaHora = DateTime.Now,
+                    NumeroEmpleado = int.Parse(tbNoEmpleado.Text),
+                    TipoEmpleado = 1,
+                    HuellaDigita = Template.Bytes
+                };
+                MonitoreoEntities monitoreoEntities = new MonitoreoEntities();
+
+                monitoreoEntities.Usuarios.Add(usuario);
+                monitoreoEntities.SaveChanges();
+                LimpiarCampos();
+                return;
+            }
+            MessageBox.Show("Verifique que todos los campos esten capturados correctamente.");
+        }
+
+        private void LimpiarCampos()
+        {
+            Stop();
+            tbNoEmpleado.Text = string.Empty;
+            tbNombre.Text = string.Empty;
+            Picture.Source = null;
+            gridFingerprint.Visibility = Visibility.Hidden;
+
+        }
+
+        private bool ValidateFields()
+        {
+            if (string.IsNullOrWhiteSpace(tbNoEmpleado.Text))
+            {
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(tbNombre.Text))
+            {
+                return false;
+            }
+            if (Template == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void ResetFingerprint()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Picture.Source = null;
+                Enroller.Clear();
+            });
+        }
+
+        private void TbNoEmpleado_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Deployment.Application;
 using System;
 using System.Windows.Controls;
+using monitor.Fingerprint.Views;
 
 namespace monitor
 {
@@ -23,7 +24,7 @@ namespace monitor
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Index page = new Index();
+            RegisterUser page = new RegisterUser();
             mainPage.NavigationService.Navigate(page);
             lblPageTitle.Content = page.Title;
             LoadMenus();

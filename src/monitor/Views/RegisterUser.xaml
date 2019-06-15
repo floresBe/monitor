@@ -78,9 +78,9 @@
         <Grid Margin="20">
             <StackPanel>
                 <Label Content="No. Empleado" FontSize="18"></Label>
-                <TextBox Style="{StaticResource placeHolder}" Tag="No. Empleado" FontSize="18"></TextBox>
+                <TextBox Name="tbNoEmpleado" PreviewTextInput="TbNoEmpleado_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="No. Empleado" FontSize="18"></TextBox>
                 <Label Content="Nombre" FontSize="18"></Label>
-                <TextBox Style="{StaticResource placeHolder}" Tag="Nombre" FontSize="18"></TextBox>
+                <TextBox Name="tbNombre" Style="{StaticResource placeHolder}" Tag="Nombre" FontSize="18"></TextBox>
                 <Grid Margin="0,20,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -121,7 +121,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Background="#ff3823" Foreground="White" Margin="0,0,10,0" FontSize="25">Cancelar</Button>
-            <Button Background="#72bb53" Foreground="White" Grid.Column="1" Margin="10,0,0,0" FontSize="25">Guardar</Button>
+            <Button Name="btnGuardar" Background="#72bb53" Foreground="White" Grid.Column="1" Margin="10,0,0,0" FontSize="25" Click="BtnGuardar_Click">Guardar</Button>
         </Grid>
     </Grid>
 </Page>
