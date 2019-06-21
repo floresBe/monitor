@@ -27,7 +27,7 @@ namespace monitor
         private Template Template;
         private Verification Verificator;
         private Capture Capturer;
-        private MonitoreoEntities _monitoreoEntities;
+        private UsuarioRepository _usuarioRepository;
 
         public Login()
         {
@@ -45,7 +45,7 @@ namespace monitor
         {
             Init();
             Start();
-            _monitoreoEntities = new MonitoreoEntities();
+            _usuarioRepository = new UsuarioRepository();
         }
 
         protected virtual void Init()
@@ -79,13 +79,17 @@ namespace monitor
         }
         protected virtual void Process(Sample Sample)
         {
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                lblNotValidUser.Visibility = Visibility.Hidden;
+            });
             // Process the sample and create a feature set for the enrollment purpose.
             FeatureSet features = ExtractFeatures(Sample, DataPurpose.Verification);
 
             // Check quality of the sample and start verification if it's good
             if (features!= null)
             {
-                foreach (Usuarios usuario in _monitoreoEntities.Usuarios)
+                foreach (Usuarios usuario in _usuarioRepository.GetUsuariosLogin())
                 {
                     if (usuario.HuellaDigita != null && usuario.HuellaDigita.Length > 0)
                     {
@@ -109,6 +113,10 @@ namespace monitor
                         }
                     }
                 }
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    lblNotValidUser.Visibility = Visibility.Visible;
+                });
             }
         }
         protected FeatureSet ExtractFeatures(Sample Sample, DataPurpose Purpose)

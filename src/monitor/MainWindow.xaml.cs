@@ -24,9 +24,8 @@ namespace monitor
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            RegisterUser page = new RegisterUser();
-            mainPage.NavigationService.Navigate(page);
-            lblPageTitle.Content = page.Title;
+            //RegisterUser page = new RegisterUser();
+            //mainPage.NavigationService.Navigate(page);
             LoadMenus();
             LoadCurrentVersion();
         }
@@ -36,17 +35,17 @@ namespace monitor
             string version = string.Empty;
             try
             {
-                //// get deployment version
-                version = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+                // Get deployment version.
+                version = $"v{ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()}";
             }
             catch (InvalidDeploymentException)
             {
-                //// you cannot read publish version when app isn't installed 
-                //// (e.g. during debug)
+                // You cannot read publish version when app isn't installed 
+                // (e.g. during debug)
                 version = "debug";
             }
             Title = $"{Title} - {version}";
-            lblVersion.Content = $"Monitor - v{version}";
+            lblVersion.Content = $"Monitor - {version}";
             lblDate.Content = DateTime.Now.ToLongDateString();
         }
         public void LoadMenus()

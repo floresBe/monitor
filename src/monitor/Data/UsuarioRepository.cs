@@ -17,8 +17,14 @@ namespace monitor.Data
 
         public List<Usuarios> GetUsuarios()
         {
-            return _monitoreoEntities.Usuarios.ToList();
+            return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1).ToList();
         }
+
+        public List<Usuarios> GetUsuariosLogin()
+        {
+            return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1 && usr.Activo == 1).ToList();
+        }
+
 
         public bool InsertUsuario(Usuarios user)
         {
