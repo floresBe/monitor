@@ -21,7 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace monitor.Fingerprint.Views
+namespace monitor.Fingerprint.Views.UsuariosView
 {
     /// <summary>
     /// Interaction logic for RgisterUser.xaml
@@ -35,12 +35,25 @@ namespace monitor.Fingerprint.Views
         //public delegate void OnTemplateEventHandler(DPFP.Template template);
         //public event OnTemplateEventHandler OnTemplate;
         public Template Template;
-        private MonitoreoEntities _monitoreoEntities;
+        private UsuarioRepository _usuarioRepository;
 
         public RegisterUser()
         {
             InitializeComponent();
-            _monitoreoEntities = new MonitoreoEntities();
+            _usuarioRepository = new UsuarioRepository();
+            Loaded += RegisterUser_Loaded;
+            Unloaded += RegisterUser_Unloaded;
+        }
+
+        private void RegisterUser_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Stop();
+        }
+
+        private void RegisterUser_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbTipoEmpleado.Items.Add("Ingeniero");
+            cbTipoEmpleado.Items.Add("Clase V");
         }
 
         protected virtual void Init()
@@ -81,14 +94,6 @@ namespace monitor.Fingerprint.Views
             }
         }
 
-        protected void SetPrompt(string prompt)
-        {
-            //this.Invoke(new Function(delegate ()
-            //{
-            //    //Prompt.Text = prompt;
-            //}));
-        }
-
         public void OnComplete(object Capture, string ReaderSerialNumber, Sample Sample)
         {
             Process(Sample);
@@ -120,13 +125,12 @@ namespace monitor.Fingerprint.Views
                     // Check if template has been created.
                     switch (Enroller.TemplateStatus)
                     {
-                        case DPFP.Processing.Enrollment.Status.Ready:   // report success and stop capturing
+                        case Enrollment.Status.Ready:   // report success and stop capturing
                             OnTemplate(Enroller.Template);
-                            SetPrompt("De click en guardar para terminar.");
                             Stop();
                             break;
 
-                        case DPFP.Processing.Enrollment.Status.Failed:  // report failure and restart capturing
+                        case Enrollment.Status.Failed:  // report failure and restart capturing
                             Enroller.Clear();
                             Stop();
                             UpdateStatus();
@@ -137,13 +141,12 @@ namespace monitor.Fingerprint.Views
 
         }
 
-        private void OnTemplate(DPFP.Template template)
+        private void OnTemplate(Template template)
         {
             Dispatcher.Invoke(() =>
             {
 
                 Template = template;
-                //VerifyButton.Enabled = SaveButton.Enabled = (Template != null);
                 if (Template != null)
                     MessageBox.Show("Finalizo la captura correctamente.", "Aviso");
                 else
@@ -167,7 +170,7 @@ namespace monitor.Fingerprint.Views
             return bitmap;
         }
 
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        private BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {
@@ -229,17 +232,17 @@ namespace monitor.Fingerprint.Views
         {
             Dispatcher.Invoke(() =>
             {
-                lblSamples.Text = String.Format("Muestras restantes: {0}", Enroller.FeaturesNeeded);
+                lblSamples.Text = string.Format("Muestras restantes: {0}", Enroller.FeaturesNeeded);
             });
         }
 
-        protected DPFP.FeatureSet ExtractFeatures(DPFP.Sample Sample, DPFP.Processing.DataPurpose Purpose)
+        protected FeatureSet ExtractFeatures(Sample Sample, DataPurpose Purpose)
         {
-            DPFP.Processing.FeatureExtraction Extractor = new DPFP.Processing.FeatureExtraction();  // Create a feature extractor
-            DPFP.Capture.CaptureFeedback feedback = DPFP.Capture.CaptureFeedback.None;
-            DPFP.FeatureSet features = new DPFP.FeatureSet();
+            FeatureExtraction Extractor = new FeatureExtraction();  // Create a feature extractor
+            CaptureFeedback feedback = CaptureFeedback.None;
+            FeatureSet features = new DPFP.FeatureSet();
             Extractor.CreateFeatureSet(Sample, Purpose, ref feedback, ref features);            // TODO: return features as a result?
-            if (feedback == DPFP.Capture.CaptureFeedback.Good)
+            if (feedback == CaptureFeedback.Good)
                 return features;
             else
                 return null;
@@ -255,7 +258,6 @@ namespace monitor.Fingerprint.Views
                 }
                 catch
                 {
-                    SetPrompt("No se pudo terminar la captura!");
                 }
             }
         }
@@ -269,32 +271,37 @@ namespace monitor.Fingerprint.Views
 
         private void BtnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            if (ValidateFields())
+            try
             {
-                Usuarios usuario = new Usuarios()
+                if (ValidateFields())
                 {
-                    Activo = 1,
-                    Estatus = 1,
-                    FechaHora = DateTime.Now,
-                    NumeroEmpleado = int.Parse(tbNoEmpleado.Text),
-                    TipoEmpleado = 1,
-                    HuellaDigita = Template.Bytes
-                };
-                MonitoreoEntities monitoreoEntities = new MonitoreoEntities();
+                    Usuarios usuario = new Usuarios()
+                    {
+                        Activo = 1,
+                        Estatus = 1,
+                        FechaHora = DateTime.Now,
+                        NumeroEmpleado = int.Parse(tbNoEmpleado.Text),
+                        TipoEmpleado = cbTipoEmpleado.SelectedIndex + 1,
+                        HuellaDigita = Template.Bytes
+                    };
+                    _usuarioRepository.InsertUsuario(usuario);
+                    LimpiarCampos();
+                    return;
+                }
+                throw new Exception("Verifique que todos los campos esten capturados correctamente.");
 
-                monitoreoEntities.Usuarios.Add(usuario);
-                monitoreoEntities.SaveChanges();
-                LimpiarCampos();
-                return;
             }
-            MessageBox.Show("Verifique que todos los campos esten capturados correctamente.");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void LimpiarCampos()
         {
             Stop();
             tbNoEmpleado.Text = string.Empty;
-            tbNombre.Text = string.Empty;
+            cbTipoEmpleado.SelectedItem = null;
             Picture.Source = null;
             gridFingerprint.Visibility = Visibility.Hidden;
 
@@ -306,7 +313,7 @@ namespace monitor.Fingerprint.Views
             {
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(tbNombre.Text))
+            if (cbTipoEmpleado.SelectedItem == null)
             {
                 return false;
             }
@@ -330,6 +337,11 @@ namespace monitor.Fingerprint.Views
         {
             System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

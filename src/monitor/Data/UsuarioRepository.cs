@@ -17,12 +17,28 @@ namespace monitor.Data
 
         public List<Usuarios> GetUsuarios()
         {
-            return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1).ToList();
+            try
+            {
+                return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
 
         public List<Usuarios> GetUsuariosLogin()
         {
-            return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1 && usr.Activo == 1).ToList();
+            try
+            {
+                return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1 && usr.Activo == 1).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
 
 
@@ -34,6 +50,7 @@ namespace monitor.Data
                     throw new Exception("Ya existe un usuario con ese número de empleado.");
                 }
                 _monitoreoEntities.Usuarios.Add(user);
+                _monitoreoEntities.SaveChanges();
                 return true;
             }
             catch (Exception ex)

@@ -63,6 +63,7 @@ namespace monitor
                 //MessageBox.Show("Can't initiate capture operation!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         protected void Start()
         {
             if (null != Capturer)
@@ -77,6 +78,7 @@ namespace monitor
                 }
             }
         }
+
         protected virtual void Process(Sample Sample)
         {
             Application.Current.Dispatcher.Invoke(delegate
@@ -91,6 +93,7 @@ namespace monitor
             {
                 foreach (Usuarios usuario in _usuarioRepository.GetUsuariosLogin())
                 {
+
                     if (usuario.HuellaDigita != null && usuario.HuellaDigita.Length > 0)
                     {
                         Template = new Template();
@@ -119,6 +122,7 @@ namespace monitor
                 });
             }
         }
+
         protected FeatureSet ExtractFeatures(Sample Sample, DataPurpose Purpose)
         {
             FeatureExtraction Extractor = new FeatureExtraction(); 
@@ -133,11 +137,13 @@ namespace monitor
 
             return null;
         }
+
         public void Verify(Template template)
         {
             Template = template;
             ShowDialog();
         }
+
         protected void Stop()
         {
             if (null != Capturer)

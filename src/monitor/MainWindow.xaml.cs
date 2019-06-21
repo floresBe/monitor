@@ -7,6 +7,7 @@ using System.Deployment.Application;
 using System;
 using System.Windows.Controls;
 using monitor.Fingerprint.Views;
+using monitor.Fingerprint.Views.UsuariosView;
 
 namespace monitor
 {
@@ -24,8 +25,8 @@ namespace monitor
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //RegisterUser page = new RegisterUser();
-            //mainPage.NavigationService.Navigate(page);
+            RegisterUser page = new RegisterUser();
+            mainPage.NavigationService.Navigate(page);
             LoadMenus();
             LoadCurrentVersion();
         }
