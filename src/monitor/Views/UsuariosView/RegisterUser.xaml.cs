@@ -275,14 +275,14 @@ namespace monitor.Fingerprint.Views.UsuariosView
             {
                 if (ValidateFields())
                 {
-                    Usuarios usuario = new Usuarios()
+                    Usuario usuario = new Usuario()
                     {
                         Activo = 1,
                         Estatus = 1,
                         FechaHora = DateTime.Now,
                         NumeroEmpleado = int.Parse(tbNoEmpleado.Text),
                         TipoEmpleado = cbTipoEmpleado.SelectedIndex + 1,
-                        HuellaDigita = Template.Bytes
+                        HuellaDigital = Template.Bytes
                     };
                     _usuarioRepository.InsertUsuario(usuario);
                     LimpiarCampos();

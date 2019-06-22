@@ -12,11 +12,11 @@ namespace monitor.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuarios
+    public partial class Usuario
     {
         public int NumeroEmpleado { get; set; }
         public Nullable<int> TipoEmpleado { get; set; }
-        public byte[] HuellaDigita { get; set; }
+        public byte[] HuellaDigital { get; set; }
         public Nullable<byte> Activo { get; set; }
         public Nullable<int> Estatus { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }

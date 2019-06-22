@@ -15,11 +15,11 @@ namespace monitor.Data
             _monitoreoEntities = new MonitoreoEntities();
         }
 
-        public List<Usuarios> GetUsuarios()
+        public List<Usuario> GetUsuarios()
         {
             try
             {
-                return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1).ToList();
+                return _monitoreoEntities.Usuario.Where(usr => usr.Estatus == 1).ToList();
             }
             catch (Exception ex)
             {
@@ -28,11 +28,11 @@ namespace monitor.Data
             }
         }
 
-        public List<Usuarios> GetUsuariosLogin()
+        public List<Usuario> GetUsuariosLogin()
         {
             try
             {
-                return _monitoreoEntities.Usuarios.Where(usr => usr.Estatus == 1 && usr.Activo == 1).ToList();
+                return _monitoreoEntities.Usuario.Where(usr => usr.Estatus == 1 && usr.Activo == 1).ToList();
             }
             catch (Exception ex)
             {
@@ -42,11 +42,11 @@ namespace monitor.Data
         }
 
 
-        public bool InsertUsuario(Usuarios user)
+        public bool InsertUsuario(Usuario user)
         {
             try
             {
-                if(_monitoreoEntities.Usuarios.Any(a => a.NumeroEmpleado == user.NumeroEmpleado)){
+                if(_monitoreoEntities.Usuario.Any(a => a.NumeroEmpleado == user.NumeroEmpleado)){
                     throw new Exception("Ya existe un usuario con ese número de empleado.");
                 }
                 _monitoreoEntities.Usuarios.Add(user);

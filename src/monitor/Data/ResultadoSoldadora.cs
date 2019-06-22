@@ -12,15 +12,17 @@ namespace monitor.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Pieza
+    public partial class ResultadoSoldadora
     {
-        public int PiezaId { get; set; }
+        public int ResultadoId { get; set; }
         public string ModeloId { get; set; }
-        public Nullable<int> PID { get; set; }
         public Nullable<int> EstacionId { get; set; }
-        public Nullable<int> Estado { get; set; }
-        public string TiempoCiclo { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }
+        public Nullable<int> Cycle { get; set; }
+        public Nullable<double> PkPwr { get; set; }
+        public Nullable<double> TotalAbs { get; set; }
+        public Nullable<double> Energy { get; set; }
+        public Nullable<double> WeldForce { get; set; }
     
         public virtual Estacion Estacion { get; set; }
         public virtual Modelo Modelo { get; set; }
