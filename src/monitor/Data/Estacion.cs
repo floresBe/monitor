@@ -14,6 +14,13 @@ namespace monitor.Data
     
     public partial class Estacion
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Estacion()
+        {
+            this.Pieza = new HashSet<Pieza>();
+            this.ResultadoSoldadora = new HashSet<ResultadoSoldadora>();
+        }
+    
         public int EstacionId { get; set; }
         public string Nombre { get; set; }
         public string Monitor { get; set; }
@@ -22,5 +29,10 @@ namespace monitor.Data
         public string IPSoldador { get; set; }
         public Nullable<int> Estatus { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pieza> Pieza { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ResultadoSoldadora> ResultadoSoldadora { get; set; }
     }
 }

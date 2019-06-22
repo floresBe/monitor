@@ -89,12 +89,12 @@ namespace monitor
             // Check quality of the sample and start verification if it's good
             if (features!= null)
             {
-                foreach (Usuarios usuario in _usuarioRepository.GetUsuariosLogin())
+                foreach (Usuario usuario in _usuarioRepository.GetUsuariosLogin())
                 {
-                    if (usuario.HuellaDigita != null && usuario.HuellaDigita.Length > 0)
+                    if (usuario.HuellaDigital != null && usuario.HuellaDigital.Length > 0)
                     {
                         Template = new Template();
-                        Template.DeSerialize(usuario.HuellaDigita);
+                        Template.DeSerialize(usuario.HuellaDigital);
                         // Compare the feature set with our template
                         Verification.Result result = new Verification.Result();
                         Verificator.Verify(features, Template, ref result);
