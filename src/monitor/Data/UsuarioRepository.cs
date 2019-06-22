@@ -49,7 +49,7 @@ namespace monitor.Data
                 if(_monitoreoEntities.Usuario.Any(a => a.NumeroEmpleado == user.NumeroEmpleado)){
                     throw new Exception("Ya existe un usuario con ese número de empleado.");
                 }
-                _monitoreoEntities.Usuarios.Add(user);
+                _monitoreoEntities.Usuario.Add(user);
                 _monitoreoEntities.SaveChanges();
                 return true;
             }
