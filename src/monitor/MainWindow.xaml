@@ -47,7 +47,22 @@
                 </Border>
 
                 <StackPanel Name="stackMenu">
-                    
+                    <ListView x:Name="menuItems" Background="Transparent">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image></Image>
+                                    <Label Grid.Column="1" Content="{Binding title}" Foreground="Black"  FontSize="20"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView> 
                 </StackPanel>
 
 

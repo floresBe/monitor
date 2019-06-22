@@ -1,6 +1,10 @@
 [
   {
-    "title": "Registrar Usuario",
+    "title": "Inicio",
     "icon": null,
+  },
+  {
+    "title": "Estaciones",
+    "icon": null
   }
  ]
