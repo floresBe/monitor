@@ -91,7 +91,7 @@ namespace monitor
             // Check quality of the sample and start verification if it's good
             if (features!= null)
             {
-                foreach (Usuario usuario in _usuarioRepository.GetUsuariosLogin())
+                foreach (Usuario usuario in _usuarioRepository.GetUsuariosLogin() ?? new List<Usuario>())
                 {
                     if (usuario.HuellaDigital != null && usuario.HuellaDigital.Length > 0)
                     {
