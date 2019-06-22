@@ -1,10 +1,37 @@
 [
   {
-    "title": "Inicio",
-    "icon": null,
+    "Title": "Inicio",
+    "Icon": "Assets/home.png",
+    "Nivel":  2
   },
+
   {
-    "title": "Estaciones",
-    "icon": null
+    "Icon": "Assets/monitoring.png",
+    "Title": "Estaciones",
+    "Nivel": 2
+  },
+
+  {
+    "Title": "Reportes",
+    "Icon": "Assets/reporting.png",
+    "Nivel": 2
+  },
+
+  {
+    "Title": "Modelos",
+    "Icon": "Assets/models.png",
+    "Nivel": 1
+  },
+
+  {
+    "Title": "Usuarios",
+    "Icon": "Assets/user.png",
+    "Nivel": 1
+  },
+
+  {
+    "Title": "Salir",
+    "Icon": "Assets/logout.png",
+    "Nivel": 2
   }
- ]
+]
