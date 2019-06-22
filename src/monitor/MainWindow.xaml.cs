@@ -57,16 +57,14 @@ namespace monitor
                 string json = r.ReadToEnd();
                 items = JsonConvert.DeserializeObject<List<Item>>(json);
             }
-            foreach (var item in items)
-            {
-                
-            }
+
+            menuItems.ItemsSource = items;
         }
 
     }
     public class Item
     {
-        public string title;
-        public string icon;
+        public string title { get; set; }
+        public string icon { get; set; }
     }
 }
