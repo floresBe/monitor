@@ -14,11 +14,26 @@ namespace monitor.Data
     
     public partial class Modelo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Modelo()
+        {
+            this.Pieza = new HashSet<Pieza>();
+            this.PiezasTomadas = new HashSet<PiezasTomadas>();
+            this.ResultadoSoldadora = new HashSet<ResultadoSoldadora>();
+        }
+    
         public string ModeloId { get; set; }
         public string NumeroModelo { get; set; }
         public Nullable<double> Routing { get; set; }
         public string RutaAyudaVisual { get; set; }
         public Nullable<byte> Estatus { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pieza> Pieza { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PiezasTomadas> PiezasTomadas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ResultadoSoldadora> ResultadoSoldadora { get; set; }
     }
 }

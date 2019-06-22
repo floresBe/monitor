@@ -271,18 +271,18 @@ namespace monitor.Fingerprint.Views
         {
             if (ValidateFields())
             {
-                Usuarios usuario = new Usuarios()
+                Usuario usuario = new Usuario()
                 {
                     Activo = 1,
                     Estatus = 1,
                     FechaHora = DateTime.Now,
                     NumeroEmpleado = int.Parse(tbNoEmpleado.Text),
                     TipoEmpleado = 1,
-                    HuellaDigita = Template.Bytes
+                    HuellaDigital = Template.Bytes
                 };
                 MonitoreoEntities monitoreoEntities = new MonitoreoEntities();
 
-                monitoreoEntities.Usuarios.Add(usuario);
+                monitoreoEntities.Usuario.Add(usuario);
                 monitoreoEntities.SaveChanges();
                 LimpiarCampos();
                 return;
