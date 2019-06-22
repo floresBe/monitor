@@ -31,7 +31,7 @@
                     <Rectangle Fill="#3071A9"></Rectangle>
                 </Border>
 
-                <Label Name="lblVersion" Foreground="White" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                <Label Name="lblTitle" Foreground="White" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"></Label>
 
                 <Label Name="lblDate" Grid.Column="1" Foreground="White" Margin="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
             </Grid>
@@ -47,7 +47,7 @@
                 </Border>
 
                 <StackPanel Name="stackMenu">
-                    <ListView x:Name="menuItems" Background="Transparent">
+                    <ListView x:Name="menuItems" Background="Transparent" SelectionChanged="MenuItems_SelectionChanged" BorderThickness="0">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid >
@@ -56,14 +56,17 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image></Image>
-                                    <Label Grid.Column="1" Content="{Binding title}" Foreground="Black"  FontSize="20"/>
+                                    <Image Source="{Binding Icon}" Height="40" Margin="10,10,10,10"/>
+                                    <Label Grid.Column="1" Content="{Binding Title}" Margin="5,10,10,10" Foreground="White"  FontSize="20"/>
 
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                    </ListView> 
+                    </ListView>
+
+                    
                 </StackPanel>
+                <Label Name="lblVersion" Foreground="White" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
 
 
 

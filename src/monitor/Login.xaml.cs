@@ -105,6 +105,7 @@ namespace monitor
                         {
                             Application.Current.Dispatcher.Invoke(delegate
                             {
+                                App.usuario = usuario;
                                 MainWindow main = new MainWindow();
                                 Application.Current.MainWindow = main;
                                 Stop();

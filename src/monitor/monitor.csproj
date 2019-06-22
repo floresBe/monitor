@@ -202,6 +202,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Assets\home.png" />
+    <Resource Include="Assets\logout.png" />
+    <Resource Include="Assets\models.png" />
+    <Resource Include="Assets\monitoring.png" />
+    <Resource Include="Assets\reporting.png" />
+    <Resource Include="Assets\user.png" />
     <Content Include="Data\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

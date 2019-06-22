@@ -1,4 +1,5 @@
-﻿using System;
+﻿using monitor.Data;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
@@ -10,7 +11,7 @@ namespace monitor
     /// </summary>
     public partial class App : Application
     {
-
+        public static Usuario usuario;
         public App()
         {
         }

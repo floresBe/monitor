@@ -8,6 +8,7 @@ using System;
 using System.Windows.Controls;
 using monitor.Fingerprint.Views;
 using monitor.Fingerprint.Views.UsuariosView;
+using System.Linq;
 
 namespace monitor
 {
@@ -24,9 +25,7 @@ namespace monitor
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            RegisterUser page = new RegisterUser();
-            mainPage.NavigationService.Navigate(page);
+        {  
             LoadMenus();
             LoadCurrentVersion();
         }
@@ -46,9 +45,10 @@ namespace monitor
                 version = "debug";
             }
             Title = $"{Title} - {version}";
-            lblVersion.Content = $"Monitor - {version}";
+            lblVersion.Content = $"{version}";
             lblDate.Content = DateTime.Now.ToLongDateString();
         }
+
         public void LoadMenus()
         {
             List<Item> items;
@@ -58,13 +58,56 @@ namespace monitor
                 items = JsonConvert.DeserializeObject<List<Item>>(json);
             }
 
-            menuItems.ItemsSource = items;
+            menuItems.ItemsSource = items.Where(w => w.Nivel >= App.usuario.TipoEmpleado);
+            menuItems.SelectedItem = items.FirstOrDefault();
         }
 
+        private void MenuItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Item itemSelected = (Item) menuItems.SelectedItem;
+            lblTitle.Content = itemSelected.Title;
+
+            switch (itemSelected.Title)
+            {
+                case "Inicio":
+                    RegisterUser page = new RegisterUser();
+                    mainPage.NavigationService.Navigate(page);
+                    break;
+                case "Estaciones":
+                    //RegisterUser page = new RegisterUser();
+                    //mainPage.NavigationService.Navigate(page);
+                    break;
+                case "Reportes":
+                    //RegisterUser page = new RegisterUser();
+                    //mainPage.NavigationService.Navigate(page);
+                    break;
+                case "Modelos":
+                    //RegisterUser page = new RegisterUser();
+                    //mainPage.NavigationService.Navigate(page);
+                    break;
+                case "Usuarios":
+                    //RegisterUser page = new RegisterUser();
+                    //mainPage.NavigationService.Navigate(page);
+                    break;
+                case "Salir":
+                    Login pageLogin = new Login();
+                    Application.Current.MainWindow = pageLogin;
+                    Close();
+                    pageLogin.Show();
+                    //RegisterUser page = new RegisterUser();
+                    //mainPage.NavigationService.Navigate(page);
+                    break;
+                default:
+                    break;
+            }
+
+            
+        }
     }
     public class Item
     {
-        public string title { get; set; }
-        public string icon { get; set; }
+        public string Title { get; set; }
+        public string Icon { get; set; }
+        public int Nivel { get; set; }
     }
 }
