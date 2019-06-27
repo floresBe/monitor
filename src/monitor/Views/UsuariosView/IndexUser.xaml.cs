@@ -2,15 +2,16 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace monitor.Views
+namespace monitor.Views.UsuariosView
 {
     /// <summary>
-    /// Interaction logic for Index.xaml
+    /// Interaction logic for IndexUser.xaml
     /// </summary>
-    public partial class Index : Page
+    public partial class IndexUser : Page
     {
         private UsuarioRepository _usuarioRepository;
-        public Index()
+
+        public IndexUser()
         {
             InitializeComponent();
             Loaded += Index_Loaded;
@@ -19,7 +20,7 @@ namespace monitor.Views
         private void Index_Loaded(object sender, RoutedEventArgs e)
         {
             _usuarioRepository = new UsuarioRepository();
-
+            dataGridUsuario.ItemsSource = _usuarioRepository.GetUsuarios();
         }
     }
 }
