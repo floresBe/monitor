@@ -1,4 +1,5 @@
-﻿using System;
+﻿using monitor.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,18 @@ namespace monitor.Views.HomeView
     /// </summary>
     public partial class StartModel : Page
     {
+        private ModeloRepository _modeloRepository;
+
         public StartModel()
         {
             InitializeComponent();
+            Loaded += StartModel_Loaded;
+        }
+        private void StartModel_Loaded(object sender, RoutedEventArgs e)
+        {
+            _modeloRepository = new ModeloRepository();
+            cbModelos.ItemsSource = _modeloRepository.GetModelos();
+             
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -33,6 +43,21 @@ namespace monitor.Views.HomeView
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(txtPID.Text))
+            {
+                MessageBox.Show("Ingresar número de PID.");
+                return;
+            }
+
+            if(cbModelos.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccione modelo.");
+                return;
+            }
+
+            App.PID = txtPID.Text;
+            App.modelo = (Modelo) cbModelos.SelectedItem;
+
             StopModel page = new StopModel();
             NavigationService.Navigate(page);
         }

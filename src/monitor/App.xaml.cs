@@ -13,6 +13,7 @@ namespace monitor
     {
         public static Usuario usuario;
         public static Modelo modelo;
+        public static string PID;
 
         public App()
         {

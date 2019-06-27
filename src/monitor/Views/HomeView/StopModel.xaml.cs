@@ -23,6 +23,9 @@ namespace monitor.Views.HomeView
         public StopModel()
         {
             InitializeComponent();
+
+            lblModelo.Content = App.modelo.NumeroModelo;
+            lblPID.Content = App.PID;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

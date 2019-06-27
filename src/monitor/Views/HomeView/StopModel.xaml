@@ -34,7 +34,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="PID" FontSize="35" VerticalAlignment="Bottom" />
-                <Label Grid.Row="1" Content="No. PID" FontSize="35" VerticalAlignment="Top" Foreground="Gray"/>
+                <Label Grid.Row="1" Name="lblPID" FontSize="35" VerticalAlignment="Top" Foreground="Gray"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -44,7 +44,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Modelo" FontSize="35" VerticalAlignment="Bottom"/>
-                <Label Grid.Row="1" Content="No. Modelo" FontSize="35" VerticalAlignment="Top" Foreground="Gray"/>
+                <Label Grid.Row="1" Name="lblModelo" FontSize="35" VerticalAlignment="Top" Foreground="Gray"/>
             </Grid>
 
             <Button Grid.Row="2" Content="Detener" Foreground="White" FontSize="25" Margin="0,20" Background="#ff3823"  Click="Button_Click"></Button>

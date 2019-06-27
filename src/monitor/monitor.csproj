@@ -157,6 +157,7 @@
     <Compile Include="Data\Modelo.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ModeloRepository.cs" />
     <Compile Include="Data\Pieza.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

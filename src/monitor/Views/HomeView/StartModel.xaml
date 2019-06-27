@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
                 
                 <Label Content="PID" FontSize="35" VerticalAlignment="Bottom" />
-                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top" Tag="No. PID" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
+                <TextBox Name="txtPID" Grid.Row="1" FontSize="35" VerticalAlignment="Top" Tag="No. PID" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
             </Grid>
             
             <Grid Grid.Row="1">
@@ -45,7 +45,7 @@
                 </Grid.RowDefinitions>
                 
                 <Label Content="Modelo" FontSize="35" VerticalAlignment="Bottom"/>
-                <ComboBox Grid.Row="1" FontSize="35" VerticalAlignment="Top"/>
+                <ComboBox DisplayMemberPath="NumeroModelo"  Name="cbModelos" Grid.Row="1" FontSize="35" VerticalAlignment="Top" Text="Seleccione" />
             </Grid>
 
             <Button Grid.Row="2" Content="Iniciar" Foreground="White" FontSize="25" Margin="0,20" Background="#72bb53" Click="Button_Click"></Button>
