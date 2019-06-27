@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Views\UsuariosView\IndexUser.xaml.cs">
       <DependentUpon>IndexUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Monitoreo.xaml.cs">
       <DependentUpon>Monitoreo.xaml</DependentUpon>
     </Compile>
@@ -201,6 +202,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\DefaultTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HomeView\FinishModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -218,6 +222,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UsuariosView\IndexUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Monitoreo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
