@@ -63,7 +63,22 @@ namespace monitor
             {
                 _usuarioRepository = new UsuarioRepository();
                 _usuarios = _usuarioRepository.GetUsuarios();
-                _usuarios.Count();
+                
+                if (_usuarios.Count() == 0)
+                {
+                    Application.Current.Dispatcher.Invoke(delegate
+                    {
+                        App.usuario = new Usuario()
+                        {
+                            TipoEmpleado = 1,
+                        };
+                        MainWindow main = new MainWindow();
+                        Application.Current.MainWindow = main;
+                        Stop();
+                        Close();
+                        main.Show();
+                    });
+                }
                 return true;
             }
             catch (ArgumentNullException)
