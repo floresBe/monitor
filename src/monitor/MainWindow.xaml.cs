@@ -8,8 +8,8 @@ using System;
 using System.Windows.Controls;
 using monitor.Fingerprint.Views;
 using monitor.Fingerprint.Views.UsuariosView;
-using System.Linq;
-using monitor.Views.InicioView;
+using System.Linq; 
+using monitor.Views.HomeView;
 
 namespace monitor
 {

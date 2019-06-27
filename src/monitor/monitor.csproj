@@ -170,6 +170,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UsuarioRepository.cs" />
+    <Compile Include="Views\HomeView\FinishModel.xaml.cs">
+      <DependentUpon>FinishModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView\StopModel.xaml.cs">
+      <DependentUpon>StopModel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
@@ -179,7 +185,7 @@
     <Compile Include="Views\Monitoreo.xaml.cs">
       <DependentUpon>Monitoreo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InicioView\StartModel.xaml.cs">
+    <Compile Include="Views\HomeView\StartModel.xaml.cs">
       <DependentUpon>StartModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsuariosView\RegisterUser.xaml.cs">
@@ -187,6 +193,14 @@
     </Compile>
     <Compile Include="Fingerprint\FingerprintManager.cs" />
     <Compile Include="Monitors.cs" />
+    <Page Include="Views\HomeView\FinishModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView\StopModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Index.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,7 +213,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\InicioView\StartModel.xaml">
+    <Page Include="Views\HomeView\StartModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
