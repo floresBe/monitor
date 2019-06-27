@@ -12,12 +12,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="19*"/>
-                <RowDefinition Height="92*"/>
-                <RowDefinition Height="99*"/>
+                <RowDefinition Height=".1*"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid Name="gridHeader" Grid.ColumnSpan="2" Margin="0,0,0.333,0">
+            <Grid Name="gridHeader" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition  Width=".25*"/>
                     <ColumnDefinition/>
@@ -37,7 +36,7 @@
                 <Label Name="lblDate" Grid.Column="1" Foreground="White" Margin="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,634.333,-0.333" Grid.RowSpan="2">
+            <Grid Grid.Row="1">
                 <Border BorderBrush="Black" BorderThickness="2">
                     <Border.Effect>
                         <DropShadowEffect Color="Gray"  BlurRadius="10"/>
@@ -74,7 +73,7 @@
             </Grid>
 
 
-            <Grid Grid.Row="1" Grid.Column="1"  Margin="20.333,20,20.333,19.667" Grid.RowSpan="2">
+            <Grid Grid.Row="1" Grid.Column="1"  Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>

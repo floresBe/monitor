@@ -22,6 +22,13 @@ namespace monitor
                 RutaAyudaVisual = @"C:\Users\Flores\Dropbox\Monitor\",
                 Routing = 12.3
             };
+
+            usuario = new Usuario()
+            {
+                Activo = 1,
+                Estatus = 1,
+                TipoEmpleado = 1
+            };
         }
     }
 }

@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Xps.Packaging;
 using Application = Microsoft.Office.Interop.PowerPoint.Application;
 
-namespace monitor
+namespace monitor.Views
 {
     /// <summary>
     /// Interaction logic for Monitoreo.xaml

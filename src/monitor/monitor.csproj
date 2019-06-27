@@ -176,8 +176,11 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Monitoreo.xaml.cs">
+    <Compile Include="Views\Monitoreo.xaml.cs">
       <DependentUpon>Monitoreo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InicioView\StartModel.xaml.cs">
+      <DependentUpon>StartModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsuariosView\RegisterUser.xaml.cs">
       <DependentUpon>RegisterUser.xaml</DependentUpon>
@@ -192,7 +195,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Monitoreo.xaml">
+    <Page Include="Views\Monitoreo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InicioView\StartModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
