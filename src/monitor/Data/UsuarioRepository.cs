@@ -23,7 +23,6 @@ namespace monitor.Data
             }
             catch (Exception ex)
             {
-
                 return null;
             }
         }
@@ -36,11 +35,9 @@ namespace monitor.Data
             }
             catch (Exception ex)
             {
-
                 return null;
             }
         }
-
 
         public bool InsertUsuario(Usuario user)
         {

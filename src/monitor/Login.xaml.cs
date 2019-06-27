@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace monitor
         private Verification Verificator;
         private Capture Capturer;
         private UsuarioRepository _usuarioRepository;
+        private List<Usuario> _usuarios;
 
         public Login()
         {
@@ -43,9 +45,31 @@ namespace monitor
 
         private void Login_Loaded(object sender, RoutedEventArgs e)
         {
-            Init();
-            Start();
-            _usuarioRepository = new UsuarioRepository();
+            if (ValidateConnection())
+            {
+                Init();
+                Start();                
+            }
+            else
+            {
+                MessageBox.Show("No se pudo conectar con el servidor, revise su conexión e intente nuevamente.");
+                Close();
+            }
+        }
+
+        private bool ValidateConnection()
+        {
+            try
+            {
+                _usuarioRepository = new UsuarioRepository();
+                _usuarios = _usuarioRepository.GetUsuarios();
+                _usuarios.Count();
+                return true;
+            }
+            catch (ArgumentNullException)
+            {
+                return false;
+            }
         }
 
         protected virtual void Init()
@@ -89,9 +113,9 @@ namespace monitor
             FeatureSet features = ExtractFeatures(Sample, DataPurpose.Verification);
 
             // Check quality of the sample and start verification if it's good
-            if (features!= null)
+            if (features != null)
             {
-                foreach (Usuario usuario in _usuarioRepository.GetUsuariosLogin() ?? new List<Usuario>())
+                foreach (Usuario usuario in _usuarios ?? new List<Usuario>())
                 {
                     if (usuario.HuellaDigital != null && usuario.HuellaDigital.Length > 0)
                     {
@@ -125,23 +149,17 @@ namespace monitor
 
         protected FeatureSet ExtractFeatures(Sample Sample, DataPurpose Purpose)
         {
-            FeatureExtraction Extractor = new FeatureExtraction(); 
+            FeatureExtraction Extractor = new FeatureExtraction();
             CaptureFeedback feedback = CaptureFeedback.None;
             FeatureSet features = new FeatureSet();
 
-            Extractor.CreateFeatureSet(Sample, Purpose, ref feedback, ref features);            
+            Extractor.CreateFeatureSet(Sample, Purpose, ref feedback, ref features);
             if (feedback == CaptureFeedback.Good)
             {
                 return features;
             }
 
             return null;
-        }
-
-        public void Verify(Template template)
-        {
-            Template = template;
-            ShowDialog();
         }
 
         protected void Stop()
