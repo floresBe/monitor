@@ -21,7 +21,7 @@
                     <ColumnDefinition  Width=".25*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
                     <Border.Effect>
                         <DropShadowEffect Color="Gray" BlurRadius="10"/>
@@ -64,7 +64,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    
+
                 </StackPanel>
                 <Label Name="lblVersion" Foreground="White" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
 

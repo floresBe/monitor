@@ -8,7 +8,8 @@ using System;
 using System.Windows.Controls;
 using monitor.Fingerprint.Views;
 using monitor.Fingerprint.Views.UsuariosView;
-using System.Linq;
+using System.Linq; 
+using monitor.Views.HomeView;
 
 namespace monitor
 {
@@ -70,7 +71,7 @@ namespace monitor
             switch (itemSelected.Title)
             {
                 case "Inicio":
-                    RegisterUser page = new RegisterUser();
+                    StartModel page = new StartModel();
                     mainPage.NavigationService.Navigate(page);
                     break;
                 case "Estaciones":

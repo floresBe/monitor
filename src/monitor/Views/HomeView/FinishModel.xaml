@@ -1,0 +1,68 @@
+﻿<Page x:Class="monitor.Views.HomeView.FinishModel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:monitor.Views.HomeView"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="FinishModel">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="1" VerticalAlignment="Bottom" FontSize="25" Content="Piezas tomadas durante el proceso por motivos de..." />
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Ingeniería" FontSize="35" VerticalAlignment="Bottom" />
+                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top" Tag="Ingeniería" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Calidad (SPC)" FontSize="35" VerticalAlignment="Bottom"/>
+                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top" PreviewTextInput="TextBox_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="Calidad (SPC)"/>
+            </Grid>
+            
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Producción" FontSize="35" VerticalAlignment="Bottom"/>
+                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top"  Style="{StaticResource placeHolder}" PreviewTextInput="TextBox_PreviewTextInput"  Tag="Producción"/>
+            </Grid>
+
+            <Button Grid.Row="3" Content="Terminar" Foreground="White" FontSize="25" Margin="0,15" Background="#ff3823" Click="Button_Click"></Button>
+
+        </Grid>
+    </Grid>
+</Page>

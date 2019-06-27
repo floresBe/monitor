@@ -63,6 +63,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.9.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="DPFPDevNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=696774c42ee28c57, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Windows\assembly\GAC_MSIL\DPFPDevNET\1.6.1.0__696774c42ee28c57\DPFPDevNET.dll</HintPath>
@@ -89,14 +92,29 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>..\packages\Microsoft.Office.Interop.PowerPoint.12.0.4518.1014\lib\net20\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Office, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>..\packages\Office.12.0.0\lib\net40\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.5.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
@@ -139,6 +157,7 @@
     <Compile Include="Data\Modelo.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ModeloRepository.cs" />
     <Compile Include="Data\Pieza.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -152,6 +171,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UsuarioRepository.cs" />
+    <Compile Include="Views\HomeView\FinishModel.xaml.cs">
+      <DependentUpon>FinishModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView\StopModel.xaml.cs">
+      <DependentUpon>StopModel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
@@ -160,6 +185,11 @@
     </Compile>
     <Compile Include="Views\UsuariosView\IndexUser.xaml.cs">
       <DependentUpon>IndexUser.xaml</DependentUpon>
+    <Compile Include="Views\Monitoreo.xaml.cs">
+      <DependentUpon>Monitoreo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HomeView\StartModel.xaml.cs">
+      <DependentUpon>StartModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsuariosView\RegisterUser.xaml.cs">
       <DependentUpon>RegisterUser.xaml</DependentUpon>
@@ -171,6 +201,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\DefaultTheme.xaml">
+    <Page Include="Views\HomeView\FinishModel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView\StopModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +218,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UsuariosView\IndexUser.xaml">
+    <Page Include="Views\Monitoreo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView\StartModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
