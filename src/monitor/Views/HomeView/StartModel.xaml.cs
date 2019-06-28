@@ -22,6 +22,7 @@ namespace monitor.Views.HomeView
     public partial class StartModel : Page
     {
         private ModeloRepository _modeloRepository;
+     
 
         public StartModel()
         {
@@ -30,13 +31,13 @@ namespace monitor.Views.HomeView
         }
         private void StartModel_Loaded(object sender, RoutedEventArgs e)
         {
-            _modeloRepository = new ModeloRepository();
-            cbModelos.ItemsSource = _modeloRepository.GetModelos();
-             
+            _modeloRepository = new ModeloRepository(); 
+            cbModelos.ItemsSource = _modeloRepository.GetModelos(); 
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            //returns the character that match with the expression
             System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
@@ -56,10 +57,11 @@ namespace monitor.Views.HomeView
             }
 
             App.PID = txtPID.Text;
-            App.modelo = (Modelo) cbModelos.SelectedItem;
+            App.modelo = (Modelo) cbModelos.SelectedItem; 
 
-            StopModel page = new StopModel();
-            NavigationService.Navigate(page);
-        }
+            App.stopModelPage = new StopModel();
+            NavigationService.Navigate(App.stopModelPage);
+        } 
+       
     }
 }

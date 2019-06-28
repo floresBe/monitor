@@ -1,4 +1,5 @@
 ﻿using monitor.Data;
+using monitor.Views.HomeView;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -14,16 +15,10 @@ namespace monitor
         public static Usuario usuario;
         public static Modelo modelo;
         public static string PID;
-
+        public static bool isRunning;
+        public static StopModel stopModelPage;
         public App()
-        {
-            modelo = new Modelo()
-            {
-                NumeroModelo = "LM89769",
-                RutaAyudaVisual = @"C:\Users\Flores\Dropbox\Monitor\",
-                Routing = 12.3
-            };
-
+        { 
             usuario = new Usuario()
             {
                 Activo = 1,
