@@ -39,12 +39,21 @@ namespace monitor.Views
         int pages;
         int page;
         string URL;
-
-        string sDateCycle;
         DateTime timeCycle;
 
         public Monitoreo()
         {
+            InitializeComponent();
+            InitializeHeader();
+            InitializeDocumentViwer();
+            InitializeTimerCycle();
+            InitializeTimerCurrentTime();
+        }
+
+        public Monitoreo(string estacion)
+        {
+            Estacion = estacion;
+
             InitializeComponent();
             InitializeHeader();
             InitializeDocumentViwer();
@@ -61,9 +70,7 @@ namespace monitor.Views
             lblRouting.Content = Routing;
 
             URL = App.modelo.RutaAyudaVisual;
-
-            // to Do: Recibir nombre de estacion por parametro.
-            Estacion = "AyudaVisual" ;
+ 
             lblEstacion.Content = Estacion;  
         }
         private void InitializeDocumentViwer()
@@ -72,7 +79,7 @@ namespace monitor.Views
             {
                 string powerPointFile = URL + Estacion + ".ppt";
 
-                var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + ".ppsx";
+                var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion + ".ppsx";
                 var xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
                 DocumentviewPowerPoint.Document = xpsDocument.GetFixedDocumentSequence();
@@ -190,7 +197,8 @@ namespace monitor.Views
       
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddPieza(1);
+            AddPieza(1); 
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

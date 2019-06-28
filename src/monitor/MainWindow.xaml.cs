@@ -10,6 +10,7 @@ using monitor.Fingerprint.Views;
 using monitor.Fingerprint.Views.UsuariosView;
 using System.Linq; 
 using monitor.Views.HomeView;
+using monitor.Views.UsuariosView;
 
 namespace monitor
 {
@@ -71,6 +72,12 @@ namespace monitor
             switch (itemSelected.Title)
             {
                 case "Inicio":
+                    if (App.isRunning)
+                    { 
+                        mainPage.NavigationService.Navigate(App.stopModelPage);
+                        break;
+                    }
+
                     StartModel page = new StartModel();
                     mainPage.NavigationService.Navigate(page);
                     break;
@@ -87,8 +94,8 @@ namespace monitor
                     //mainPage.NavigationService.Navigate(page);
                     break;
                 case "Usuarios":
-                    //RegisterUser page = new RegisterUser();
-                    //mainPage.NavigationService.Navigate(page);
+                    IndexUser pageUsers = new IndexUser();
+                    mainPage.NavigationService.Navigate(pageUsers);
                     break;
                 case "Salir":
                     Login pageLogin = new Login();
