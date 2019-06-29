@@ -113,6 +113,7 @@
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Width="20" Click="Button_Click_1"></Button>
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="20" Width="20" Click="Button_Click_2"></Button>
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="20" Width="20" Click="Button_Click_3"></Button>
+            <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="20" Width="20" Click="Button_Click_4"></Button>
 
 
         </StackPanel>

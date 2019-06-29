@@ -170,6 +170,7 @@
     <Compile Include="Data\ResultadoSoldadora.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ResultadoSoldadoraRepository.cs" />
     <Compile Include="Data\Usuario.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
