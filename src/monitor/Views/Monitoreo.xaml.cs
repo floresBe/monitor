@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
+using monitor.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +26,9 @@ namespace monitor.Views
     /// </summary>
     public partial class Monitoreo : Window
     {
-        string Estacion;
+        PiezaRepository PiezaRepository = new PiezaRepository();
+
+        Estacion Estacion;
 
         string Modelo;
         double? Routing;
@@ -40,46 +43,48 @@ namespace monitor.Views
         int page;
         string URL;
         DateTime timeCycle;
-
+          
         public Monitoreo()
         {
             InitializeComponent();
-            InitializeHeader();
-            InitializeDocumentViwer();
-            InitializeTimerCycle();
-            InitializeTimerCurrentTime();
+            Initialize();
         }
 
-        public Monitoreo(string estacion)
+        public Monitoreo(Estacion estacion)
         {
             Estacion = estacion;
 
             InitializeComponent();
+            Initialize();
+        }
+        private void Initialize()
+        {
+            PiezaRepository = new PiezaRepository(); 
+
             InitializeHeader();
             InitializeDocumentViwer();
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
         }
-
         private void InitializeHeader()
         {
             Modelo = App.modelo.NumeroModelo;
-            lblModelo.Content = Modelo; 
-          
+            lblModelo.Content = Modelo;
+
             Routing = App.modelo.Routing;
             lblRouting.Content = Routing;
 
             URL = App.modelo.RutaAyudaVisual;
- 
-            lblEstacion.Content = Estacion;  
+
+            lblEstacion.Content = Estacion.Nombre;
         }
         private void InitializeDocumentViwer()
         {
             try
             {
-                string powerPointFile = URL + Estacion + ".ppt";
+                string powerPointFile = URL + Estacion.Nombre + ".ppt";
 
-                var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion + ".ppsx";
+                var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + ".ppsx";
                 var xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
                 DocumentviewPowerPoint.Document = xpsDocument.GetFixedDocumentSequence();
@@ -121,7 +126,7 @@ namespace monitor.Views
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(NextPageTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
-            dispatcherTimer.Start(); 
+            dispatcherTimer.Start();
         }
         private void InitializeTimerCycle()
         {
@@ -130,38 +135,70 @@ namespace monitor.Views
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(CycleTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Start(); 
+            dispatcherTimer.Start();
         }
         private void InitializeTimeCycle()
-        { 
+        {
             timeCycle = DateTime.Today;
         }
         private void InitializeTimerCurrentTime()
-        {  
+        {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(CurrentTimeTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
             dispatcherTimer.Start();
         }
 
-        private void AddPieza(int state)
+
+        private void InPLCData(string modelo, string state)
         {
-            InitializeTimeCycle();
-
-            piezasHoraActual += 1;
-            lblPiezasHoraActual.Content = piezasHoraActual;
-
-            if(state == 1)
+            if(modelo != App.modelo.ModeloId)
             {
-                piezasBuenas += 1;
-                lblBuenasHoraActual.Content = piezasBuenas;
-                return;
+                WarningMessageGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                WarningMessageGrid.Visibility = Visibility.Collapsed;
             }
 
-            piezasMalas += 1;
-            lblMalasHoraActual.Content = piezasMalas;
+            AddPieza(int.Parse(state));
         }
+        private void AddPieza(int state)
+        {
+            try
+            {
+                Pieza pieza = new Pieza()
+                {
+                    EstacionId = Estacion.EstacionId,
+                    Estado = state,
+                    ModeloId = App.modelo.ModeloId,
+                    PID = int.Parse(App.PID),
+                    TiempoCiclo = lblTiempoCiclo.Content.ToString(),
+                    FechaHora = DateTime.Now
+                };
 
+                PiezaRepository.InsertPieza(pieza);
+
+                InitializeTimeCycle();
+
+                piezasHoraActual += 1;
+                lblPiezasHoraActual.Content = piezasHoraActual;
+
+                if (state == 1)
+                {
+                    piezasBuenas += 1;
+                    lblBuenasHoraActual.Content = piezasBuenas;
+                    return;
+                }
+
+                piezasMalas += 1;
+                lblMalasHoraActual.Content = piezasMalas;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al capturar pieza. - Error: " + ex.Message);
+            }
+        }
         private void NextPageTimer_Tick(object sender, EventArgs e)
         {
             if (page < pages)
@@ -175,7 +212,7 @@ namespace monitor.Views
             page = 1;
         }
         private void CycleTimer_Tick(object sender, EventArgs e)
-        {    
+        {
             lblTiempoCiclo.Content = timeCycle.ToString("HH:mm:ss");
             timeCycle = timeCycle.AddSeconds(1);
         }
@@ -192,18 +229,25 @@ namespace monitor.Views
 
             lblPiezasHoraActual.Content = piezasHoraActual;
             lblPiezasHoraAnterior.Content = piezasHoraAnterior;
-        }
-
-      
+        } 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddPieza(1); 
+            AddPieza(1);
 
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             AddPieza(0);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            InPLCData("A","1");
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            InPLCData(App.modelo.ModeloId, "0");
         }
     }
 }

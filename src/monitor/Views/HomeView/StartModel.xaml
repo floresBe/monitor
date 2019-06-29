@@ -17,14 +17,14 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -33,9 +33,9 @@
                     <RowDefinition />
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                
-                <Label Content="PID" FontSize="35" VerticalAlignment="Bottom" />
-                <TextBox Name="txtPID" Grid.Row="1" FontSize="35" VerticalAlignment="Top" Tag="No. PID" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
+               
+                <Label Content="Modelo" FontSize="35" VerticalAlignment="Bottom"/>
+                <ComboBox DisplayMemberPath="NumeroModelo"  Name="cbModelos" Grid.Row="1" FontSize="35" VerticalAlignment="Top" Text="Seleccione" />
             </Grid>
             
             <Grid Grid.Row="1">
@@ -44,11 +44,11 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <Label Content="Modelo" FontSize="35" VerticalAlignment="Bottom"/>
-                <ComboBox DisplayMemberPath="NumeroModelo"  Name="cbModelos" Grid.Row="1" FontSize="35" VerticalAlignment="Top" Text="Seleccione" />
+                <Label Content="PID" FontSize="35" VerticalAlignment="Bottom" />
+                <TextBox Name="txtPID" Grid.Row="1" FontSize="35" VerticalAlignment="Top" Tag="No. PID" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
             </Grid>
 
-            <Button Grid.Row="2" Content="Iniciar" Foreground="White" FontSize="25" Margin="0,20" Background="#72bb53" Click="Button_Click"></Button>
+            <Button Grid.Row="2" Content="Iniciar" Margin="0,20" Background="#72bb53" Click="Button_Click"></Button>
 
         </Grid>
     </Grid>

@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2.5*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -24,10 +24,11 @@
 
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             
@@ -38,7 +39,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Ingeniería" FontSize="35" VerticalAlignment="Bottom" />
-                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top" Tag="Ingeniería" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
+                <TextBox Grid.Row="1" Name="tbIngenieria" FontSize="35" VerticalAlignment="Top" Tag="Ingeniería" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -48,7 +49,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Calidad (SPC)" FontSize="35" VerticalAlignment="Bottom"/>
-                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top" PreviewTextInput="TextBox_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="Calidad (SPC)"/>
+                <TextBox Grid.Row="1" Name="tbCalidad" FontSize="35" VerticalAlignment="Top" PreviewTextInput="TextBox_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="Calidad (SPC)"/>
             </Grid>
             
             <Grid Grid.Row="2">
@@ -58,10 +59,12 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Producción" FontSize="35" VerticalAlignment="Bottom"/>
-                <TextBox Grid.Row="1" FontSize="35" VerticalAlignment="Top"  Style="{StaticResource placeHolder}" PreviewTextInput="TextBox_PreviewTextInput"  Tag="Producción"/>
+                <TextBox Grid.Row="1" Name="tbProduccion" FontSize="35" VerticalAlignment="Top"  Style="{StaticResource placeHolder}" PreviewTextInput="TextBox_PreviewTextInput"  Tag="Producción"/>
             </Grid>
 
-            <Button Grid.Row="3" Content="Terminar" Foreground="White" FontSize="25" Margin="0,15" Background="#ff3823" Click="Button_Click"></Button>
+            <Button Grid.Row="3" Content="Registrar" Margin="0,15" Background="#72bb53" Click="Button_Click"></Button>
+            <Button Grid.Row="4" Content="Volver al inicio" Margin="0,15" Background="#3071A9" Click="Button_Click_1"></Button>
+
 
         </Grid>
     </Grid>
