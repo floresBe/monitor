@@ -162,6 +162,7 @@
     <Compile Include="Data\Pieza.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\PiezaRepository.cs" />
     <Compile Include="Data\PiezasTomadas.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -272,6 +273,9 @@
     <Resource Include="Assets\monitoring.png" />
     <Resource Include="Assets\reporting.png" />
     <Resource Include="Assets\user.png" />
+    <Resource Include="Assets\warning.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Data\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

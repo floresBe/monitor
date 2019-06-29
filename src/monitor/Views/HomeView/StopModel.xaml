@@ -32,9 +32,9 @@
                     <RowDefinition />
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-
-                <Label Content="PID" FontSize="35" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                <Label Grid.Row="1" Name="lblPID" FontSize="35" VerticalAlignment="Top" Foreground="Gray" HorizontalAlignment="Center" />
+                
+                <Label Content="Modelo" FontSize="35" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <Label Grid.Row="1" Name="lblModelo" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="Gray"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -43,8 +43,8 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Modelo" FontSize="35" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <Label Grid.Row="1" Name="lblModelo" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="Gray"/>
+                <Label Content="PID" FontSize="35" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                <Label Grid.Row="1" Name="lblPID" FontSize="35" VerticalAlignment="Top" Foreground="Gray" HorizontalAlignment="Center" />
             </Grid>
 
             <Button Grid.Row="2" Content="Detener" Margin="0,20" Background="#ff3823" Click="Button_Click"></Button>

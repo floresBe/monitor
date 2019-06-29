@@ -38,7 +38,7 @@
           <Property Name="PID" Type="int" />
           <Property Name="EstacionId" Type="int" />
           <Property Name="Estado" Type="int" />
-          <Property Name="TiempoCiclo" Type="varchar" MaxLength="1" />
+          <Property Name="TiempoCiclo" Type="varchar" MaxLength="50" />
           <Property Name="FechaHora" Type="datetime" />
         </EntityType>
         <EntityType Name="PiezasTomadas">
@@ -235,7 +235,7 @@
           <Property Name="PID" Type="Int32" />
           <Property Name="EstacionId" Type="Int32" />
           <Property Name="Estado" Type="Int32" />
-          <Property Name="TiempoCiclo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TiempoCiclo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaHora" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Estacion" Relationship="MonitoreoModel.FK_PiezaEstacion" FromRole="Pieza" ToRole="Estacion" />
           <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_PiezaModelo" FromRole="Pieza" ToRole="Modelo" />

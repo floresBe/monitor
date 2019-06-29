@@ -58,7 +58,7 @@ namespace monitor.Views.HomeView
 
                 if (screen != null)
                 {
-                    Monitoreo monitoreoWindow = new Monitoreo(estacion.Nombre);
+                    Monitoreo monitoreoWindow = new Monitoreo(estacion);
                     monitoreoWindow.Left = screen.WorkingArea.Left;
                     monitoreoWindow.Top = screen.WorkingArea.Top;
                     monitoreoWindow.Width = screen.Bounds.Width;
