@@ -55,5 +55,26 @@ namespace monitor.Data
                 throw ex;
             }
         }
+
+        public bool DeleteUsuario(Usuario user)
+        {
+            try
+            {
+                Usuario usuario = _monitoreoEntities.Usuario.Where(w => w.NumeroEmpleado == user.NumeroEmpleado).FirstOrDefault();
+
+                if (usuario != null)
+                {
+                    usuario.Estatus = 0;
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

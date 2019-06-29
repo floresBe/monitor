@@ -285,7 +285,7 @@ namespace monitor.Fingerprint.Views.UsuariosView
                         HuellaDigital = Template.Bytes
                     };
                     _usuarioRepository.InsertUsuario(usuario);
-                    LimpiarCampos();
+                    NavigationService.GoBack();
                     return;
                 }
                 throw new Exception("Verifique que todos los campos esten capturados correctamente.");

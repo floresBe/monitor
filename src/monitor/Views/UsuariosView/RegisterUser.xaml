@@ -115,13 +115,13 @@
             </Border>
             <TextBlock Grid.Row="2" Name="lblSamples" FontSize="18"></TextBlock>
         </Grid>
-        <Grid Grid.Column="2" Grid.Row="1" Margin="20,0,20,20">
+        <Grid Grid.Column="2" Grid.Row="1" Margin="0,10" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button Name="btnCancelar" Background="#ff3823" Foreground="White" Margin="0,0,10,0" FontSize="25" Click="BtnCancelar_Click">Cancelar</Button>
-            <Button Name="btnGuardar" Background="#72bb53" Foreground="White" Grid.Column="1" Margin="10,0,0,0" FontSize="25" Click="BtnGuardar_Click">Guardar</Button>
+            <Button Name="btnCancelar" Width="160" Background="#ff3823" Margin="10,0,0,0" Click="BtnCancelar_Click">Cancelar</Button>
+            <Button Name="btnGuardar" Width="160" Background="#72bb53" Grid.Column="1" Margin="10,0,0,0" Click="BtnGuardar_Click">Guardar</Button>
         </Grid>
     </Grid>
 </Page>

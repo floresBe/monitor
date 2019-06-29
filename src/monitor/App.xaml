@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <!-- Theme -->
                 <ResourceDictionary Source="Themes/DefaultTheme.xaml"/>
+                <ResourceDictionary Source="Themes/DataGridResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
