@@ -26,7 +26,8 @@ namespace monitor.Views
     /// </summary>
     public partial class Monitoreo : Window
     {
-        PiezaRepository PiezaRepository = new PiezaRepository();
+        PiezaRepository PiezaRepository;
+        ResultadoSoldadoraRepository ResultadoSoldadoraRepository;
 
         Estacion Estacion;
 
@@ -43,13 +44,12 @@ namespace monitor.Views
         int page;
         string URL;
         DateTime timeCycle;
-          
+
         public Monitoreo()
         {
             InitializeComponent();
             Initialize();
         }
-
         public Monitoreo(Estacion estacion)
         {
             Estacion = estacion;
@@ -57,9 +57,11 @@ namespace monitor.Views
             InitializeComponent();
             Initialize();
         }
+
         private void Initialize()
         {
-            PiezaRepository = new PiezaRepository(); 
+            PiezaRepository = new PiezaRepository();
+            ResultadoSoldadoraRepository = new ResultadoSoldadoraRepository();
 
             InitializeHeader();
             InitializeDocumentViwer();
@@ -98,29 +100,6 @@ namespace monitor.Views
                 MessageBox.Show("Error al buscar archivo ppt - Error: " + ex.Message);
             }
         }
-        private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
-        {
-            //New Application Power Point 
-            var powerPointApp = new Application();
-            //Open the presentation (Invisible)
-            var presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
-
-            try
-            {
-                presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to export to XPS format: " + ex);
-            }
-            finally
-            {  //Close the presentation without saving changes and quit PowerPoint
-                presentation.Close();
-                powerPointApp.Quit();
-            }
-
-            return new XpsDocument(xpsFilename, FileAccess.Read);
-        }
         private void InitializeTimerDocumentViewer()
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -149,19 +128,63 @@ namespace monitor.Views
             dispatcherTimer.Start();
         }
 
+        private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
+        {
+            //New Application Power Point 
+            var powerPointApp = new Application();
+            //Open the presentation (Invisible)
+            var presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
 
+            try
+            {
+                presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to export to XPS format: " + ex);
+            }
+            finally
+            {  //Close the presentation without saving changes and quit PowerPoint
+                presentation.Close();
+                powerPointApp.Quit();
+            }
+
+            return new XpsDocument(xpsFilename, FileAccess.Read);
+        }
         private void InPLCData(string modelo, string state)
         {
-            if(modelo != App.modelo.ModeloId)
+            AddPieza(int.Parse(state));
+
+            if (modelo != App.modelo.ModeloId)
             {
                 WarningMessageGrid.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                WarningMessageGrid.Visibility = Visibility.Collapsed;
+                return;
             }
 
-            AddPieza(int.Parse(state));
+            WarningMessageGrid.Visibility = Visibility.Collapsed; 
+        }
+        private void InSoldadoraData(int cycle, double pkpwr, double totalAbs, double energy, double weldForce)
+        {
+            try
+            {
+                ResultadoSoldadora resultadoSoldadora = new ResultadoSoldadora()
+                {
+                    ModeloId = App.modelo.ModeloId,
+                    EstacionId = Estacion.EstacionId,
+                    Cycle = cycle,
+                    PkPwr = pkpwr,
+                    TotalAbs = totalAbs,
+                    Energy = energy,
+                    WeldForce = weldForce,
+                    FechaHora = DateTime.Now
+                };
+
+                ResultadoSoldadoraRepository.InsertResultadoSoldadora(resultadoSoldadora);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al registrar datos de soldadora. - Error: " + ex.Message);
+            }
         }
         private void AddPieza(int state)
         {
@@ -196,9 +219,10 @@ namespace monitor.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al capturar pieza. - Error: " + ex.Message);
+                MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
             }
         }
+
         private void NextPageTimer_Tick(object sender, EventArgs e)
         {
             if (page < pages)
@@ -229,7 +253,9 @@ namespace monitor.Views
 
             lblPiezasHoraActual.Content = piezasHoraActual;
             lblPiezasHoraAnterior.Content = piezasHoraAnterior;
-        } 
+        }
+
+        //Botones auxiliares
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AddPieza(1);
@@ -239,15 +265,17 @@ namespace monitor.Views
         {
             AddPieza(0);
         }
-
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            InPLCData("A","1");
+            InPLCData("A", "1");
         }
-
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             InPLCData(App.modelo.ModeloId, "0");
+        }
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            InSoldadoraData(1,1.2,14.1,12,23.2);
         }
     }
 }
