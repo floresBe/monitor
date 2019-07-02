@@ -19,7 +19,7 @@ namespace monitor.Data
         {
             try
             {
-                return _monitoreoEntities.Modelo.Where(usr => usr.Estatus == 1).ToList();
+                return _monitoreoEntities.Modelo.Where(w => w.Estatus == 1).ToList();
             }
             catch (Exception ex)
             {
@@ -39,6 +39,27 @@ namespace monitor.Data
                 _monitoreoEntities.Modelo.Add(model);
                 _monitoreoEntities.SaveChanges();
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeleteModelo(Modelo model)
+        {
+            try
+            {
+                Modelo modelo = _monitoreoEntities.Modelo.Where(w => w.ModeloId == model.ModeloId).FirstOrDefault();
+
+                if (modelo != null)
+                {
+                    modelo.Estatus = 0;
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
             }
             catch (Exception ex)
             {

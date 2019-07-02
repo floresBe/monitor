@@ -188,6 +188,9 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ModelosView\IndexModel.xaml.cs">
+      <DependentUpon>IndexModel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UsuariosView\IndexUser.xaml.cs">
       <DependentUpon>IndexUser.xaml</DependentUpon>
     </Compile>
@@ -223,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModelosView\IndexModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
