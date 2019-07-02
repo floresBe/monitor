@@ -37,14 +37,30 @@ namespace monitor.Fingerprint.Views.UsuariosView
         public Template Template;
         private UsuarioRepository _usuarioRepository;
 
+        private bool isEdit;
+        private bool fingerprintRead;
+        private Usuario User;
+
         public RegisterUser()
         {
             InitializeComponent();
             _usuarioRepository = new UsuarioRepository();
             Loaded += RegisterUser_Loaded;
             Unloaded += RegisterUser_Unloaded;
+            isEdit = false;
         }
+        public RegisterUser(Usuario user)
+        {
+            InitializeComponent();
+            _usuarioRepository = new UsuarioRepository();
+            Loaded += RegisterUser_Loaded;
+            Unloaded += RegisterUser_Unloaded;
 
+            isEdit = true;
+            User = user;
+
+          
+        }
         private void RegisterUser_Unloaded(object sender, RoutedEventArgs e)
         {
             Stop();
@@ -54,6 +70,20 @@ namespace monitor.Fingerprint.Views.UsuariosView
         {
             cbTipoEmpleado.Items.Add("Ingeniero");
             cbTipoEmpleado.Items.Add("Clase V");
+            if (isEdit)
+            {
+                tbNoEmpleado.Text = User.NumeroEmpleado.ToString();
+                cbTipoEmpleado.SelectedIndex = (int) User.TipoEmpleado - 1;
+                
+                if (User.Activo == 1)
+                {
+                    cbActivo.IsChecked = true;
+                }
+
+                return;
+            }
+
+            gridActivo.Visibility = Visibility.Collapsed;
         }
 
         protected virtual void Init()
@@ -148,7 +178,10 @@ namespace monitor.Fingerprint.Views.UsuariosView
 
                 Template = template;
                 if (Template != null)
+                {
                     MessageBox.Show("Finalizo la captura correctamente.", "Aviso");
+                    fingerprintRead = true;
+                }
                 else
                     MessageBox.Show("La captura no se realizo correctamente, repita el proceso.", "Aviso");
             });
@@ -275,6 +308,28 @@ namespace monitor.Fingerprint.Views.UsuariosView
             {
                 if (ValidateFields())
                 {
+                    if (isEdit)
+                    { 
+                        User.FechaHora = DateTime.Now;
+                        User.NumeroEmpleado = int.Parse(tbNoEmpleado.Text);
+                        User.TipoEmpleado = cbTipoEmpleado.SelectedIndex + 1;
+                        if (fingerprintRead)
+                        {
+                            User.HuellaDigital = Template.Bytes;
+                        }
+                        if ((bool)cbActivo.IsChecked)
+                        {
+                            User.Activo = 1;
+                        }
+                        else
+                        {
+                            User.Activo = 0;
+                        }
+                        _usuarioRepository.UpdateUsuario(User);
+                        NavigationService.GoBack();
+                        return;
+                    } 
+
                     Usuario usuario = new Usuario()
                     {
                         Activo = 1,
@@ -288,6 +343,7 @@ namespace monitor.Fingerprint.Views.UsuariosView
                     NavigationService.GoBack();
                     return;
                 }
+
                 throw new Exception("Verifique que todos los campos esten capturados correctamente.");
 
             }
@@ -303,8 +359,7 @@ namespace monitor.Fingerprint.Views.UsuariosView
             tbNoEmpleado.Text = string.Empty;
             cbTipoEmpleado.SelectedItem = null;
             Picture.Source = null;
-            gridFingerprint.Visibility = Visibility.Hidden;
-
+            gridFingerprint.Visibility = Visibility.Hidden; 
         }
 
         private bool ValidateFields()
@@ -317,7 +372,7 @@ namespace monitor.Fingerprint.Views.UsuariosView
             {
                 return false;
             }
-            if (Template == null)
+            if (Template == null && !isEdit)
             {
                 return false;
             }

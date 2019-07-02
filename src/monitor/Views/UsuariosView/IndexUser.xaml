@@ -38,7 +38,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Width="160" Background="#f5f104" Margin="10,0,0,0">Editar</Button>
+            <Button Width="160" x:Name="btnEditar" Background="#f5f104" Margin="10,0,0,0" Click="BtnEditar_Click">Editar</Button>
             <Button Width="160" Name="btnEliminar" Background="#ff3823" Margin="10,0,0,0" Grid.Column="1" Click="BtnEliminar_Click">Eliminar</Button>
             <Button Width="160" Name="btnNuevo" Background="#72bb53" Margin="10,0,0,0" Grid.Column="2" Click="BtnNuevo_Click">Nuevo</Button>
         </Grid>

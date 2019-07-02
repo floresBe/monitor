@@ -93,6 +93,17 @@
                         </Button.Background>
                     </Button>
                 </Grid>
+                <Grid x:Name="gridActivo" Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label FontSize="18">Activo</Label>
+                    <CheckBox x:Name="cbActivo" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                </Grid>
+                
+                
 
             </StackPanel>
         </Grid>

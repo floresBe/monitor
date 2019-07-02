@@ -44,5 +44,13 @@ namespace monitor.Views.UsuariosView
                 }
             }
         }
+
+        private void BtnEditar_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridUsuario.SelectedItem != null)
+            {
+                NavigationService.Navigate(new RegisterUser((Usuario)dataGridUsuario.SelectedItem));
+            }
+        }
     }
 }

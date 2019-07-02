@@ -60,11 +60,40 @@ namespace monitor.Data
         {
             try
             {
-                Usuario usuario = _monitoreoEntities.Usuario.Where(w => w.NumeroEmpleado == user.NumeroEmpleado).FirstOrDefault();
+                Usuario usuario = _monitoreoEntities.Usuario.Where(w => w.UsuarioId == user.UsuarioId).FirstOrDefault();
 
                 if (usuario != null)
                 {
                     usuario.Estatus = 0;
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool UpdateUsuario(Usuario user)
+        {
+            try
+            {
+                if (_monitoreoEntities.Usuario.Any(a => a.NumeroEmpleado == user.NumeroEmpleado && a.UsuarioId != user.UsuarioId))
+                {
+                    throw new Exception("Ya existe un usuario con ese número de empleado.");
+                }
+                Usuario usuario = _monitoreoEntities.Usuario.Where(w => w.UsuarioId == user.UsuarioId).FirstOrDefault();
+
+                if (usuario != null)
+                {
+                    usuario.Activo = user.Activo;
+                    usuario.FechaHora = user.FechaHora;
+                    usuario.HuellaDigital = user.HuellaDigital;
+                    usuario.NumeroEmpleado = user.NumeroEmpleado;
+                    usuario.TipoEmpleado = user.TipoEmpleado;  
                     _monitoreoEntities.SaveChanges();
                     return true;
                 }
