@@ -26,7 +26,20 @@ namespace monitor.Data
 
                 return null;
             }
-        } 
+        }
+
+        public Modelo GetLastModelo()
+        {
+            try
+            {
+                Modelo modelo = _monitoreoEntities.Modelo.ToList().Last();
+                return modelo;
+            }
+            catch (Exception ex)
+            { 
+                return null;
+            }
+        }
 
         public bool InsertModelo(Modelo model)
         {
@@ -55,6 +68,34 @@ namespace monitor.Data
                 if (modelo != null)
                 {
                     modelo.Estatus = 0;
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool UpdateModelo(Modelo model)
+        {
+            try
+            {
+                if (_monitoreoEntities.Modelo.Any(a => a.NumeroModelo == model.NumeroModelo && a.ModeloId != model.ModeloId))
+                {
+                    throw new Exception("Ya existe un usuario con ese número de empleado.");
+                }
+                Modelo modelo = _monitoreoEntities.Modelo.Where(w => w.ModeloId == model.ModeloId).FirstOrDefault();
+
+                if (modelo != null)
+                { 
+                    modelo.FechaHora = model.FechaHora;
+                    modelo.NumeroModelo = model.NumeroModelo;
+                    modelo.Routing = model.Routing;
+                    modelo.RutaAyudaVisual = model.RutaAyudaVisual;
                     _monitoreoEntities.SaveChanges();
                     return true;
                 }

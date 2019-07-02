@@ -34,7 +34,10 @@ namespace monitor.Views.ModelosView
         }
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
-
+            if(dataGridModelo.SelectedItem != null)
+            {
+                NavigationService.Navigate(new RegisterModel((Modelo)dataGridModelo.SelectedItem));
+            }
         }
 
         private void BtnEliminar_Click(object sender, RoutedEventArgs e)
@@ -55,7 +58,7 @@ namespace monitor.Views.ModelosView
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new RegisterModel());
         }
     }
 }
