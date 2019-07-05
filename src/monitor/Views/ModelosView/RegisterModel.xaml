@@ -1,12 +1,13 @@
-﻿<Page x:Class="monitor.Fingerprint.Views.UsuariosView.RegisterUser"
+﻿<Page x:Class="monitor.Views.ModelosView.RegisterModel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:monitor.Fingerprint.Views.UsuariosView"
+      xmlns:local="clr-namespace:monitor.Views.ModelosView"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Registrar Usuario">
+      Title="RegisterModel">
+
     <Page.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -77,54 +78,32 @@
         </Grid.RowDefinitions>
         <Grid Margin="20">
             <StackPanel>
-                <Label Content="No. Empleado" FontSize="18"></Label>
-                <TextBox Name="tbNoEmpleado" PreviewTextInput="TbNoEmpleado_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="No. Empleado" FontSize="18"></TextBox>
-                <Label Content="Tipo" FontSize="18"></Label>
-                <ComboBox FontSize="18" Name="cbTipoEmpleado" IsEditable="True" IsReadOnly="True" Text="Seleccione"/>
-                <Grid Margin="0,20,0,0">
+                <Label Content="No. Modelo" FontSize="18"></Label>
+                <TextBox Name="tbNoModelo" PreviewTextInput="TbNoModelo_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="No. Modelo" FontSize="18"></TextBox>
+                <Label Content="Routing" FontSize="18"></Label>
+                <TextBox Name="tbRouting" PreviewTextInput="TbRouting_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="Routing" FontSize="18"></TextBox>
+                <Label Content="Ruta ayuda visual" FontSize="18"></Label>
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Label FontSize="18" >Leer huella digital</Label>
-                    <Button Grid.Column="1" Click="Button_Click" Width="50" Height="50" VerticalAlignment="Top" Style="{DynamicResource fingerprintButtonStyle}" >
+                    <TextBox Name="tbAyudaVisual" PreviewTextInput="TbAyudaVisual_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="Ruta ayuda visual" FontSize="18"></TextBox>
+                    <Button x:Name="btnSearch" Grid.Column="1" Click="BtnSearch_Click" Width="35"  HorizontalAlignment="Right" Style="{DynamicResource fingerprintButtonStyle}" >
                         <Button.Background>
-                            <ImageBrush ImageSource="/monitor;component/Assets/fingerprintHover.png" Stretch="Uniform"/>
+                            <ImageBrush ImageSource="/monitor;component/Assets/search.png" Stretch="Uniform"/>
                         </Button.Background>
-                    </Button>
-                </Grid>
-                <Grid x:Name="gridActivo" Margin="0,20,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label FontSize="18">Activo</Label>
-                    <CheckBox x:Name="cbActivo" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                </Grid>
-                
-                
-
+                    </Button>  
+                </Grid> 
             </StackPanel>
         </Grid>
+        
         <Grid Name="gridFingerprint" Grid.Column="2" Margin="20" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Margin="0,0,5,0" FontSize="18">Estatus del lector:</TextBlock>
-                <TextBlock Name="lblStatus" FontSize="18" Grid.Column="1"></TextBlock>
-            </Grid>
-            <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White">
-                <Image x:Name="Picture"/>
-            </Border>
-            <TextBlock Grid.Row="2" Name="lblSamples" FontSize="18"></TextBlock>
+            </Grid.RowDefinitions> 
         </Grid>
         <Grid Grid.Column="2" Grid.Row="1" Margin="0,10" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>

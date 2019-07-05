@@ -68,9 +68,10 @@
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
-            <PropertyRef Name="NumeroEmpleado" />
+            <PropertyRef Name="UsuarioId" />
           </Key>
-          <Property Name="NumeroEmpleado" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroEmpleado" Type="int" />
           <Property Name="TipoEmpleado" Type="int" />
           <Property Name="HuellaDigital" Type="varbinary(max)" />
           <Property Name="Activo" Type="tinyint" />
@@ -270,9 +271,10 @@
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
-            <PropertyRef Name="NumeroEmpleado" />
+            <PropertyRef Name="UsuarioId" />
           </Key>
-          <Property Name="NumeroEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroEmpleado" Type="Int32" />
           <Property Name="TipoEmpleado" Type="Int32" />
           <Property Name="HuellaDigital" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Activo" Type="Byte" />
@@ -420,6 +422,7 @@
                 <ScalarProperty Name="HuellaDigital" ColumnName="HuellaDigital" />
                 <ScalarProperty Name="TipoEmpleado" ColumnName="TipoEmpleado" />
                 <ScalarProperty Name="NumeroEmpleado" ColumnName="NumeroEmpleado" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

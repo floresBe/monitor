@@ -14,7 +14,8 @@ namespace monitor.Data
     
     public partial class Usuario
     {
-        public int NumeroEmpleado { get; set; }
+        public int UsuarioId { get; set; }
+        public Nullable<int> NumeroEmpleado { get; set; }
         public Nullable<int> TipoEmpleado { get; set; }
         public byte[] HuellaDigital { get; set; }
         public Nullable<byte> Activo { get; set; }

@@ -11,6 +11,7 @@ using monitor.Fingerprint.Views.UsuariosView;
 using System.Linq; 
 using monitor.Views.HomeView;
 using monitor.Views.UsuariosView;
+using monitor.Views.ModelosView;
 
 namespace monitor
 {
@@ -89,9 +90,9 @@ namespace monitor
                     //RegisterUser page = new RegisterUser();
                     //mainPage.NavigationService.Navigate(page);
                     break;
-                case "Modelos":
-                    //RegisterUser page = new RegisterUser();
-                    //mainPage.NavigationService.Navigate(page);
+                case "Modelos": 
+                    IndexModel Modelpage = new IndexModel();
+                    mainPage.NavigationService.Navigate(Modelpage);
                     break;
                 case "Usuarios":
                     IndexUser pageUsers = new IndexUser();
@@ -101,9 +102,7 @@ namespace monitor
                     Login pageLogin = new Login();
                     Application.Current.MainWindow = pageLogin;
                     Close();
-                    pageLogin.Show();
-                    //RegisterUser page = new RegisterUser();
-                    //mainPage.NavigationService.Navigate(page);
+                    pageLogin.Show(); 
                     break;
                 default:
                     break;
