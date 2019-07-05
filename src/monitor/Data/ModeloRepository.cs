@@ -68,6 +68,7 @@ namespace monitor.Data
                 if (modelo != null)
                 {
                     modelo.Estatus = 0;
+                    modelo.FechaHora = DateTime.Now;
                     _monitoreoEntities.SaveChanges();
                     return true;
                 }
