@@ -19,7 +19,7 @@ namespace monitor.Data
         {
             try
             {
-                return _monitoreoEntities.Usuario.Where(usr => usr.Estatus == 1).ToList();
+                return _monitoreoEntities.Usuario.Where(usr => usr.Estatus == 1 ).ToList();
             }
             catch (Exception ex)
             {

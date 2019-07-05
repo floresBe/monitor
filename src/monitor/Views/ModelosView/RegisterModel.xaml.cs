@@ -1,6 +1,7 @@
 ﻿using monitor.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -58,15 +60,24 @@ namespace monitor.Views.ModelosView
         {
 
         }
-
         private void TbRouting_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"\d+(\.(\d{0,2})?)?");
+            bool match = !regex.IsMatch(tbRouting.Text + e.Text);
+            e.Handled = match;
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
-        {
+        { 
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
 
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    tbAyudaVisual.Text = fbd.SelectedPath + @"\"; 
+                 }
+            }
         }
 
         private void TbAyudaVisual_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -96,9 +107,8 @@ namespace monitor.Views.ModelosView
                         NavigationService.GoBack();
                         return;
                     }
+                    string modeloId = GetModeloId();
 
-                    Modelo lastModel = _modeloRepository.GetLastModelo();
-                    string modeloId = lastModel.ModeloId + "1";
                     Modelo modelo = new Modelo()
                     {
                         ModeloId = modeloId,
@@ -118,7 +128,7 @@ namespace monitor.Views.ModelosView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -136,7 +146,52 @@ namespace monitor.Views.ModelosView
             {
                 return false;
             }
+            try
+            {
+                Convert.ToDouble(tbRouting.Text);
+            }
+            catch(Exception)
+            {
+                throw new Exception("El valor de routing no es válido.");
+            }
             return true;
+        }
+
+        private char GetLetter(char lastId)
+        {
+            char id = ' ';
+
+            if (lastId == 'Z')
+                id = 'A';
+             else
+                id = (char)(((int)lastId) + 1);
+
+            return id;
+         
+        }
+
+        private string GetModeloId()
+        {
+            string modeloId = "";
+            Modelo lastModel = _modeloRepository.GetLastModelo();
+            char lastId = lastModel.ModeloId[lastModel.ModeloId.Length - 1];
+            char newId = GetLetter(lastId);
+
+            if (lastId == 'Z')
+            {
+                for (int i = 0; i < lastModel.ModeloId.Length + 1; i++)
+                {
+                    modeloId += newId;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < lastModel.ModeloId.Length; i++)
+                {
+                    modeloId += newId;
+                }
+            }
+            return modeloId;
         }
     }
 }

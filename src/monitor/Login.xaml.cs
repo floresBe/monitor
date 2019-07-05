@@ -62,7 +62,7 @@ namespace monitor
             try
             {
                 _usuarioRepository = new UsuarioRepository();
-                _usuarios = _usuarioRepository.GetUsuarios();
+                _usuarios = _usuarioRepository.GetUsuariosLogin();
                 
                 if (_usuarios.Count() == 0)
                 {

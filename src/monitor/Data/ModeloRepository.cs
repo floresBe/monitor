@@ -32,7 +32,7 @@ namespace monitor.Data
         {
             try
             {
-                Modelo modelo = _monitoreoEntities.Modelo.ToList().Last();
+                Modelo modelo = _monitoreoEntities.Modelo.ToList().OrderBy(o => o.FechaHora).Last();
                 return modelo;
             }
             catch (Exception ex)
