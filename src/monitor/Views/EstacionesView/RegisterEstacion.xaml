@@ -92,7 +92,7 @@
                     <Label Content="IP Soldadora" FontSize="18"></Label>
                     <CheckBox x:Name="cbSoldadora" Unchecked="CbSoldadora_Checked" Checked="CbSoldadora_Checked" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-                <TextBox Name="tbIPSoldadora" PreviewTextInput="TbIPSoldadora_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="IP Soldadora" FontSize="18"/>
+                <TextBox Name="tbIPSoldadora" Visibility="Collapsed" PreviewTextInput="TbIPSoldadora_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="IP Soldadora" FontSize="18"/>
 
             </StackPanel>
         </Grid>

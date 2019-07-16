@@ -62,6 +62,7 @@ namespace monitor.Views.EstacionesView
                 if (Estacion.Soldador == 1)
                 {
                     cbSoldadora.IsChecked = true;
+                    tbIPSoldadora.Visibility = Visibility.Visible;
                 }
                 tbIPSoldadora.Text = Estacion.IPSoldador;
                 cbMonitor.SelectedItem = Estacion.Monitor;
@@ -103,7 +104,7 @@ namespace monitor.Views.EstacionesView
                         Estacion.Nombre = tbEstacion.Text;
                         Estacion.IPPLC = tbIPPLC.Text;
                         Estacion.Soldador = cbSoldadora.IsChecked.Value ? (byte)1 : (byte)0;
-                        Estacion.IPSoldador = tbIPSoldadora.Text;
+                        Estacion.IPSoldador = cbSoldadora.IsChecked.Value ? tbIPSoldadora.Text : "";
                         Estacion.Monitor = cbMonitor.SelectedItem.ToString();
 
                         _estacionRepository.UpdateEstacion(Estacion);
@@ -161,7 +162,13 @@ namespace monitor.Views.EstacionesView
 
         private void CbSoldadora_Checked(object sender, RoutedEventArgs e)
         {
-            tbIPSoldadora.IsEnabled = cbSoldadora.IsChecked.Value;
+            if (cbSoldadora.IsChecked.Value)
+            {
+                tbIPSoldadora.Visibility = Visibility.Visible;
+                return;
+            }
+
+            tbIPSoldadora.Visibility = Visibility.Collapsed;
         }
     }
 }
