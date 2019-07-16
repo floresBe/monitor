@@ -193,5 +193,10 @@ namespace monitor.Views.ModelosView
             }
             return modeloId;
         }
+
+        private void BtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Seleccionar la carpeta en la cual se encuentran las ayudas visuales correspondientes al modelo. Las ayudas visuales deben de estar agrupadas en carpetas con el nombre de la estación a la que pertenecen.", "Información");
+        }
     }
 }

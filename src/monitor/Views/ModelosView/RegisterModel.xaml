@@ -87,13 +87,19 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBox Name="tbAyudaVisual" PreviewTextInput="TbAyudaVisual_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="Ruta ayuda visual" FontSize="18"></TextBox>
                     <Button x:Name="btnSearch" Grid.Column="1" Click="BtnSearch_Click" Width="35"  HorizontalAlignment="Right" Style="{DynamicResource fingerprintButtonStyle}" >
                         <Button.Background>
                             <ImageBrush ImageSource="/monitor;component/Assets/search.png" Stretch="Uniform"/>
                         </Button.Background>
-                    </Button>  
+                    </Button>
+                    <Button x:Name="BtnHelp" Grid.Column="2" Click="BtnHelp_Click" Width="20" Height="20" Margin="5" Style="{DynamicResource fingerprintButtonStyle}" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="/monitor;component/Assets/information.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
                 </Grid> 
             </StackPanel>
         </Grid>
