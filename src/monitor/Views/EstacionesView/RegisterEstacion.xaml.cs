@@ -170,6 +170,11 @@ namespace monitor.Views.EstacionesView
 
             tbIPSoldadora.Visibility = Visibility.Collapsed;
         }
+
+        private void BtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Activar la casilla para indicar que la estación utiliza soldadora.","Información");
+        }
     }
 }
 
