@@ -105,7 +105,9 @@ namespace monitor.Views.EstacionesView
                         Estacion.Soldador = cbSoldadora.IsChecked.Value ? (byte)1 : (byte)0;
                         Estacion.IPSoldador = tbIPSoldadora.Text;
                         Estacion.Monitor = cbMonitor.SelectedItem.ToString();
-                    
+
+                        _estacionRepository.UpdateEstacion(Estacion);
+
                         NavigationService.GoBack();
                         return;
                     }

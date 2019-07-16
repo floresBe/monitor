@@ -67,5 +67,36 @@ namespace monitor.Data
                 throw ex;
             }
         }
+
+        public bool UpdateEstacion(Estacion estacion)
+        {
+            try
+            {
+                if (_monitoreoEntities.Estacion.Any(a => a.Nombre == estacion.Nombre && a.EstacionId != estacion.EstacionId))
+                {
+                    throw new Exception("Ya existe una estación con ese nombre.");
+                }
+                Estacion Estacion = _monitoreoEntities.Estacion.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault();
+
+                if (Estacion != null)
+                {
+                    Estacion.FechaHora = estacion.FechaHora;
+                    Estacion.Nombre = estacion.Nombre;
+                    Estacion.Monitor = estacion.Monitor;
+                    Estacion.IPPLC = estacion.IPPLC;
+                    Estacion.IPSoldador = estacion.IPSoldador;
+                    Estacion.Soldador = estacion.Soldador;
+                   
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
