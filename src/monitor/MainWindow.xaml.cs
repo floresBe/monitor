@@ -12,6 +12,7 @@ using System.Linq;
 using monitor.Views.HomeView;
 using monitor.Views.UsuariosView;
 using monitor.Views.ModelosView;
+using monitor.Views.EstacionesView;
 
 namespace monitor
 {
@@ -79,12 +80,12 @@ namespace monitor
                         break;
                     }
 
-                    StartModel page = new StartModel();
-                    mainPage.NavigationService.Navigate(page);
+                    StartModel StartModePage = new StartModel();
+                    mainPage.NavigationService.Navigate(StartModePage);
                     break;
                 case "Estaciones":
-                    //RegisterUser page = new RegisterUser();
-                    //mainPage.NavigationService.Navigate(page);
+                    IndexEstacion EstacionesPage = new IndexEstacion();
+                    mainPage.NavigationService.Navigate(EstacionesPage);
                     break;
                 case "Reportes":
                     //RegisterUser page = new RegisterUser();

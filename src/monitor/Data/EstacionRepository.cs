@@ -32,13 +32,66 @@ namespace monitor.Data
         {
             try
             {
-                if (_monitoreoEntities.Estacion.Any(a => a.Nombre == estacion.Nombre))
+                if (_monitoreoEntities.Estacion.Any(a => a.Nombre == estacion.Nombre && a.Estatus ==1))
                 {
                     throw new Exception("Ya existe una Estación con este nombre.");
                 }
                 _monitoreoEntities.Estacion.Add(estacion);
                 _monitoreoEntities.SaveChanges();
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DeleteEstacion(Estacion estacion)
+        {
+            try
+            {
+                Estacion dbEstacion = _monitoreoEntities.Estacion.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault();
+
+                if (dbEstacion != null)
+                {
+                    dbEstacion.Estatus = 0;
+                    dbEstacion.FechaHora = DateTime.Now;
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool UpdateEstacion(Estacion estacion)
+        {
+            try
+            {
+                if (_monitoreoEntities.Estacion.Any(a => a.Nombre == estacion.Nombre && a.EstacionId != estacion.EstacionId))
+                {
+                    throw new Exception("Ya existe una estación con ese nombre.");
+                }
+                Estacion Estacion = _monitoreoEntities.Estacion.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault();
+
+                if (Estacion != null)
+                {
+                    Estacion.FechaHora = estacion.FechaHora;
+                    Estacion.Nombre = estacion.Nombre;
+                    Estacion.Monitor = estacion.Monitor;
+                    Estacion.IPPLC = estacion.IPPLC;
+                    Estacion.IPSoldador = estacion.IPSoldador;
+                    Estacion.Soldador = estacion.Soldador;
+                   
+                    _monitoreoEntities.SaveChanges();
+                    return true;
+                }
+                return false;
+
             }
             catch (Exception ex)
             {
