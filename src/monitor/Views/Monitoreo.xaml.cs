@@ -40,6 +40,10 @@ namespace monitor.Views
         int piezasBuenas;
         int piezasMalas;
 
+        List<XpsDocument> xpsDocuments;
+
+        int documents;
+        int document;
         int pages;
         int page;
         string URL;
@@ -82,22 +86,31 @@ namespace monitor.Views
         }
         private void InitializeDocumentViwer()
         {
+            string powerPointFile = "";
+            xpsDocuments = new List<XpsDocument>();
             try
             {
-                string powerPointFile = URL + Estacion.Nombre + ".ppt";
+                DirectoryInfo d = new DirectoryInfo(URL+@"\"+Estacion.Nombre);
+                FileInfo[] Files = d.GetFiles("*.ppt"); //Getting ppt files 
 
-                var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + ".ppsx";
-                var xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
+                foreach (FileInfo file in Files)
+                {
+                    powerPointFile = URL + Estacion.Nombre + @"\" + file;
 
-                DocumentviewPowerPoint.Document = xpsDocument.GetFixedDocumentSequence();
-                page = 1;
-                pages = DocumentviewPowerPoint.PageCount;
+                    var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + file + ".ppsx";
+                    XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
+                    xpsDocuments.Add(xpsDocument);
+                }
+                documents = xpsDocuments.Count();
+                document = 1;
+
+                ShowNewDocument(); 
                 InitializeTimerDocumentViewer();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error al buscar archivo ppt - Error: " + ex.Message);
+                MessageBox.Show("No se encontro el archivo: " + powerPointFile);
             }
         }
         private void InitializeTimerDocumentViewer()
@@ -134,7 +147,7 @@ namespace monitor.Views
             var powerPointApp = new Application();
             //Open the presentation (Invisible)
             var presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
-
+            
             try
             {
                 presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
@@ -224,7 +237,7 @@ namespace monitor.Views
         }
 
         private void NextPageTimer_Tick(object sender, EventArgs e)
-        {
+        {  
             if (page < pages)
             {
                 DocumentviewPowerPoint.NextPage();
@@ -232,9 +245,24 @@ namespace monitor.Views
                 return;
             }
 
-            DocumentviewPowerPoint.FirstPage();
-            page = 1;
+            if(document < documents)
+            {
+                document++; 
+                ShowNewDocument();
+                return;
+            } 
+
+            document = 1;
+            ShowNewDocument();
         }
+
+        private void ShowNewDocument()
+        {
+            DocumentviewPowerPoint.Document = xpsDocuments[document - 1].GetFixedDocumentSequence();
+            page = 1;
+            pages = DocumentviewPowerPoint.PageCount;
+        }
+
         private void CycleTimer_Tick(object sender, EventArgs e)
         {
             lblTiempoCiclo.Content = timeCycle.ToString("HH:mm:ss");
