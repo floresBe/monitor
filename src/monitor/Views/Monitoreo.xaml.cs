@@ -90,34 +90,45 @@ namespace monitor.Views
             xpsDocuments = new List<XpsDocument>();
             try
             {
-                DirectoryInfo d = new DirectoryInfo(URL+@"\"+Estacion.Nombre);
-                FileInfo[] Files = d.GetFiles("*.ppt"); //Getting ppt files 
+                DirectoryInfo d = new DirectoryInfo(URL + @"\" + Estacion.Nombre); // Se abre directorio
+                FileInfo[] Files = d.GetFiles("*.ppt"); // Se obtienen los documentos  
 
-                foreach (FileInfo file in Files)
-                {
-                    powerPointFile = URL + Estacion.Nombre + @"\" + file;
+                if (Files.Count() > 0)
+                { 
+                    foreach (FileInfo file in Files)
+                    {
+                        powerPointFile = URL + Estacion.Nombre + @"\" + file;
 
-                    var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + file + ".ppsx";
-                    XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
+                        string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + file + ".ppsx";
+                        XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
-                    xpsDocuments.Add(xpsDocument);
+                        xpsDocuments.Add(xpsDocument);
+                    }
+
+                    documents = xpsDocuments.Count();
+                    document = 1;
+
+                    ShowNewDocument();
+                    InitializeTimerDocumentViewer();
+                    return;
                 }
-                documents = xpsDocuments.Count();
-                document = 1;
 
-                ShowNewDocument(); 
-                InitializeTimerDocumentViewer();
+                throw new FormatException("No se encontro ningún archivo .ppt en la ruta: " + URL + @"\" + Estacion.Nombre);
             }
-            catch (Exception)
+            catch (FormatException fe)
             {
-                MessageBox.Show("No se encontro el archivo: " + powerPointFile);
+                MessageBox.Show(fe.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
             }
         }
         private void InitializeTimerDocumentViewer()
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(NextPageTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, Estacion.SegundosAyudaVisual.Value);
             dispatcherTimer.Start();
         }
         private void InitializeTimerCycle()
@@ -140,14 +151,13 @@ namespace monitor.Views
             dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
             dispatcherTimer.Start();
         }
-
         private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
         {
             //New Application Power Point 
             var powerPointApp = new Application();
             //Open the presentation (Invisible)
             var presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
-            
+
             try
             {
                 presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
@@ -174,7 +184,7 @@ namespace monitor.Views
                 return;
             }
 
-            WarningMessageGrid.Visibility = Visibility.Collapsed; 
+            WarningMessageGrid.Visibility = Visibility.Collapsed;
         }
         private void InSoldadoraData(int cycle, double pkpwr, double totalAbs, double energy, double weldForce)
         {
@@ -235,9 +245,8 @@ namespace monitor.Views
                 MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
             }
         }
-
         private void NextPageTimer_Tick(object sender, EventArgs e)
-        {  
+        {
             if (page < pages)
             {
                 DocumentviewPowerPoint.NextPage();
@@ -245,24 +254,22 @@ namespace monitor.Views
                 return;
             }
 
-            if(document < documents)
+            if (document < documents)
             {
-                document++; 
+                document++;
                 ShowNewDocument();
                 return;
-            } 
+            }
 
             document = 1;
             ShowNewDocument();
         }
-
         private void ShowNewDocument()
         {
             DocumentviewPowerPoint.Document = xpsDocuments[document - 1].GetFixedDocumentSequence();
             page = 1;
             pages = DocumentviewPowerPoint.PageCount;
         }
-
         private void CycleTimer_Tick(object sender, EventArgs e)
         {
             lblTiempoCiclo.Content = timeCycle.ToString("HH:mm:ss");
@@ -303,7 +310,7 @@ namespace monitor.Views
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            InSoldadoraData(1,1.2,14.1,12,23.2);
+            InSoldadoraData(1, 1.2, 14.1, 12, 23.2);
         }
     }
 }

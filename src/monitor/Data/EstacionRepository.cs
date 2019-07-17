@@ -86,7 +86,8 @@ namespace monitor.Data
                     Estacion.IPPLC = estacion.IPPLC;
                     Estacion.IPSoldador = estacion.IPSoldador;
                     Estacion.Soldador = estacion.Soldador;
-                   
+                    Estacion.SegundosAyudaVisual = estacion.SegundosAyudaVisual;
+                    
                     _monitoreoEntities.SaveChanges();
                     return true;
                 }
