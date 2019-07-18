@@ -68,6 +68,7 @@ namespace monitor.Data
                 if (modelo != null)
                 {
                     modelo.Estatus = 0;
+                    modelo.FechaHora = DateTime.Now;
                     _monitoreoEntities.SaveChanges();
                     return true;
                 }
@@ -86,7 +87,7 @@ namespace monitor.Data
             {
                 if (_monitoreoEntities.Modelo.Any(a => a.NumeroModelo == model.NumeroModelo && a.ModeloId != model.ModeloId))
                 {
-                    throw new Exception("Ya existe un usuario con ese número de empleado.");
+                    throw new Exception("Ya existe un modelo con ese número.");
                 }
                 Modelo modelo = _monitoreoEntities.Modelo.Where(w => w.ModeloId == model.ModeloId).FirstOrDefault();
 

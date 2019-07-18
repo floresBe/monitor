@@ -68,7 +68,7 @@ namespace monitor.Fingerprint.Views.UsuariosView
 
         private void RegisterUser_Loaded(object sender, RoutedEventArgs e)
         {
-            cbTipoEmpleado.Items.Add("Ingeniero");
+            cbTipoEmpleado.Items.Add("Ingeniería");
             cbTipoEmpleado.Items.Add("Clase V");
             if (isEdit)
             {

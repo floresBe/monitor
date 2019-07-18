@@ -214,6 +214,12 @@
       <DependentUpon>ReportViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PiezasPorModeloViewModel.cs" />
+    <Compile Include="Views\EstacionesView\IndexEstacion.xaml.cs">
+      <DependentUpon>IndexEstacion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EstacionesView\RegisterEstacion.xaml.cs">
+      <DependentUpon>RegisterEstacion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView\FinishModel.xaml.cs">
       <DependentUpon>FinishModel.xaml</DependentUpon>
     </Compile>
@@ -262,6 +268,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\DefaultTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EstacionesView\IndexEstacion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EstacionesView\RegisterEstacion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -349,6 +363,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\search.png" />
+    <Resource Include="Assets\information.png" />
     <Content Include="Data\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>
