@@ -87,8 +87,9 @@ namespace monitor
                     //mainPage.NavigationService.Navigate(page);
                     break;
                 case "Reportes":
-                    //RegisterUser page = new RegisterUser();
-                    //mainPage.NavigationService.Navigate(page);
+                    Reports.ReportsMenu reportPage = new Reports.ReportsMenu();
+                    reportPage.Show();
+                    WindowState = WindowState.Minimized;
                     break;
                 case "Modelos": 
                     IndexModel Modelpage = new IndexModel();
