@@ -1,0 +1,13 @@
+﻿<Window x:Class="monitor.Reports.ReportViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing" 
+        xmlns:local="clr-namespace:monitor.Reports"
+        mc:Ignorable="d"
+        Title="ReportViewer">
+    <Grid>
+        <dxp:DocumentPreviewControl Name="preview" DocumentSource="{Binding Report}"/>
+    </Grid>
+</Window>
