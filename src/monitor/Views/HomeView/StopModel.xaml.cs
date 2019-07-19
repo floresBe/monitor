@@ -37,18 +37,18 @@ namespace monitor.Views.HomeView
         }
         private void StopModel_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!App.isRunning)
-            {
-                lblModelo.Content = App.modelo.NumeroModelo;
-                lblPID.Content = App.PID;
+            //if (!App.isRunning)
+            //{
+            //    lblModelo.Content = App.modelo.NumeroModelo;
+            //    lblPID.Content = App.PID;
 
-                StartMonitoringAsync();
-            } 
+            //    StartMonitoringAsync();
+            //} 
         }
 
         private async void StartMonitoringAsync()
         {
-            App.isRunning = true;
+         //   App.isRunning = true;
             var screens = Screen.AllScreens;
 
             foreach (var estacion in estaciones)
@@ -58,16 +58,16 @@ namespace monitor.Views.HomeView
 
                 if (screen != null)
                 {
-                    Monitoreo monitoreoWindow = new Monitoreo(estacion);
-                    monitoreoWindow.Left = screen.WorkingArea.Left;
-                    monitoreoWindow.Top = screen.WorkingArea.Top;
-                    monitoreoWindow.Width = screen.Bounds.Width;
-                    monitoreoWindow.Height = screen.Bounds.Height;
-                    monitoreoWindow.WindowState = WindowState.Normal;
+                    //Monitoreo monitoreoWindow = new Monitoreo(estacion);
+                    //monitoreoWindow.Left = screen.WorkingArea.Left;
+                    //monitoreoWindow.Top = screen.WorkingArea.Top;
+                    //monitoreoWindow.Width = screen.Bounds.Width;
+                    //monitoreoWindow.Height = screen.Bounds.Height;
+                    //monitoreoWindow.WindowState = WindowState.Normal;
                      
-                    monitoreoWindow.Show();
+                    //monitoreoWindow.Show();
 
-                    estacionesWindows.Add(monitoreoWindow);
+                    //estacionesWindows.Add(monitoreoWindow);
                 }
                 await Task.Delay(100);
             }
@@ -76,7 +76,7 @@ namespace monitor.Views.HomeView
         private void StopMonitoring()
         {
             //To do: Detener proceso
-            App.isRunning = false;
+         //   App.isRunning = false;
 
             foreach (var estacion in estacionesWindows)
             {

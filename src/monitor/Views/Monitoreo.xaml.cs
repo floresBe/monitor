@@ -29,10 +29,10 @@ namespace monitor.Views
         PiezaRepository PiezaRepository;
         ResultadoSoldadoraRepository ResultadoSoldadoraRepository;
 
-        Estacion Estacion;
+        public Estacion Estacion { get; set; }
+        public Modelo Modelo  { get; set;  }
 
-        string Modelo;
-        double? Routing;
+        string PID; 
 
         int piezasHoraActual;
         int piezasHoraAnterior;
@@ -40,23 +40,25 @@ namespace monitor.Views
         int piezasBuenas;
         int piezasMalas;
 
-        List<XpsDocument> xpsDocuments;
+        DateTime timeCycle;
 
+        List<XpsDocument> xpsDocuments;
+        string ruta;
         int documents;
         int document;
         int pages;
         int page;
-        string URL;
-        DateTime timeCycle;
 
         public Monitoreo()
         {
             InitializeComponent();
             Initialize();
         }
-        public Monitoreo(Estacion estacion)
+        public Monitoreo(Estacion estacion, Modelo modelo, string PID)
         {
             Estacion = estacion;
+            Modelo = modelo;
+            this.PID = PID;
 
             InitializeComponent();
             Initialize();
@@ -72,15 +74,12 @@ namespace monitor.Views
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
         }
-        private void InitializeHeader()
+        public void InitializeHeader()
         {
-            Modelo = App.modelo.NumeroModelo;
-            lblModelo.Content = Modelo;
+            lblModelo.Content = Modelo.NumeroModelo;
 
-            Routing = App.modelo.Routing;
-            lblRouting.Content = Routing;
-
-            URL = App.modelo.RutaAyudaVisual;
+            lblRouting.Content = Modelo.Routing;
+            ruta = Modelo.RutaAyudaVisual;
 
             lblEstacion.Content = Estacion.Nombre;
         }
@@ -90,16 +89,16 @@ namespace monitor.Views
             xpsDocuments = new List<XpsDocument>();
             try
             {
-                DirectoryInfo d = new DirectoryInfo(URL + @"\" + Estacion.Nombre); // Se abre directorio
+                DirectoryInfo d = new DirectoryInfo(ruta + @"\" + Estacion.Nombre); // Se abre directorio
                 FileInfo[] Files = d.GetFiles("*.ppt"); // Se obtienen los documentos  
 
                 if (Files.Count() > 0)
-                { 
+                {
                     foreach (FileInfo file in Files)
                     {
-                        powerPointFile = URL + Estacion.Nombre + @"\" + file;
+                        powerPointFile = ruta + Estacion.Nombre + @"\" + file;
 
-                        string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + file + ".ppsx";
+                        string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + file + ".ppsx";
                         XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
                         xpsDocuments.Add(xpsDocument);
@@ -113,13 +112,13 @@ namespace monitor.Views
                     return;
                 }
 
-                throw new FormatException("No se encontro ningún archivo .ppt en la ruta: " + URL + @"\" + Estacion.Nombre);
+                throw new FormatException("No se encontro ningún archivo .ppt en la ruta: " + ruta + @"\" + Estacion.Nombre);
             }
             catch (FormatException fe)
             {
                 MessageBox.Show(fe.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
             }
@@ -178,7 +177,7 @@ namespace monitor.Views
         {
             AddPieza(int.Parse(state));
 
-            if (modelo != App.modelo.ModeloId)
+            if (modelo != Modelo.ModeloId)
             {
                 WarningMessageGrid.Visibility = Visibility.Visible;
                 return;
@@ -192,7 +191,7 @@ namespace monitor.Views
             {
                 ResultadoSoldadora resultadoSoldadora = new ResultadoSoldadora()
                 {
-                    ModeloId = App.modelo.ModeloId,
+                    ModeloId = Modelo.ModeloId,
                     EstacionId = Estacion.EstacionId,
                     Cycle = cycle,
                     PkPwr = pkpwr,
@@ -217,8 +216,8 @@ namespace monitor.Views
                 {
                     EstacionId = Estacion.EstacionId,
                     Estado = state,
-                    ModeloId = App.modelo.ModeloId,
-                    PID = int.Parse(App.PID),
+                    ModeloId = Modelo.ModeloId,
+                    PID = int.Parse(PID),
                     TiempoCiclo = lblTiempoCiclo.Content.ToString(),
                     FechaHora = DateTime.Now
                 };
@@ -302,11 +301,11 @@ namespace monitor.Views
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            InPLCData("A", "1");
+            InPLCData("#", "1");
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            InPLCData(App.modelo.ModeloId, "0");
+            InPLCData(Modelo.ModeloId, "0");
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {

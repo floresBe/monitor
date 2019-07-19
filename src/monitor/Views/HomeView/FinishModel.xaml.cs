@@ -35,16 +35,16 @@ namespace monitor.Views.HomeView
                 int calidad = int.Parse(tbCalidad.Text);
                 int produccion = int.Parse(tbProduccion.Text);
 
-                PiezasTomadas piezasTomadas = new PiezasTomadas()
-                {
-                    Ingenieria = ingenieria,
-                    Calidad = calidad,
-                    Produccion = produccion,
-                    ModeloId = App.modelo.ModeloId,
-                    FechaHora = DateTime.Now
-                };
+                //PiezasTomadas piezasTomadas = new PiezasTomadas()
+                //{
+                //    Ingenieria = ingenieria,
+                //    Calidad = calidad,
+                //    Produccion = produccion,
+                //    ModeloId = modelo.ModeloId,
+                //    FechaHora = DateTime.Now
+                //};
 
-                piezasTomadasRepository.InsertPiezasTomadas(piezasTomadas);
+                //piezasTomadasRepository.InsertPiezasTomadas(piezasTomadas);
 
                 MessageBox.Show("Piezas registradas con éxito.");
             }
