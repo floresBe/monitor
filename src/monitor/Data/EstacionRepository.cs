@@ -19,11 +19,15 @@ namespace monitor.Data
         {
             try
             {
-                return _monitoreoEntities.Estacion.Where(usr => usr.Estatus == 1).ToList();
+                List<Estacion> estaciones = _monitoreoEntities.Estacion.Where(usr => usr.Estatus == 1).ToList();
+                foreach (Estacion est in estaciones)
+                {
+                    est.Mensaje = "Libre";
+                }
+                return estaciones; 
             }
             catch (Exception ex)
-            {
-
+            { 
                 return null;
             }
         }

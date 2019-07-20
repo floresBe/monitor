@@ -27,6 +27,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid>
@@ -42,14 +43,15 @@
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition/> 
                     </Grid.RowDefinitions>
 
                     <Label Content="PID" FontSize="25" VerticalAlignment="Bottom" />
                     <TextBox Name="txtPID" Grid.Row="1" FontSize="25" VerticalAlignment="Top" Tag="No. PID" PreviewTextInput="TextBox_PreviewTextInput" Style="{StaticResource placeHolder}"/>
                 </Grid>
 
-                <Button x:Name="btnSiguiente" Grid.Row="2" Content="Siguiente" Margin="0,20" Background="#72bb53" Click="BtnSiguiente_Click"></Button>
+                <Button x:Name="btnSiguiente" Grid.Row="2" Content="Siguiente" Margin="0,5" Background="#72bb53" Click="BtnSiguiente_Click"></Button>
+                <Button x:Name="btnCancelar" Grid.Row="3" Content="Cancelar" Margin="0,5" Background="#ff3823" Click="BtnCancelar_Click"></Button>
 
             </Grid>
 
@@ -59,9 +61,10 @@
                     <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 
-                <Label x:Name="lblEstaciones" VerticalAlignment="Top" FontSize="20" Content="Estaciones" />
+                <Label x:Name="lblEstaciones" VerticalAlignment="Top" FontSize="20" Content="Estaciones activas" />
 
                 <ListView Grid.Row="1" x:Name="estacionesItems" SelectionMode="Multiple"  Background="Transparent" SelectionChanged="EstacionesItems_SelectionChanged" BorderThickness="0">
                     <ListView.ItemTemplate>
@@ -70,15 +73,19 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Content="{Binding Nombre}" Margin="5,10,10,10" FontSize="20"/>
-                                <Label Grid.Column="1" Content="{Binding Modelo}" Margin="5,10,10,10"  FontSize="20"/>
+                                <Label Grid.Column="1" Content="{Binding Mensaje}" Margin="5,10,10,10" FontSize="20"/>
+                                <Label Grid.Column="2" Content="{Binding Modelo}" Margin="5,10,10,10"  FontSize="20"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Button x:Name="btnIniciarModelo" Grid.Row="2" Content="Iniciar" Margin="0,20" Background="#72bb53" Click="BtnIniciarModelo_Click"/>
+                <Button x:Name="btnIniciarModelo" Grid.Row="2" Content="Iniciar" Margin="0,5" Background="#72bb53" Click="BtnIniciarModelo_Click"/>
+                <Button x:Name="btnCancelar2" Grid.Row="3" Content="Cancelar" Margin="0,5" Background="#ff3823" Click="BtnCancelar2_Click"></Button>
+
             </Grid>
 
             <!--Grid info modelo corriendo-->

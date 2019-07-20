@@ -91,6 +91,12 @@ namespace monitor.Views.HomeView
         }
         private void BtnIniciarModelo_Click(object sender, RoutedEventArgs e)
         {
+            if(estacionesItems.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("No selecciono ninguna estación.", "Atención");
+                return;
+            }
+
             foreach (var est in estacionesItems.SelectedItems)
             {
                 Estacion estacion = (Estacion)est;
@@ -118,6 +124,7 @@ namespace monitor.Views.HomeView
 
                 //Indicar que la estación esta corriendo el modelo seleccionado. 
                 App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Modelo = modelo.NumeroModelo;
+                App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Mensaje = "Modelo Actual:";
             }
 
             grdEstaciones.Visibility = Visibility.Collapsed;
@@ -132,6 +139,7 @@ namespace monitor.Views.HomeView
                 foreach (var estacion in App.estaciones.Where(w => w.Modelo == modelo.NumeroModelo))
                 {
                     estacion.Modelo = null;
+                    estacion.Mensaje = "Libre";
 
                     //Cerrar y eliminar estacion.
                     if (App.estacionesWindows.Any(a => a.Estacion.EstacionId == estacion.EstacionId))
@@ -200,6 +208,17 @@ namespace monitor.Views.HomeView
             lblPiezasTomadas.Visibility = Visibility.Collapsed;
             grdPiezasTomadas.Visibility = Visibility.Collapsed;
             btnIniciar.Visibility = Visibility.Visible;
+        } 
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            grdIniciarModelo.Visibility = Visibility.Collapsed;
+            btnIniciar.Visibility = Visibility.Visible;
+        }
+
+        private void BtnCancelar2_Click(object sender, RoutedEventArgs e)
+        {
+            grdEstaciones.Visibility = Visibility.Collapsed;
+            grdIniciarModelo.Visibility = Visibility.Visible;
         }
         private void StartMonitoringAsync()
         {
@@ -246,7 +265,6 @@ namespace monitor.Views.HomeView
                 MessageBox.Show("Ocurrio un error al registrar piezas. - Error:" + ex.Message);
             }
         }
-
 
     }
 }
