@@ -73,14 +73,8 @@ namespace monitor
 
             switch (itemSelected.Title)
             {
-                case "Inicio":
-                    if (App.isRunning)
-                    { 
-                        mainPage.NavigationService.Navigate(App.stopModelPage);
-                        break;
-                    }
-
-                    StartModel StartModePage = new StartModel();
+                case "Inicio": 
+                    ModelsView StartModePage = new ModelsView();
                     mainPage.NavigationService.Navigate(StartModePage);
                     break;
                 case "Estaciones":

@@ -21,14 +21,13 @@ namespace monitor.Views.HomeView
     /// </summary>
     public partial class StartModel : Page
     {
-        private ModeloRepository _modeloRepository;
-     
+        private ModeloRepository _modeloRepository; 
 
         public StartModel()
         {
             InitializeComponent();
             Loaded += StartModel_Loaded;
-        }
+        } 
         private void StartModel_Loaded(object sender, RoutedEventArgs e)
         {
             _modeloRepository = new ModeloRepository(); 
@@ -56,11 +55,11 @@ namespace monitor.Views.HomeView
                 return;
             }
 
-            App.PID = txtPID.Text;
-            App.modelo = (Modelo) cbModelos.SelectedItem; 
-
-            App.stopModelPage = new StopModel();
-            NavigationService.Navigate(App.stopModelPage);
+            //App.PID = txtPID.Text;
+            //App.modelo = (Modelo) cbModelos.SelectedItem;
+ 
+            //App.stopModelPage = new StopModel();
+            //NavigationService.Navigate(App.stopModelPage);
         } 
        
     }

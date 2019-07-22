@@ -29,10 +29,10 @@ namespace monitor.Views
         PiezaRepository PiezaRepository;
         ResultadoSoldadoraRepository ResultadoSoldadoraRepository;
 
-        Estacion Estacion;
+        public Estacion Estacion { get; set; }
+        public Modelo Modelo  { get; set;  }
 
-        string Modelo;
-        double? Routing;
+        string PID; 
 
         int piezasHoraActual;
         int piezasHoraAnterior;
@@ -40,19 +40,25 @@ namespace monitor.Views
         int piezasBuenas;
         int piezasMalas;
 
+        DateTime timeCycle;
+
+        List<XpsDocument> xpsDocuments;
+        string ruta;
+        int documents;
+        int document;
         int pages;
         int page;
-        string URL;
-        DateTime timeCycle;
 
         public Monitoreo()
         {
             InitializeComponent();
             Initialize();
         }
-        public Monitoreo(Estacion estacion)
+        public Monitoreo(Estacion estacion, Modelo modelo, string PID)
         {
             Estacion = estacion;
+            Modelo = modelo;
+            this.PID = PID;
 
             InitializeComponent();
             Initialize();
@@ -68,43 +74,60 @@ namespace monitor.Views
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
         }
-        private void InitializeHeader()
+        public void InitializeHeader()
         {
-            Modelo = App.modelo.NumeroModelo;
-            lblModelo.Content = Modelo;
+            lblModelo.Content = Modelo.NumeroModelo;
 
-            Routing = App.modelo.Routing;
-            lblRouting.Content = Routing;
-
-            URL = App.modelo.RutaAyudaVisual;
+            lblRouting.Content = Modelo.Routing;
+            ruta = Modelo.RutaAyudaVisual;
 
             lblEstacion.Content = Estacion.Nombre;
         }
         private void InitializeDocumentViwer()
         {
+            string powerPointFile = "";
+            xpsDocuments = new List<XpsDocument>();
             try
             {
-                string powerPointFile = URL + Estacion.Nombre + ".ppt";
+                DirectoryInfo d = new DirectoryInfo(ruta + @"\" + Estacion.Nombre); // Se abre directorio
+                FileInfo[] Files = d.GetFiles("*.ppt"); // Se obtienen los documentos  
 
-                var xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + ".ppsx";
-                var xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
+                if (Files.Count() > 0)
+                {
+                    foreach (FileInfo file in Files)
+                    {
+                        powerPointFile = ruta + Estacion.Nombre + @"\" + file;
 
-                DocumentviewPowerPoint.Document = xpsDocument.GetFixedDocumentSequence();
-                page = 1;
-                pages = DocumentviewPowerPoint.PageCount;
+                        string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + file + ".ppsx";
+                        XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
-                InitializeTimerDocumentViewer();
+                        xpsDocuments.Add(xpsDocument);
+                    }
+
+                    documents = xpsDocuments.Count();
+                    document = 1;
+
+                    ShowNewDocument();
+                    InitializeTimerDocumentViewer();
+                    return;
+                }
+
+                throw new FormatException("No se encontro ningún archivo .ppt en la ruta: " + ruta + @"\" + Estacion.Nombre);
             }
-            catch (Exception ex)
+            catch (FormatException fe)
             {
-                MessageBox.Show("Error al buscar archivo ppt - Error: " + ex.Message);
+                MessageBox.Show(fe.Message);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
             }
         }
         private void InitializeTimerDocumentViewer()
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(NextPageTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, Estacion.SegundosAyudaVisual.Value);
             dispatcherTimer.Start();
         }
         private void InitializeTimerCycle()
@@ -127,7 +150,6 @@ namespace monitor.Views
             dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
             dispatcherTimer.Start();
         }
-
         private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
         {
             //New Application Power Point 
@@ -155,13 +177,13 @@ namespace monitor.Views
         {
             AddPieza(int.Parse(state));
 
-            if (modelo != App.modelo.ModeloId)
+            if (modelo != Modelo.ModeloId)
             {
                 WarningMessageGrid.Visibility = Visibility.Visible;
                 return;
             }
 
-            WarningMessageGrid.Visibility = Visibility.Collapsed; 
+            WarningMessageGrid.Visibility = Visibility.Collapsed;
         }
         private void InSoldadoraData(int cycle, double pkpwr, double totalAbs, double energy, double weldForce)
         {
@@ -169,7 +191,7 @@ namespace monitor.Views
             {
                 ResultadoSoldadora resultadoSoldadora = new ResultadoSoldadora()
                 {
-                    ModeloId = App.modelo.ModeloId,
+                    ModeloId = Modelo.ModeloId,
                     EstacionId = Estacion.EstacionId,
                     Cycle = cycle,
                     PkPwr = pkpwr,
@@ -194,8 +216,8 @@ namespace monitor.Views
                 {
                     EstacionId = Estacion.EstacionId,
                     Estado = state,
-                    ModeloId = App.modelo.ModeloId,
-                    PID = int.Parse(App.PID),
+                    ModeloId = Modelo.ModeloId,
+                    PID = int.Parse(PID),
                     TiempoCiclo = lblTiempoCiclo.Content.ToString(),
                     FechaHora = DateTime.Now
                 };
@@ -222,7 +244,6 @@ namespace monitor.Views
                 MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
             }
         }
-
         private void NextPageTimer_Tick(object sender, EventArgs e)
         {
             if (page < pages)
@@ -232,8 +253,21 @@ namespace monitor.Views
                 return;
             }
 
-            DocumentviewPowerPoint.FirstPage();
+            if (document < documents)
+            {
+                document++;
+                ShowNewDocument();
+                return;
+            }
+
+            document = 1;
+            ShowNewDocument();
+        }
+        private void ShowNewDocument()
+        {
+            DocumentviewPowerPoint.Document = xpsDocuments[document - 1].GetFixedDocumentSequence();
             page = 1;
+            pages = DocumentviewPowerPoint.PageCount;
         }
         private void CycleTimer_Tick(object sender, EventArgs e)
         {
@@ -267,15 +301,15 @@ namespace monitor.Views
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            InPLCData("A", "1");
+            InPLCData("#", "1");
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            InPLCData(App.modelo.ModeloId, "0");
+            InPLCData(Modelo.ModeloId, "0");
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            InSoldadoraData(1,1.2,14.1,12,23.2);
+            InSoldadoraData(1, 1.2, 14.1, 12, 23.2);
         }
     }
 }

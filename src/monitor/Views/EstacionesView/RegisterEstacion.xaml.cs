@@ -66,10 +66,8 @@ namespace monitor.Views.EstacionesView
                 }
                 tbIPSoldadora.Text = Estacion.IPSoldador;
                 cbMonitor.SelectedItem = Estacion.Monitor;
-            }
-
-           
-
+                cbSegundos.Text = Estacion.SegundosAyudaVisual.ToString();
+            } 
         }
 
         private void TbEstacion_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -106,7 +104,7 @@ namespace monitor.Views.EstacionesView
                         Estacion.Soldador = cbSoldadora.IsChecked.Value ? (byte)1 : (byte)0;
                         Estacion.IPSoldador = cbSoldadora.IsChecked.Value ? tbIPSoldadora.Text : "";
                         Estacion.Monitor = cbMonitor.SelectedItem.ToString();
-
+                        Estacion.SegundosAyudaVisual = int.Parse(cbSegundos.Text);
                         _estacionRepository.UpdateEstacion(Estacion);
 
                         NavigationService.GoBack();
@@ -122,8 +120,9 @@ namespace monitor.Views.EstacionesView
                         Soldador = cbSoldadora.IsChecked.Value ? (byte)1 : (byte)0,
                         IPSoldador = tbIPSoldadora.Text,
                         Monitor = cbMonitor.SelectedItem.ToString(),
-                        Estatus = 1
-                    };
+                        Estatus = 1,
+                        SegundosAyudaVisual = int.Parse(cbSegundos.Text)
+                };
                     _estacionRepository.InsertEstacion(estacion);
 
                     NavigationService.GoBack();
@@ -157,6 +156,10 @@ namespace monitor.Views.EstacionesView
             {
                 return false;
             }
+            if(string.IsNullOrEmpty(cbSegundos.Text))
+            {
+                return false;
+            }
             return true;
         }
 
@@ -174,6 +177,17 @@ namespace monitor.Views.EstacionesView
         private void BtnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.MessageBox.Show("Activar la casilla para indicar que la estación utiliza soldadora.","Información");
+        }
+
+        private void BtnHelp2_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Indica los segundos de trasición entre una diapositiva y otra.", "Información");
+        }
+
+        private void CbSegundos_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

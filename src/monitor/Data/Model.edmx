@@ -17,6 +17,7 @@
           <Property Name="IPSoldador" Type="varchar" MaxLength="50" />
           <Property Name="Estatus" Type="int" />
           <Property Name="FechaHora" Type="datetime" />
+          <Property Name="SegundosAyudaVisual" Type="int" />
         </EntityType>
         <EntityType Name="Modelo">
           <Key>
@@ -210,6 +211,7 @@
           <Property Name="IPSoldador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estatus" Type="Int32" />
           <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="SegundosAyudaVisual" Type="Int32" />
           <NavigationProperty Name="Pieza" Relationship="MonitoreoModel.FK_PiezaEstacion" FromRole="Estacion" ToRole="Pieza" />
           <NavigationProperty Name="ResultadoSoldadora" Relationship="MonitoreoModel.FK_ResultadoSoldadoraEstacion" FromRole="Estacion" ToRole="ResultadoSoldadora" />
         </EntityType>
@@ -350,6 +352,7 @@
           <EntitySetMapping Name="Estacion">
             <EntityTypeMapping TypeName="MonitoreoModel.Estacion">
               <MappingFragment StoreEntitySet="Estacion">
+                <ScalarProperty Name="SegundosAyudaVisual" ColumnName="SegundosAyudaVisual" />
                 <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
                 <ScalarProperty Name="Estatus" ColumnName="Estatus" />
                 <ScalarProperty Name="IPSoldador" ColumnName="IPSoldador" />

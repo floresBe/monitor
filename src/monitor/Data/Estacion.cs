@@ -29,7 +29,12 @@ namespace monitor.Data
         public string IPSoldador { get; set; }
         public Nullable<int> Estatus { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }
-    
+        public Nullable<int> SegundosAyudaVisual { get; set; }
+        public string Modelo { get; set; } 
+        public bool isRunning { get; set; }
+        public string Mensaje { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pieza> Pieza { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

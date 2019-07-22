@@ -220,11 +220,11 @@
     <Compile Include="Views\EstacionesView\RegisterEstacion.xaml.cs">
       <DependentUpon>RegisterEstacion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeView\FinishModel.xaml.cs">
-      <DependentUpon>FinishModel.xaml</DependentUpon>
+    <Compile Include="Views\HomeView\ModelsView.xaml.cs">
+      <DependentUpon>ModelsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeView\StopModel.xaml.cs">
-      <DependentUpon>StopModel.xaml</DependentUpon>
+    <Compile Include="Views\HomeView\RunModel.xaml.cs">
+      <DependentUpon>RunModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
@@ -246,9 +246,6 @@
     </Compile>
     <Compile Include="Views\Monitoreo.xaml.cs">
       <DependentUpon>Monitoreo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HomeView\StartModel.xaml.cs">
-      <DependentUpon>StartModel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsuariosView\RegisterUser.xaml.cs">
       <DependentUpon>RegisterUser.xaml</DependentUpon>
@@ -279,11 +276,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HomeView\FinishModel.xaml">
+    <Page Include="Views\HomeView\ModelsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HomeView\StopModel.xaml">
+    <Page Include="Views\HomeView\RunModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,10 +309,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Monitoreo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\HomeView\StartModel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

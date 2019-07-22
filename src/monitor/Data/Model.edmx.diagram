@@ -6,11 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="786515f29fac4ceba4acb032e6e7c09f" Name="Diagram1" ZoomLevel="172">
         <EntityTypeShape EntityType="MonitoreoModel.Estacion" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MonitoreoModel.Modelo" Width="1.5" PointX="0.75" PointY="4.875" />
-        <EntityTypeShape EntityType="MonitoreoModel.Pieza" Width="1.5" PointX="6" PointY="4.875" />
-        <EntityTypeShape EntityType="MonitoreoModel.PiezasTomadas" Width="1.5" PointX="3" PointY="12.375" />
-        <EntityTypeShape EntityType="MonitoreoModel.ResultadoSoldadora" Width="1.5" PointX="3" PointY="4.625" />
-        <EntityTypeShape EntityType="MonitoreoModel.Usuario" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MonitoreoModel.Modelo" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="MonitoreoModel.Pieza" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="MonitoreoModel.PiezasTomadas" Width="1.5" PointX="3" PointY="12.5" />
+        <EntityTypeShape EntityType="MonitoreoModel.ResultadoSoldadora" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="MonitoreoModel.Usuario" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="MonitoreoModel.FK_PiezaEstacion" />
         <AssociationConnector Association="MonitoreoModel.FK_ResultadoSoldadoraEstacion" />
         <AssociationConnector Association="MonitoreoModel.FK_PiezaModelo" />
