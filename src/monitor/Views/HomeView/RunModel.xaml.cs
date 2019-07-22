@@ -28,6 +28,8 @@ namespace monitor.Views.HomeView
 
         System.Windows.Forms.Screen[] screens;
 
+        int id; 
+
         public RunModel()
         {
             InitializeComponent();
@@ -39,9 +41,34 @@ namespace monitor.Views.HomeView
             cbModelos.ItemsSource = _modeloRepository.GetModelos();
 
             screens = System.Windows.Forms.Screen.AllScreens;
+
+            if(App.id < 4)
+            {
+                id = App.id;
+                App.id++;
+            }
+            else
+            {
+                id = 0;
+                App.id = 1;
+            }
+
+            if (App.modelsRunning[id])
+            {
+                btnIniciar.Visibility = Visibility.Collapsed;
+                grdModeloCorriendo.Visibility = Visibility.Visible;
+
+                modelo = App.models[id];
+                PID = App.PIDs[id];
+
+                lblModelo.Content = App.models[id].NumeroModelo;
+                lblPID.Content = App.PIDs[id];
+
+            }
+
         }
         private void BtnIniciar_Click(object sender, RoutedEventArgs e)
-        {
+        { 
             grdIniciarModelo.Visibility = Visibility.Visible;
             btnIniciar.Visibility = Visibility.Collapsed;
         }
@@ -127,6 +154,10 @@ namespace monitor.Views.HomeView
                 App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Mensaje = "Modelo Actual:";
             }
 
+            App.modelsRunning[id] = true;
+            App.models[id] = modelo;
+            App.PIDs[id] = PID;
+
             grdEstaciones.Visibility = Visibility.Collapsed;
             grdModeloCorriendo.Visibility = Visibility.Visible;
         }
@@ -152,6 +183,9 @@ namespace monitor.Views.HomeView
                 //Reiniciar valores.
                 txtPID.Text = null;
                 cbModelos.SelectedItem = null;
+                App.modelsRunning[id] = false;
+                App.PIDs[id] = "";
+                App.models[id] = null;
 
                 estacionesItems.UnselectAll();
 
