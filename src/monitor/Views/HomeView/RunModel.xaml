@@ -19,6 +19,8 @@
                 <RowDefinition Height=".3*" />
             </Grid.RowDefinitions>
 
+         
+
             <Button x:Name="btnIniciar"  Content="Iniciar" Grid.Column="1" Grid.Row="1" Margin="0,150" Background="#72bb53" Click="BtnIniciar_Click"/>
 
             <!--Grid iniciar modelo-->
@@ -166,6 +168,9 @@
                 <Button x:Name="btnRegistrar" Grid.Row="4" Content="Registrar" Margin="0,5" Background="#72bb53" Click="BtnRegistrar_Click"></Button>
                 <Button x:Name="btnVolverInicio"  Grid.Row="5" Content="Volver al inicio" Margin="0,5" Background="#3071A9" Click="BtnVolverInicio_Click"></Button>
             </Grid>
+            
+            <!-- Cargando-->
+            <local:Loading x:Name="Loading" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
 
         </Grid>
     </Border>

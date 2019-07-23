@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,9 +31,7 @@ namespace monitor.Views
         ResultadoSoldadoraRepository ResultadoSoldadoraRepository;
 
         public Estacion Estacion { get; set; }
-        public Modelo Modelo  { get; set;  }
-
-        string PID; 
+        public Modelo Modelo { get; set; }
 
         int piezasHoraActual;
         int piezasHoraAnterior;
@@ -54,11 +53,10 @@ namespace monitor.Views
             InitializeComponent();
             Initialize();
         }
-        public Monitoreo(Estacion estacion, Modelo modelo, string PID)
+        public Monitoreo(Estacion estacion, Modelo modelo)
         {
             Estacion = estacion;
             Modelo = modelo;
-            this.PID = PID;
 
             InitializeComponent();
             Initialize();
@@ -76,6 +74,7 @@ namespace monitor.Views
         }
         public void InitializeHeader()
         {
+            lblPID.Content = Estacion.PID;
             lblModelo.Content = Modelo.NumeroModelo;
 
             lblRouting.Content = Modelo.Routing;
@@ -102,7 +101,7 @@ namespace monitor.Views
                         XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
                         xpsDocuments.Add(xpsDocument);
-                    }
+                    } 
 
                     documents = xpsDocuments.Count();
                     document = 1;
@@ -118,7 +117,7 @@ namespace monitor.Views
             {
                 MessageBox.Show(fe.Message);
             }
-            catch (Exception)
+            catch (Exception ez)
             {
                 MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
             }
@@ -152,24 +151,23 @@ namespace monitor.Views
         }
         private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
         {
-            //New Application Power Point 
-            var powerPointApp = new Application();
-            //Open the presentation (Invisible)
-            var presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
-
+            //New Application Power Point
+            Application powerPointApp;
+            Presentation presentation;
             try
             {
+                powerPointApp = new Application();
+
+                presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
                 presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to export to XPS format: " + ex);
-            }
-            finally
-            {  //Close the presentation without saving changes and quit PowerPoint
+
                 presentation.Close();
                 powerPointApp.Quit();
             }
+            catch (Exception ex)
+            {  
+                ConvertPowerPointToXps(pptFilename, xpsFilename);
+            } 
 
             return new XpsDocument(xpsFilename, FileAccess.Read);
         }
@@ -217,7 +215,7 @@ namespace monitor.Views
                     EstacionId = Estacion.EstacionId,
                     Estado = state,
                     ModeloId = Modelo.ModeloId,
-                    PID = int.Parse(PID),
+                    PID = int.Parse(Estacion.PID),
                     TiempoCiclo = lblTiempoCiclo.Content.ToString(),
                     FechaHora = DateTime.Now
                 };

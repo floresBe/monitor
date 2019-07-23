@@ -30,7 +30,8 @@ namespace monitor.Data
         public Nullable<int> Estatus { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }
         public Nullable<int> SegundosAyudaVisual { get; set; }
-        public string Modelo { get; set; } 
+        public string Modelo { get; set; }
+        public string PID { get; set; }
         public bool isRunning { get; set; }
         public string Mensaje { get; set; }
 
