@@ -8,11 +8,12 @@ using System;
 using System.Windows.Controls;
 using monitor.Fingerprint.Views;
 using monitor.Fingerprint.Views.UsuariosView;
-using System.Linq; 
+using System.Linq;
 using monitor.Views.HomeView;
 using monitor.Views.UsuariosView;
 using monitor.Views.ModelosView;
 using monitor.Views.EstacionesView;
+using System.ComponentModel;
 
 namespace monitor
 {
@@ -29,7 +30,7 @@ namespace monitor
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {  
+        {
             LoadMenus();
             LoadCurrentVersion();
         }
@@ -68,12 +69,12 @@ namespace monitor
 
         private void MenuItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Item itemSelected = (Item) menuItems.SelectedItem;
+            Item itemSelected = (Item)menuItems.SelectedItem;
             lblTitle.Content = itemSelected.Title;
 
             switch (itemSelected.Title)
             {
-                case "Inicio": 
+                case "Inicio":
                     ModelsView StartModePage = new ModelsView();
                     mainPage.NavigationService.Navigate(StartModePage);
                     break;
@@ -86,7 +87,7 @@ namespace monitor
                     reportPage.Show();
                     WindowState = WindowState.Minimized;
                     break;
-                case "Modelos": 
+                case "Modelos":
                     IndexModel Modelpage = new IndexModel();
                     mainPage.NavigationService.Navigate(Modelpage);
                     break;
@@ -98,13 +99,29 @@ namespace monitor
                     Login pageLogin = new Login();
                     Application.Current.MainWindow = pageLogin;
                     Close();
-                    pageLogin.Show(); 
+                    pageLogin.Show();
                     break;
                 default:
                     break;
             }
 
-            
+
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            MessageBoxResult result =
+                 MessageBox.Show("Al salir se cerraran todas las estacines.¿Continuar?", "Cerrar", MessageBoxButton.YesNo,MessageBoxImage.Warning);
+            if (result == MessageBoxResult.No)
+            {
+                // If user doesn't want to close, cancel closure
+                e.Cancel = true;
+            }
+
+            foreach (var estacion in App.estacionesWindows)
+            {
+                estacion.Close();
+            }            
         }
     }
     public class Item

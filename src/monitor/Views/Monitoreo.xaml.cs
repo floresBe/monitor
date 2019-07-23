@@ -31,9 +31,7 @@ namespace monitor.Views
 
         public Estacion Estacion { get; set; }
         public Modelo Modelo  { get; set;  }
-
-        string PID; 
-
+          
         int piezasHoraActual;
         int piezasHoraAnterior;
 
@@ -54,23 +52,22 @@ namespace monitor.Views
             InitializeComponent();
             Initialize();
         }
-        public Monitoreo(Estacion estacion, Modelo modelo, string PID)
+        public Monitoreo(Estacion estacion, Modelo modelo)
         {
             Estacion = estacion;
-            Modelo = modelo;
-            this.PID = PID;
+            Modelo = modelo; 
 
             InitializeComponent();
             Initialize();
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
             PiezaRepository = new PiezaRepository();
             ResultadoSoldadoraRepository = new ResultadoSoldadoraRepository();
 
             InitializeHeader();
-            InitializeDocumentViwer();
+            await InitializeDocumentViwer();
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
         }
@@ -83,7 +80,7 @@ namespace monitor.Views
 
             lblEstacion.Content = Estacion.Nombre;
         }
-        private void InitializeDocumentViwer()
+        private async Task InitializeDocumentViwer()
         {
             string powerPointFile = "";
             xpsDocuments = new List<XpsDocument>();
@@ -101,9 +98,10 @@ namespace monitor.Views
                         string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + file + ".ppsx";
                         XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
-                        xpsDocuments.Add(xpsDocument);
+                        xpsDocuments.Add(xpsDocument); 
                     }
 
+                    await Task.Delay(100);
                     documents = xpsDocuments.Count();
                     document = 1;
 
@@ -118,7 +116,7 @@ namespace monitor.Views
             {
                 MessageBox.Show(fe.Message);
             }
-            catch (Exception)
+            catch (Exception ez)
             {
                 MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
             }
@@ -217,7 +215,7 @@ namespace monitor.Views
                     EstacionId = Estacion.EstacionId,
                     Estado = state,
                     ModeloId = Modelo.ModeloId,
-                    PID = int.Parse(PID),
+                    PID = int.Parse(Estacion.PID),
                     TiempoCiclo = lblTiempoCiclo.Content.ToString(),
                     FechaHora = DateTime.Now
                 };
