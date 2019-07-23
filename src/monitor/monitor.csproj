@@ -155,6 +155,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -220,6 +223,9 @@
     <Compile Include="Views\EstacionesView\RegisterEstacion.xaml.cs">
       <DependentUpon>RegisterEstacion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HomeView\Loading.xaml.cs">
+      <DependentUpon>Loading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView\ModelsView.xaml.cs">
       <DependentUpon>ModelsView.xaml</DependentUpon>
     </Compile>
@@ -273,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EstacionesView\RegisterEstacion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -357,6 +367,7 @@
     </Resource>
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\information.png" />
+    <Resource Include="Assets\loading.gif" />
     <Content Include="Data\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>
