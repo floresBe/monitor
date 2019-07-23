@@ -32,6 +32,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -39,13 +40,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="Modelo" Foreground="White" FontSize="45" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <Label Content="Routing" Grid.Column="1" Foreground="White" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <Label Content="Estación" Grid.Column="2" Foreground="White" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-          
-            <Label Name="lblModelo" Content="Modelo" Grid.Row="1" Foreground="LightGray" FontSize="45" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Label Name="lblRouting" Content="Routing" Grid.Row="1" Grid.Column="1" Foreground="LightGray" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Label Name="lblEstacion" Content="Estación" Grid.Row="1" Grid.Column="2" Foreground="LightGray" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Content="PID" Foreground="White" FontSize="45" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="Modelo"  Grid.Column="1" Foreground="White" FontSize="45" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="Routing" Grid.Column="2" Foreground="White" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="Estación" Grid.Column="3" Foreground="White" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+            <Label Name="lblPID" Content="PID" Grid.Row="1" Foreground="LightGray" FontSize="45" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblModelo" Content="Modelo" Grid.Row="1" Grid.Column="1" Foreground="LightGray" FontSize="45" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblRouting" Content="Routing" Grid.Row="1" Grid.Column="2" Foreground="LightGray" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblEstacion" Content="Estación" Grid.Row="1" Grid.Column="3" Foreground="LightGray" FontSize="45"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Grid>
 
         <Grid Grid.Row="1">

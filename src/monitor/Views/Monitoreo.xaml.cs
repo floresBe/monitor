@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,8 +31,8 @@ namespace monitor.Views
         ResultadoSoldadoraRepository ResultadoSoldadoraRepository;
 
         public Estacion Estacion { get; set; }
-        public Modelo Modelo  { get; set;  }
-          
+        public Modelo Modelo { get; set; }
+
         int piezasHoraActual;
         int piezasHoraAnterior;
 
@@ -55,24 +56,25 @@ namespace monitor.Views
         public Monitoreo(Estacion estacion, Modelo modelo)
         {
             Estacion = estacion;
-            Modelo = modelo; 
+            Modelo = modelo;
 
             InitializeComponent();
             Initialize();
         }
 
-        private async void Initialize()
+        private void Initialize()
         {
             PiezaRepository = new PiezaRepository();
             ResultadoSoldadoraRepository = new ResultadoSoldadoraRepository();
 
             InitializeHeader();
-            await InitializeDocumentViwer();
+            InitializeDocumentViwer();
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
         }
         public void InitializeHeader()
         {
+            lblPID.Content = Estacion.PID;
             lblModelo.Content = Modelo.NumeroModelo;
 
             lblRouting.Content = Modelo.Routing;
@@ -80,7 +82,7 @@ namespace monitor.Views
 
             lblEstacion.Content = Estacion.Nombre;
         }
-        private async Task InitializeDocumentViwer()
+        private void InitializeDocumentViwer()
         {
             string powerPointFile = "";
             xpsDocuments = new List<XpsDocument>();
@@ -98,10 +100,9 @@ namespace monitor.Views
                         string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + file + ".ppsx";
                         XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
 
-                        xpsDocuments.Add(xpsDocument); 
-                    }
+                        xpsDocuments.Add(xpsDocument);
+                    } 
 
-                    await Task.Delay(100);
                     documents = xpsDocuments.Count();
                     document = 1;
 
@@ -150,24 +151,23 @@ namespace monitor.Views
         }
         private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
         {
-            //New Application Power Point 
-            var powerPointApp = new Application();
-            //Open the presentation (Invisible)
-            var presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
-
+            //New Application Power Point
+            Application powerPointApp;
+            Presentation presentation;
             try
             {
+                powerPointApp = new Application();
+
+                presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
                 presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to export to XPS format: " + ex);
-            }
-            finally
-            {  //Close the presentation without saving changes and quit PowerPoint
+
                 presentation.Close();
                 powerPointApp.Quit();
             }
+            catch (Exception ex)
+            {  
+                ConvertPowerPointToXps(pptFilename, xpsFilename);
+            } 
 
             return new XpsDocument(xpsFilename, FileAccess.Read);
         }

@@ -111,7 +111,7 @@ namespace monitor
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             MessageBoxResult result =
-                 MessageBox.Show("Al salir se cerraran todas las estacines.¿Continuar?", "Cerrar", MessageBoxButton.YesNo,MessageBoxImage.Warning);
+                 MessageBox.Show("Al salir se cerraran todas las estaciones. ¿Continuar?", "Cerrar", MessageBoxButton.YesNo,MessageBoxImage.Warning);
             if (result == MessageBoxResult.No)
             {
                 // If user doesn't want to close, cancel closure
