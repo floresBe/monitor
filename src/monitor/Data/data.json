@@ -14,7 +14,7 @@
   {
     "Title": "Reportes",
     "Icon": "Assets/reporting.png",
-    "Nivel": 2
+    "Nivel": 0
   },
 
   {
@@ -26,7 +26,7 @@
   {
     "Title": "Usuarios",
     "Icon": "Assets/user.png",
-    "Nivel": 1
+    "Nivel": 0
   },
 
   {

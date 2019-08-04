@@ -19,7 +19,7 @@
                 <RowDefinition Height=".3*" />
             </Grid.RowDefinitions>
 
-         
+
 
             <Button x:Name="btnIniciar"  Content="Iniciar" Grid.Column="1" Grid.Row="1" Margin="0,150" Background="#72bb53" Click="BtnIniciar_Click"/>
 
@@ -45,7 +45,7 @@
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/> 
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
                     <Label Content="PID" FontSize="25" VerticalAlignment="Bottom" />
@@ -58,33 +58,35 @@
             </Grid>
 
             <!--Lista de estaciones-->
-            <Grid x:Name="grdEstaciones" Grid.Column="1" Grid.Row="1" Visibility="Collapsed" >
+            <Grid x:Name="grdEstaciones" Grid.Column="1" Grid.Row="1"  Visibility="Collapsed">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                
+
                 <Label x:Name="lblEstaciones" VerticalAlignment="Top" FontSize="20" Content="Estaciones activas" />
-
-                <ListView Grid.Row="1" x:Name="estacionesItems" SelectionMode="Multiple"  Background="Transparent" SelectionChanged="EstacionesItems_SelectionChanged" BorderThickness="0">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Content="{Binding Nombre}" Margin="5,10,10,10" FontSize="20"/>
-                                <Label Grid.Column="1" Content="{Binding Mensaje}" Margin="5,10,10,10" FontSize="20"/>
-                                <Label Grid.Column="2" Content="{Binding Modelo}" Margin="5,10,10,10"  FontSize="20"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
+               
+                    <Grid Grid.Row="1">
+                        <ListView  x:Name="estacionesItems" Height="120" SelectionMode="Multiple" Background="Transparent" SelectionChanged="EstacionesItems_SelectionChanged" BorderThickness="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="{Binding Nombre}" Margin="5,10,10,10" FontSize="20"/>
+                                        <Label Grid.Column="1" Content="{Binding Mensaje}" Margin="5,10,10,10" FontSize="20"/>
+                                        <Label Grid.Column="2" Content="{Binding Modelo}" Margin="5,10,10,10"  FontSize="20"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+              
                 <Button x:Name="btnIniciarModelo" Grid.Row="2" Content="Iniciar" Margin="0,5" Background="#72bb53" Click="BtnIniciarModelo_Click"/>
                 <Button x:Name="btnCancelar2" Grid.Row="3" Content="Cancelar" Margin="0,5" Background="#ff3823" Click="BtnCancelar2_Click"></Button>
 
@@ -122,7 +124,7 @@
 
             </Grid>
 
-            <!-- info terminar modelo--> 
+            <!-- info terminar modelo-->
             <Grid x:Name="grdPiezasTomadas" Visibility="Collapsed" Grid.Column="1" Grid.Row="1"  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -168,9 +170,9 @@
                 <Button x:Name="btnRegistrar" Grid.Row="4" Content="Registrar" Margin="0,5" Background="#72bb53" Click="BtnRegistrar_Click"></Button>
                 <Button x:Name="btnVolverInicio"  Grid.Row="5" Content="Volver al inicio" Margin="0,5" Background="#3071A9" Click="BtnVolverInicio_Click"></Button>
             </Grid>
-            
+
             <!-- Cargando-->
-            <local:Loading x:Name="Loading" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+            <local:Loading x:Name="Loading" Visibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
 
         </Grid>
     </Border>

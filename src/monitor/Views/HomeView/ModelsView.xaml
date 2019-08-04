@@ -18,11 +18,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <local:RunModel/>
-        <local:RunModel Grid.Column="1"/>
-        <local:RunModel Grid.Row="1" />
-        <local:RunModel Grid.Row="1" Grid.Column="1" /> 
-         
+        <ScrollViewer>
+            <local:RunModel/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1">
+            <local:RunModel />
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1">
+            <local:RunModel  />
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <local:RunModel  />
+        </ScrollViewer>
+
 
     </Grid>
 </Page>

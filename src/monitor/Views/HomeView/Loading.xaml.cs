@@ -24,5 +24,9 @@ namespace monitor.Views.HomeView
         {
             InitializeComponent();
         }
+        public void Procesando(string Mensaje)
+        {
+            lblProceso.Content = Mensaje;
+        }
     }
 }

@@ -172,9 +172,16 @@ namespace monitor.Views.ModelosView
 
         private string GetModeloId()
         {
+            char lastId;
+
             string modeloId = "";
             Modelo lastModel = _modeloRepository.GetLastModelo();
-            char lastId = lastModel.ModeloId[lastModel.ModeloId.Length - 1];
+            if(lastModel == null)
+            {
+                return "A"; 
+            }
+
+            lastId = lastModel.ModeloId[lastModel.ModeloId.Length - 1];
             char newId = GetLetter(lastId);
 
             if (lastId == 'Z')

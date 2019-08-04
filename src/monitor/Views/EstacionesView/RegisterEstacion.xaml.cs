@@ -106,7 +106,7 @@ namespace monitor.Views.EstacionesView
                         Estacion.Monitor = cbMonitor.SelectedItem.ToString();
                         Estacion.SegundosAyudaVisual = int.Parse(cbSegundos.Text);
                         _estacionRepository.UpdateEstacion(Estacion);
-
+                        
                         NavigationService.GoBack();
                         return;
                     }
@@ -122,7 +122,8 @@ namespace monitor.Views.EstacionesView
                         Monitor = cbMonitor.SelectedItem.ToString(),
                         Estatus = 1,
                         SegundosAyudaVisual = int.Parse(cbSegundos.Text)
-                };
+                    };
+
                     _estacionRepository.InsertEstacion(estacion);
 
                     NavigationService.GoBack();
@@ -144,18 +145,18 @@ namespace monitor.Views.EstacionesView
             {
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(tbIPPLC.Text))
-            {
-                return false;
-            }
+            //if (string.IsNullOrWhiteSpace(tbIPPLC.Text))
+            //{
+            //    return false;
+            //}
             if (cbMonitor.SelectedItem == null)
             {
                 return false;
             }
-            if (cbSoldadora.IsChecked.Value && string.IsNullOrWhiteSpace(tbIPSoldadora.Text))
-            {
-                return false;
-            }
+            //if (cbSoldadora.IsChecked.Value && string.IsNullOrWhiteSpace(tbIPSoldadora.Text))
+            //{
+            //    return false;
+            //}
             if(string.IsNullOrEmpty(cbSegundos.Text))
             {
                 return false;

@@ -28,7 +28,7 @@ namespace monitor.Views.HomeView
 
         System.Windows.Forms.Screen[] screens;
 
-        int id; 
+        int id;
 
         public RunModel()
         {
@@ -39,10 +39,10 @@ namespace monitor.Views.HomeView
         {
             _modeloRepository = new ModeloRepository();
             cbModelos.ItemsSource = _modeloRepository.GetModelos();
+            
+            CargarEstacionesDisponibles();
 
-            screens = System.Windows.Forms.Screen.AllScreens;
-
-            if(App.id < 4)
+            if (App.id < 4)
             {
                 id = App.id;
                 App.id++;
@@ -62,15 +62,17 @@ namespace monitor.Views.HomeView
                 PID = App.PIDs[id];
 
                 lblModelo.Content = App.models[id].NumeroModelo;
-                lblPID.Content = App.PIDs[id]; 
+                lblPID.Content = App.PIDs[id];
             }
 
         }
+        //Pagina 1
         private void BtnIniciar_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             grdIniciarModelo.Visibility = Visibility.Visible;
             btnIniciar.Visibility = Visibility.Collapsed;
         }
+        //Pagina 2
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex("[^0-9]+");
@@ -97,8 +99,15 @@ namespace monitor.Views.HomeView
             lblModelo.Content = modelo.NumeroModelo;
 
             grdIniciarModelo.Visibility = Visibility.Collapsed;
-            StartMonitoringAsync();
+            grdEstaciones.Visibility = Visibility.Visible;
+
         }
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            grdIniciarModelo.Visibility = Visibility.Collapsed;
+            btnIniciar.Visibility = Visibility.Visible;
+        }
+        //Pagina 3
         private void EstacionesItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
@@ -116,23 +125,29 @@ namespace monitor.Views.HomeView
             }
         }
         private async void BtnIniciarModelo_Click(object sender, RoutedEventArgs e)
-        {
-            Loading.Visibility = Visibility.Visible;
-            await Task.Delay(100);
-
+        { 
             if (estacionesItems.SelectedItems.Count == 0)
             {
                 MessageBox.Show("No selecciono ninguna estación.", "Atención");
                 return;
             }
 
-            AbrirEstaciones();
+            Loading.Visibility = Visibility.Visible;
+            await Task.Delay(100);
+
+            await AbrirEstaciones();
 
             grdEstaciones.Visibility = Visibility.Collapsed;
             grdModeloCorriendo.Visibility = Visibility.Visible;
-            await Task.Delay(100);
+              
             Loading.Visibility = Visibility.Collapsed;
         }
+        private void BtnCancelar2_Click(object sender, RoutedEventArgs e)
+        {
+            grdEstaciones.Visibility = Visibility.Collapsed;
+            grdIniciarModelo.Visibility = Visibility.Visible;
+        }
+        //Pagina 4
         private void BtnDetener_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult boxButton = MessageBox.Show("¿Seguro que desea detener el proceso del PID: " + PID + "?", "Detener proceso", MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -165,6 +180,7 @@ namespace monitor.Views.HomeView
                 grdPiezasTomadas.Visibility = Visibility.Visible;
             }
         }
+        //Pagina 5
         private void BtnRegistrar_Click(object sender, RoutedEventArgs e)
         {
             bool todosCero = true;
@@ -203,7 +219,7 @@ namespace monitor.Views.HomeView
                     return;
                 }
 
-                RegistrarPiezas();
+                RegistrarPiezasTomadas();
 
                 grdPiezasTomadas.Visibility = Visibility.Collapsed;
                 btnIniciar.Visibility = Visibility.Visible;
@@ -215,19 +231,11 @@ namespace monitor.Views.HomeView
             grdPiezasTomadas.Visibility = Visibility.Collapsed;
             btnIniciar.Visibility = Visibility.Visible;
         } 
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+       
+        private void CargarEstacionesDisponibles()
         {
-            grdIniciarModelo.Visibility = Visibility.Collapsed;
-            btnIniciar.Visibility = Visibility.Visible;
-        }
+            screens = System.Windows.Forms.Screen.AllScreens;
 
-        private void BtnCancelar2_Click(object sender, RoutedEventArgs e)
-        {
-            grdEstaciones.Visibility = Visibility.Collapsed;
-            grdIniciarModelo.Visibility = Visibility.Visible;
-        }
-        private void StartMonitoringAsync()
-        {
             foreach (var estacion in App.estaciones)
             {
                 var screen = screens.Where(w => w.DeviceName == estacion.Monitor).FirstOrDefault();
@@ -237,10 +245,71 @@ namespace monitor.Views.HomeView
                     estacion.isRunning = true;
                 }
             }
+
             estacionesItems.ItemsSource = App.estaciones.Where(a => a.isRunning);
-            grdEstaciones.Visibility = Visibility.Visible;
+          
         }
-        private void RegistrarPiezas()
+        private async Task AbrirEstaciones()
+        {
+            Loading.Procesando("Abriendo estaciones...");
+            await Task.Delay(1000);
+            foreach (var est in estacionesItems.SelectedItems)
+            {
+                Estacion estacion = (Estacion)est; 
+
+                //Verificar si la ventana de la estacion se encuentra activa.
+                Loading.Procesando($"Verificando estación {estacion.Nombre} ...");
+                await Task.Delay(100);
+
+                if (App.estacionesWindows.Any(a => a.Estacion.EstacionId == estacion.EstacionId))
+                {
+                    //Cerrar y eliminar estacion activa.
+                    Loading.Procesando($"Cerrando estación {estacion.Nombre} ...");
+                    await Task.Delay(100);
+                    App.estacionesWindows.Where(a => a.Estacion.EstacionId == estacion.EstacionId).FirstOrDefault().Close();
+                    App.estacionesWindows.Remove(App.estacionesWindows.Where(a => a.Estacion.EstacionId == estacion.EstacionId).FirstOrDefault());
+                }
+
+                //Buscar monitor indicado.
+                Loading.Procesando($"Buscando monitor {estacion.Monitor} ...");
+                await Task.Delay(100);
+
+                var screen = screens.Where(w => w.DeviceName == estacion.Monitor).FirstOrDefault();
+                estacion.PID = PID;
+
+                //Crear pantalla de monitoreo.
+                Loading.Procesando($"Abriendo estación {estacion.Nombre} ...");
+                await Task.Delay(100);
+
+                Monitoreo monitoreoWindow = new Monitoreo(estacion, modelo);
+
+                monitoreoWindow.Left = screen.WorkingArea.Left;
+                monitoreoWindow.Top = screen.WorkingArea.Top;
+                monitoreoWindow.Width = screen.Bounds.Width;
+                monitoreoWindow.Height = screen.Bounds.Height;
+                monitoreoWindow.WindowState = WindowState.Normal;
+                monitoreoWindow.Show();
+
+                //Crear pantalla de monitoreo.
+                Loading.Procesando($"Cargando ayudas visuales en estación {estacion.Nombre}...");
+                await Task.Delay(100);
+
+                monitoreoWindow.InitializeDocumentViewer();
+                App.estacionesWindows.Add(monitoreoWindow);
+
+                //Indicar que la estación esta corriendo el modelo seleccionado. 
+                App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Modelo = modelo.NumeroModelo;
+                App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Mensaje = "Modelo Actual:";
+            }
+
+            Loading.Procesando($"Listo!");
+            await Task.Delay(1000);
+
+            App.modelsRunning[id] = true;
+            App.models[id] = modelo;
+            App.PIDs[id] = PID; 
+        }
+        private void RegistrarPiezasTomadas()
         {
             try
             {
@@ -271,43 +340,7 @@ namespace monitor.Views.HomeView
                 MessageBox.Show("Ocurrio un error al registrar piezas. - Error:" + ex.Message);
             }
         }
-        private async void AbrirEstaciones()
-        {
-            foreach (var est in estacionesItems.SelectedItems)
-            {
-                Estacion estacion = (Estacion)est;
-
-                //Verificar si la ventana de la estacion se encuentra activa.
-                if (App.estacionesWindows.Any(a => a.Estacion.EstacionId == estacion.EstacionId))
-                {
-                    //Cerrar y eliminar estacion activa.
-                    App.estacionesWindows.Where(a => a.Estacion.EstacionId == estacion.EstacionId).FirstOrDefault().Close();
-                    App.estacionesWindows.Remove(App.estacionesWindows.Where(a => a.Estacion.EstacionId == estacion.EstacionId).FirstOrDefault());
-                }
-
-                //Buscar monitor indicado.
-                var screen = screens.Where(w => w.DeviceName == estacion.Monitor).FirstOrDefault();
-                estacion.PID = PID;
-
-                //Crear pantalla de monitoreo.
-                Monitoreo monitoreoWindow = new Monitoreo(estacion, modelo);
-                monitoreoWindow.Left = screen.WorkingArea.Left;
-                monitoreoWindow.Top = screen.WorkingArea.Top;
-                monitoreoWindow.Width = screen.Bounds.Width;
-                monitoreoWindow.Height = screen.Bounds.Height;
-                monitoreoWindow.WindowState = WindowState.Normal;
-                monitoreoWindow.Show();
-                App.estacionesWindows.Add(monitoreoWindow);
-
-                //Indicar que la estación esta corriendo el modelo seleccionado. 
-                App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Modelo = modelo.NumeroModelo;
-                App.estaciones.Where(w => w.EstacionId == estacion.EstacionId).FirstOrDefault().Mensaje = "Modelo Actual:";
-            }
-
-            App.modelsRunning[id] = true;
-            App.models[id] = modelo;
-            App.PIDs[id] = PID;
-        }
+       
 
     }
 }

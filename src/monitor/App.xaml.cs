@@ -14,7 +14,7 @@ namespace monitor
     /// </summary>
     public partial class App : Application
     {
-        private EstacionRepository _estacionRepository;
+        private static EstacionRepository _estacionRepository = new EstacionRepository();
 
         public static Usuario usuario;   
 
@@ -29,10 +29,7 @@ namespace monitor
 
 
         public App()
-        {
-            _estacionRepository = new EstacionRepository();
-            estaciones = _estacionRepository.GetEstaciones();
-
+        {  
             id = 0;
 
             modelsRunning.Add(0, false);
@@ -58,5 +55,10 @@ namespace monitor
                 TipoEmpleado = 1
             };
         }
+
+        public static void CargarEstaciones()
+        {
+            estaciones = _estacionRepository.GetEstaciones();
+        } 
     }
 }

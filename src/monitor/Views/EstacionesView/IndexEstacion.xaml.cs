@@ -31,8 +31,10 @@ namespace monitor.Views.EstacionesView
         private void IndexEstacion_Loaded(object sender, RoutedEventArgs e)
         {
             _estacionRepository = new EstacionRepository();
-            dataGridEstacion.ItemsSource = _estacionRepository.GetEstaciones();
+            App.CargarEstaciones();
+            dataGridEstacion.ItemsSource = App.estaciones;
         }
+         
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {

@@ -12,7 +12,8 @@
         <Grid x:Name="grdCargando"  Grid.ColumnSpan="3" Grid.RowSpan="3" Background="LightGray" >
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Label Content="Cargando" FontSize="50"    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Image gif:ImageBehavior.AnimatedSource ="/monitor;component/Assets/loading.gif" Width="100"/>
+                <Label x:Name="lblProceso" Content="Cargando" FontSize="20"    VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Image gif:ImageBehavior.AnimatedSource ="/monitor;component/Assets/loading.gif" Width="100" Visibility="Collapsed"/>
             </StackPanel>
         </Grid>
     </Grid>

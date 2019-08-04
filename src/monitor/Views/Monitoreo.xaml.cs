@@ -27,8 +27,8 @@ namespace monitor.Views
     /// </summary>
     public partial class Monitoreo : Window
     {
-        PiezaRepository PiezaRepository;
-        ResultadoSoldadoraRepository ResultadoSoldadoraRepository;
+        PiezaRepository PiezaRepository = new PiezaRepository();
+        ResultadoSoldadoraRepository ResultadoSoldadoraRepository = new ResultadoSoldadoraRepository();
 
         public Estacion Estacion { get; set; }
         public Modelo Modelo { get; set; }
@@ -48,6 +48,7 @@ namespace monitor.Views
         int pages;
         int page;
 
+        Application powerPointApp = new Application();
         public Monitoreo()
         {
             InitializeComponent();
@@ -60,19 +61,15 @@ namespace monitor.Views
 
             InitializeComponent();
             Initialize();
-        }
+;        }
 
         private void Initialize()
-        {
-            PiezaRepository = new PiezaRepository();
-            ResultadoSoldadoraRepository = new ResultadoSoldadoraRepository();
-
+        {  
             InitializeHeader();
-            InitializeDocumentViwer();
             InitializeTimerCycle();
-            InitializeTimerCurrentTime();
+            InitializeTimerCurrentTime(); 
         }
-        public void InitializeHeader()
+        private void InitializeHeader()
         {
             lblPID.Content = Estacion.PID;
             lblModelo.Content = Modelo.NumeroModelo;
@@ -82,7 +79,7 @@ namespace monitor.Views
 
             lblEstacion.Content = Estacion.Nombre;
         }
-        private void InitializeDocumentViwer()
+        public async void InitializeDocumentViewer()
         {
             string powerPointFile = "";
             xpsDocuments = new List<XpsDocument>();
@@ -98,10 +95,12 @@ namespace monitor.Views
                         powerPointFile = ruta + Estacion.Nombre + @"\" + file;
 
                         string xpsFile = System.IO.Path.GetTempPath() + Guid.NewGuid() + Estacion.Nombre + file + ".ppsx";
-                        XpsDocument xpsDocument = ConvertPowerPointToXps(powerPointFile, xpsFile);
+                        XpsDocument xpsDocument = await ConvertPowerPointToXps(powerPointFile, xpsFile);
 
                         xpsDocuments.Add(xpsDocument);
-                    } 
+                    }
+
+                    powerPointApp.Quit();
 
                     documents = xpsDocuments.Count();
                     document = 1;
@@ -119,7 +118,7 @@ namespace monitor.Views
             }
             catch (Exception ez)
             {
-                MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
+                //MessageBox.Show("No se pudo abrir el archivo: " + powerPointFile);
             }
         }
         private void InitializeTimerDocumentViewer()
@@ -149,25 +148,21 @@ namespace monitor.Views
             dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
             dispatcherTimer.Start();
         }
-        private static XpsDocument ConvertPowerPointToXps(string pptFilename, string xpsFilename)
-        {
-            //New Application Power Point
-            Application powerPointApp;
+        private async Task<XpsDocument> ConvertPowerPointToXps(string pptFilename, string xpsFilename)
+        { 
             Presentation presentation;
             try
             {
-                powerPointApp = new Application();
 
                 presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
-                presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS, PpFixedFormatIntent.ppFixedFormatIntentScreen, MsoTriState.msoCTrue);
-
+                presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS);
                 presentation.Close();
-                powerPointApp.Quit();
+
             }
             catch (Exception ex)
-            {  
-                ConvertPowerPointToXps(pptFilename, xpsFilename);
-            } 
+            {
+               await ConvertPowerPointToXps(pptFilename, xpsFilename);
+            }
 
             return new XpsDocument(xpsFilename, FileAccess.Read);
         }

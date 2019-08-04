@@ -95,17 +95,17 @@
                     </Button>
                 </Grid>
                 <TextBox FontSize="18" Name="cbSegundos" PreviewTextInput="CbSegundos_PreviewTextInput" Style="{StaticResource placeHolder}" Tag="Segundos transición"/>
-                <Label Content="IP PLC" FontSize="18"></Label>
-                <TextBox Name="tbIPPLC" PreviewTextInput="TbIPPLC_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="IP PLC" FontSize="18"/>
+                <Label Content="IP PLC" FontSize="18" Visibility="Collapsed"></Label>
+                <TextBox Name="tbIPPLC"  Visibility="Collapsed" PreviewTextInput="TbIPPLC_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="IP PLC" FontSize="18"/>
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="IP Soldadora" FontSize="18"></Label>
-                    <CheckBox x:Name="cbSoldadora" Unchecked="CbSoldadora_Checked" Checked="CbSoldadora_Checked" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button x:Name="BtnHelp" Grid.Column="2" Click="BtnHelp_Click" Width="20" Height="20" Margin="5" Style="{DynamicResource fingerprintButtonStyle}" >
+                    <Label Content="IP Soldadora" FontSize="18"  Visibility="Collapsed"></Label>
+                    <CheckBox x:Name="cbSoldadora"  Visibility="Collapsed" Unchecked="CbSoldadora_Checked" Checked="CbSoldadora_Checked" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button x:Name="BtnHelp"  Visibility="Collapsed" Grid.Column="2" Click="BtnHelp_Click" Width="20" Height="20" Margin="5" Style="{DynamicResource fingerprintButtonStyle}" >
                         <Button.Background>
                             <ImageBrush ImageSource="/monitor;component/Assets/information.png" Stretch="Uniform"/>
                         </Button.Background>
