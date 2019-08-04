@@ -54,7 +54,8 @@ namespace monitor.Views.EstacionesView
                     if (_estacionRepository.DeleteEstacion((Estacion)dataGridEstacion.SelectedItem))
                     {
                         dataGridEstacion.ItemsSource = null;
-                        dataGridEstacion.ItemsSource = _estacionRepository.GetEstaciones();
+                        App.CargarEstaciones();
+                        dataGridEstacion.ItemsSource = App.estaciones;
                     }
                 }
             }

@@ -27,8 +27,8 @@ namespace monitor.Data
                 return estaciones; 
             }
             catch (Exception ex)
-            { 
-                return null;
+            {
+                throw ex;
             }
         }
 

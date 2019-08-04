@@ -21,33 +21,20 @@ namespace monitor
         public static List<Estacion> estaciones;
         public static List<Monitoreo> estacionesWindows = new List<Monitoreo>();
 
-        public static Dictionary<int,bool> modelsRunning = new Dictionary<int,bool>();
-        public static Dictionary<int, Modelo> models = new Dictionary<int, Modelo>();
-        public static Dictionary<int, string> PIDs = new Dictionary<int, string>();
-
+        public static List<ModelRunning> modelRunnings = new List<ModelRunning>();  
         public static int id;
 
 
         public App()
-        {  
+        {
+            CargarEstaciones();
+
             id = 0;
-
-            modelsRunning.Add(0, false);
-            modelsRunning.Add(1, false);
-            modelsRunning.Add(2, false);
-            modelsRunning.Add(3, false);
-
-            models.Add(0, null);
-            models.Add(1, null);
-            models.Add(2, null);
-            models.Add(3, null);
-
-            PIDs.Add(0, "");
-            PIDs.Add(1, "");
-            PIDs.Add(2, "");
-            PIDs.Add(3, "");
-
-
+            modelRunnings.Add(new ModelRunning { RunId = 0, isRunning = false, model = null, PID = "" });
+            modelRunnings.Add(new ModelRunning { RunId = 1, isRunning = false, model = null, PID = "" });
+            modelRunnings.Add(new ModelRunning { RunId = 2, isRunning = false, model = null, PID = "" });
+            modelRunnings.Add(new ModelRunning { RunId = 3, isRunning = false, model = null, PID = "" });
+  
             usuario = new Usuario()
             {
                 Activo = 1,
@@ -58,7 +45,14 @@ namespace monitor
 
         public static void CargarEstaciones()
         {
-            estaciones = _estacionRepository.GetEstaciones();
+            try
+            {
+                estaciones = _estacionRepository.GetEstaciones();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al conectar con el servidor. Revise la cadena de conexión.");
+            }
         } 
     }
 }

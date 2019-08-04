@@ -8,15 +8,15 @@
         Title="Monitoreo" Height="450" Width="800" WindowState="Maximized" WindowStartupLocation="Manual">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/> 
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!--Encabezado-->
         <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="2">
             <Border.Effect>
@@ -40,15 +40,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="PID" Foreground="White" FontSize="35" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <Label Content="Modelo"  Grid.Column="1" Foreground="White" FontSize="35" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <Label Content="Routing" Grid.Column="2" Foreground="White" FontSize="35"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <Label Content="Estación" Grid.Column="3" Foreground="White" FontSize="35"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="PID" Foreground="White" FontSize="15" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="Modelo"  Grid.Column="1" Foreground="White" FontSize="15" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="Routing" Grid.Column="2" Foreground="White" FontSize="15"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Label Content="Estación" Grid.Column="3" Foreground="White" FontSize="15"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
-            <Label Name="lblPID" Content="PID" Grid.Row="1" Foreground="LightGray" FontSize="35" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Label Name="lblModelo" Content="Modelo" Grid.Row="1" Grid.Column="1" Foreground="LightGray" FontSize="35" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Label Name="lblRouting" Content="Routing" Grid.Row="1" Grid.Column="2" Foreground="LightGray" FontSize="35"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Label Name="lblEstacion" Content="Estación" Grid.Row="1" Grid.Column="3" Foreground="LightGray" FontSize="35"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblPID" Content="PID" Grid.Row="1" Foreground="LightGray" FontSize="15" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblModelo" Content="Modelo" Grid.Row="1" Grid.Column="1" Foreground="LightGray" FontSize="15" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblRouting" Content="Routing" Grid.Row="1" Grid.Column="2" Foreground="LightGray" FontSize="15"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Name="lblEstacion" Content="Estación" Grid.Row="1" Grid.Column="3" Foreground="LightGray" FontSize="15"  VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -69,7 +69,7 @@
                 <Image Grid.Column="2" Height="50" Width="50" Source="/monitor;component/Assets/warning.png"/>
             </Grid>
             <!--Presentacion-->
-            <DocumentViewer Grid.Row="1" Margin="5" Name="DocumentviewPowerPoint" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent"  ShowPageBorders="False" VerticalAlignment="Center" HorizontalAlignment="Center"   DocumentViewerBase.IsMasterPage="False">
+            <DocumentViewer Zoom="75" Grid.Row="1" Margin="60" Name="DocumentviewPowerPoint"  ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent"  ShowPageBorders="False" VerticalAlignment="Center" HorizontalAlignment="Center"   >
                 <DocumentViewer.Resources>
                     <!-- Hides the search box-->
                     <Style TargetType="ContentControl">
@@ -78,40 +78,44 @@
                     <!-- Hides the toolbar -->
                     <Style TargetType="ToolBar">
                         <Setter Property="Visibility" Value="Collapsed" />
-                    </Style> 
+                    </Style>
                 </DocumentViewer.Resources>
             </DocumentViewer>
         </Grid>
         <!--Datos-->
-        <Grid Grid.Row="1" Grid.Column="2" Margin="5,40,45,35">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="15" VerticalAlignment="Center" >
 
-            <Label Content="Tiempo de ciclo" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="1" Content="Piezas hora actual" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="2" Content="Piezas hora anterior" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="3" Content="Buenas hora actual" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="4" Content="Malas hora actual" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"/>
 
-            <Label Name="lblTiempoCiclo" Grid.Column="1" Content="00:00:00" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" HorizontalContentAlignment="Right"/>
-            <Label Name="lblPiezasHoraActual" Grid.Column="1" Grid.Row="1" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" HorizontalContentAlignment="Right"/>
-            <Label Name="lblPiezasHoraAnterior" Grid.Column="1" Grid.Row="2" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" HorizontalContentAlignment="Right"/>
-            <Label Name="lblBuenasHoraActual" Grid.Column="1" Grid.Row="3" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" HorizontalContentAlignment="Right"/>
-            <Label Name="lblMalasHoraActual" Grid.Column="1" Grid.Row="4" Content="0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" HorizontalContentAlignment="Right"/>
-       
-        </Grid>
+            <StackPanel Margin="10">
+                <Label Content="Tiempo de ciclo" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25" />
+                <Label Name="lblTiempoCiclo" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Right"/>
+            </StackPanel>
 
-        <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
-          
+            <StackPanel Margin="10">
+                <Label Grid.Row="1" Content="Piezas hora actual" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25"/>
+                <Label Name="lblPiezasHoraActual"  Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Right"/>
+            </StackPanel>
+
+            <StackPanel Margin="10">
+                <Label Grid.Row="2" Content="Piezas hora anterior" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25"/>
+                <Label Name="lblPiezasHoraAnterior"  Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Right"/>
+            </StackPanel>
+            
+            <StackPanel Margin="10">
+                <Label Grid.Row="3" Content="Buenas hora actual" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25"/>
+                <Label Name="lblBuenasHoraActual" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Right"/>
+            </StackPanel>
+
+
+            <StackPanel Margin="10">
+                <Label Grid.Row="4" Content="Malas hora actual" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="25"/>
+                <Label Name="lblMalasHoraActual"  Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="25" HorizontalContentAlignment="Right"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal" Visibility="Collapsed">
+
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="20" Width="20" Click="Button_Click"></Button>
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="20" Width="20" Click="Button_Click_1"></Button>
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="20" Width="20" Click="Button_Click_2"></Button>
@@ -120,7 +124,7 @@
 
 
         </StackPanel>
-       
+
 
     </Grid>
 </Window>
