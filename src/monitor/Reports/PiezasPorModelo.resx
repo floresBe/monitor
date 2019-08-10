@@ -120,7 +120,26 @@
   <metadata name="sqlDataSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="sqlDataSource1.ResultSchemaSerializable" xml:space="preserve">
-    <value>PERhdGFTZXQgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxWaWV3IE5hbWU9ImVqZW1wbG8iPjxGaWVsZCBOYW1lPSJOdW1lcm9FbXBsZWFkbyIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9IlRpcG9FbXBsZWFkbyIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9Ikh1ZWxsYURpZ2l0YWwiIFR5cGU9IkJ5dGVBcnJheSIgLz48RmllbGQgTmFtZT0iQWN0aXZvIiBUeXBlPSJCeXRlIiAvPjxGaWVsZCBOYW1lPSJFc3RhdHVzIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iRmVjaGFIb3JhIiBUeXBlPSJEYXRlVGltZSIgLz48L1ZpZXc+PC9EYXRhU2V0Pg==</value>
+  <data name="$this.DataSourceSchema" xml:space="preserve">
+    <value>&lt;?xml version="1.0"?&gt;
+&lt;xs:schema id="ReportePiezasPorModelo" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"&gt;
+  &lt;xs:element name="ReportePiezasPorModelo" msdata:IsDataSet="true" msdata:UseCurrentLocale="true"&gt;
+    &lt;xs:complexType&gt;
+      &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+        &lt;xs:element name="General"&gt;
+          &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+              &lt;xs:element name="Estacion" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="Modelo" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="Buenas" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="Malas" type="xs:string" minOccurs="0" /&gt;
+              &lt;xs:element name="Total" type="xs:string" minOccurs="0" /&gt;
+            &lt;/xs:sequence&gt;
+          &lt;/xs:complexType&gt;
+        &lt;/xs:element&gt;
+      &lt;/xs:choice&gt;
+    &lt;/xs:complexType&gt;
+  &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</value>
   </data>
 </root>

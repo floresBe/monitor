@@ -6,8 +6,8 @@
         xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing" 
         xmlns:local="clr-namespace:monitor.Reports"
         mc:Ignorable="d"
-        Title="ReportViewer">
+        Title="">
     <Grid>
-        <dxp:DocumentPreviewControl Name="preview" DocumentSource="{Binding Report}"/>
+        <dxp:DocumentPreviewControl Name="preview" DocumentSource="{Binding Report}" AutoShowParametersPanel="False"/>
     </Grid>
 </Window>

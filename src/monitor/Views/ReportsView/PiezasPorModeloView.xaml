@@ -18,7 +18,14 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DatePicker/>
+        <StackPanel>
+            <Label>Desde</Label>
+            <DatePicker/>
+        </StackPanel>
+        <StackPanel>
+            <Label>Hasta</Label>
+            <DatePicker Grid.Column="2"/>
+        </StackPanel>
 
 
         <Grid Grid.Row="1" Grid.Column="0" Margin="0,10" Grid.ColumnSpan="3" HorizontalAlignment="Right">

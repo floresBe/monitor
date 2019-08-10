@@ -12,6 +12,14 @@ namespace monitor.Reports
         {
             InitializeComponent();
         }
-
+        public PiezasPorModelo(DateTime desde, DateTime hasta, int descontadosIng, int calidad, int produccion)
+        {
+            InitializeComponent();
+            lblDesde.Text = desde.ToString("d/M/yyy");
+            lblHasta.Text = hasta.ToString("d/M/yyy");
+            lblDescontadosIngenieria.Text = descontadosIng.ToString();
+            lblCalidad.Text = calidad.ToString();
+            lblProduccion.Text = produccion.ToString();
+        }
     }
 }
