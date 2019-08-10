@@ -18,11 +18,27 @@ namespace monitor.Data
         public string ModeloId { get; set; }
         public Nullable<int> EstacionId { get; set; }
         public Nullable<System.DateTime> FechaHora { get; set; }
-        public Nullable<int> Cycle { get; set; }
-        public Nullable<double> PkPwr { get; set; }
-        public Nullable<double> TotalAbs { get; set; }
-        public Nullable<double> Energy { get; set; }
-        public Nullable<double> WeldForce { get; set; }
+        public Nullable<int> CycleCount { get; set; }
+        public string Preset { get; set; }
+        public string WeldTime { get; set; }
+        public string PeakPower { get; set; }
+        public string Energy { get; set; }
+        public string Downspeed { get; set; }
+        public string WeldAbsolute { get; set; }
+        public string TotalAbsolute { get; set; }
+        public string WeldColapse { get; set; }
+        public string TotalColapse { get; set; }
+        public string Pressure { get; set; }
+        public string FrecuencyMin { get; set; }
+        public string FrecuencyMax { get; set; }
+        public string FrecuencyStart { get; set; }
+        public string FrecuencyEnd { get; set; }
+        public string CycleTime { get; set; }
+        public string HoldeForce { get; set; }
+        public string TriggerForce { get; set; }
+        public string TimeResult { get; set; }
+        public string DateResult { get; set; }
+        public string AlarmInfo { get; set; }
     
         public virtual Estacion Estacion { get; set; }
         public virtual Modelo Modelo { get; set; }

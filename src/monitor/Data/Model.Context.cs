@@ -29,7 +29,7 @@ namespace monitor.Data
         public virtual DbSet<Modelo> Modelo { get; set; }
         public virtual DbSet<Pieza> Pieza { get; set; }
         public virtual DbSet<PiezasTomadas> PiezasTomadas { get; set; }
-        public virtual DbSet<ResultadoSoldadora> ResultadoSoldadora { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<ResultadoSoldadora> ResultadoSoldadora { get; set; }
     }
 }

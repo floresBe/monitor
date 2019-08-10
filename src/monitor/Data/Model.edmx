@@ -15,9 +15,9 @@
           <Property Name="IPPLC" Type="varchar" MaxLength="50" />
           <Property Name="Soldador" Type="tinyint" />
           <Property Name="IPSoldador" Type="varchar" MaxLength="50" />
+          <Property Name="SegundosAyudaVisual" Type="int" />
           <Property Name="Estatus" Type="int" />
           <Property Name="FechaHora" Type="datetime" />
-          <Property Name="SegundosAyudaVisual" Type="int" />
         </EntityType>
         <EntityType Name="Modelo">
           <Key>
@@ -61,11 +61,27 @@
           <Property Name="ModeloId" Type="varchar" MaxLength="5" />
           <Property Name="EstacionId" Type="int" />
           <Property Name="FechaHora" Type="datetime" />
-          <Property Name="Cycle" Type="int" />
-          <Property Name="PkPwr" Type="float" />
-          <Property Name="TotalAbs" Type="float" />
-          <Property Name="Energy" Type="float" />
-          <Property Name="WeldForce" Type="float" />
+          <Property Name="CycleCount" Type="int" />
+          <Property Name="Preset" Type="varchar" MaxLength="20" />
+          <Property Name="WeldTime" Type="varchar" MaxLength="20" />
+          <Property Name="PeakPower" Type="varchar" MaxLength="20" />
+          <Property Name="Energy" Type="varchar" MaxLength="20" />
+          <Property Name="Downspeed" Type="varchar" MaxLength="20" />
+          <Property Name="WeldAbsolute" Type="varchar" MaxLength="20" />
+          <Property Name="TotalAbsolute" Type="varchar" MaxLength="20" />
+          <Property Name="WeldColapse" Type="varchar" MaxLength="20" />
+          <Property Name="TotalColapse" Type="varchar" MaxLength="20" />
+          <Property Name="Pressure" Type="varchar" MaxLength="20" />
+          <Property Name="FrecuencyMin" Type="varchar" MaxLength="20" />
+          <Property Name="FrecuencyMax" Type="varchar" MaxLength="20" />
+          <Property Name="FrecuencyStart" Type="varchar" MaxLength="20" />
+          <Property Name="FrecuencyEnd" Type="varchar" MaxLength="20" />
+          <Property Name="CycleTime" Type="varchar" MaxLength="20" />
+          <Property Name="HoldeForce" Type="varchar" MaxLength="20" />
+          <Property Name="TriggerForce" Type="varchar" MaxLength="20" />
+          <Property Name="TimeResult" Type="varchar" MaxLength="20" />
+          <Property Name="DateResult" Type="varchar" MaxLength="20" />
+          <Property Name="AlarmInfo" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -176,15 +192,10 @@
           <EntitySet Name="Modelo" EntityType="MonitoreoModel.Modelo" />
           <EntitySet Name="Pieza" EntityType="MonitoreoModel.Pieza" />
           <EntitySet Name="PiezasTomadas" EntityType="MonitoreoModel.PiezasTomadas" />
-          <EntitySet Name="ResultadoSoldadora" EntityType="MonitoreoModel.ResultadoSoldadora" />
           <EntitySet Name="Usuario" EntityType="MonitoreoModel.Usuario" />
           <AssociationSet Name="FK_PiezaEstacion" Association="MonitoreoModel.FK_PiezaEstacion">
             <End Role="Estacion" EntitySet="Estacion" />
             <End Role="Pieza" EntitySet="Pieza" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ResultadoSoldadoraEstacion" Association="MonitoreoModel.FK_ResultadoSoldadoraEstacion">
-            <End Role="Estacion" EntitySet="Estacion" />
-            <End Role="ResultadoSoldadora" EntitySet="ResultadoSoldadora" />
           </AssociationSet>
           <AssociationSet Name="FK_PiezaModelo" Association="MonitoreoModel.FK_PiezaModelo">
             <End Role="Modelo" EntitySet="Modelo" />
@@ -194,11 +205,16 @@
             <End Role="Modelo" EntitySet="Modelo" />
             <End Role="PiezasTomadas" EntitySet="PiezasTomadas" />
           </AssociationSet>
+          <EntitySet Name="ResultadoSoldadora" EntityType="MonitoreoModel.ResultadoSoldadora" />
+          <AssociationSet Name="FK_ResultadoSoldadoraEstacion" Association="MonitoreoModel.FK_ResultadoSoldadoraEstacion">
+            <End Role="Estacion" EntitySet="Estacion" />
+            <End Role="ResultadoSoldadora" EntitySet="ResultadoSoldadora" />
+          </AssociationSet>
           <AssociationSet Name="FK_ResultadoSoldadoraModelo" Association="MonitoreoModel.FK_ResultadoSoldadoraModelo">
             <End Role="Modelo" EntitySet="Modelo" />
             <End Role="ResultadoSoldadora" EntitySet="ResultadoSoldadora" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Estacion">
           <Key>
             <PropertyRef Name="EstacionId" />
@@ -255,22 +271,6 @@
           <Property Name="FechaHora" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_PiezasModelo" FromRole="PiezasTomadas" ToRole="Modelo" />
         </EntityType>
-        <EntityType Name="ResultadoSoldadora">
-          <Key>
-            <PropertyRef Name="ResultadoId" />
-          </Key>
-          <Property Name="ResultadoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModeloId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="EstacionId" Type="Int32" />
-          <Property Name="FechaHora" Type="DateTime" Precision="3" />
-          <Property Name="Cycle" Type="Int32" />
-          <Property Name="PkPwr" Type="Double" />
-          <Property Name="TotalAbs" Type="Double" />
-          <Property Name="Energy" Type="Double" />
-          <Property Name="WeldForce" Type="Double" />
-          <NavigationProperty Name="Estacion" Relationship="MonitoreoModel.FK_ResultadoSoldadoraEstacion" FromRole="ResultadoSoldadora" ToRole="Estacion" />
-          <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_ResultadoSoldadoraModelo" FromRole="ResultadoSoldadora" ToRole="Modelo" />
-        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="UsuarioId" />
@@ -291,18 +291,6 @@
               <PropertyRef Name="EstacionId" />
             </Principal>
             <Dependent Role="Pieza">
-              <PropertyRef Name="EstacionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ResultadoSoldadoraEstacion">
-          <End Type="MonitoreoModel.Estacion" Role="Estacion" Multiplicity="0..1" />
-          <End Type="MonitoreoModel.ResultadoSoldadora" Role="ResultadoSoldadora" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estacion">
-              <PropertyRef Name="EstacionId" />
-            </Principal>
-            <Dependent Role="ResultadoSoldadora">
               <PropertyRef Name="EstacionId" />
             </Dependent>
           </ReferentialConstraint>
@@ -328,6 +316,50 @@
             </Principal>
             <Dependent Role="PiezasTomadas">
               <PropertyRef Name="ModeloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ResultadoSoldadora">
+          <Key>
+            <PropertyRef Name="ResultadoId" />
+          </Key>
+          <Property Name="ResultadoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModeloId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EstacionId" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="CycleCount" Type="Int32" />
+          <Property Name="Preset" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WeldTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PeakPower" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Energy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Downspeed" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WeldAbsolute" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TotalAbsolute" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WeldColapse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TotalColapse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Pressure" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FrecuencyMin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FrecuencyMax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FrecuencyStart" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FrecuencyEnd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CycleTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HoldeForce" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TriggerForce" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TimeResult" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateResult" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AlarmInfo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Estacion" Relationship="MonitoreoModel.FK_ResultadoSoldadoraEstacion" FromRole="ResultadoSoldadora" ToRole="Estacion" />
+          <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_ResultadoSoldadoraModelo" FromRole="ResultadoSoldadora" ToRole="Modelo" />
+        </EntityType>
+        <Association Name="FK_ResultadoSoldadoraEstacion">
+          <End Type="MonitoreoModel.Estacion" Role="Estacion" Multiplicity="0..1" />
+          <End Type="MonitoreoModel.ResultadoSoldadora" Role="ResultadoSoldadora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estacion">
+              <PropertyRef Name="EstacionId" />
+            </Principal>
+            <Dependent Role="ResultadoSoldadora">
+              <PropertyRef Name="EstacionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -401,21 +433,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ResultadoSoldadora">
-            <EntityTypeMapping TypeName="MonitoreoModel.ResultadoSoldadora">
-              <MappingFragment StoreEntitySet="ResultadoSoldadora">
-                <ScalarProperty Name="WeldForce" ColumnName="WeldForce" />
-                <ScalarProperty Name="Energy" ColumnName="Energy" />
-                <ScalarProperty Name="TotalAbs" ColumnName="TotalAbs" />
-                <ScalarProperty Name="PkPwr" ColumnName="PkPwr" />
-                <ScalarProperty Name="Cycle" ColumnName="Cycle" />
-                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
-                <ScalarProperty Name="EstacionId" ColumnName="EstacionId" />
-                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
-                <ScalarProperty Name="ResultadoId" ColumnName="ResultadoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="MonitoreoModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
@@ -426,6 +443,37 @@
                 <ScalarProperty Name="TipoEmpleado" ColumnName="TipoEmpleado" />
                 <ScalarProperty Name="NumeroEmpleado" ColumnName="NumeroEmpleado" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResultadoSoldadora">
+            <EntityTypeMapping TypeName="MonitoreoModel.ResultadoSoldadora">
+              <MappingFragment StoreEntitySet="ResultadoSoldadora">
+                <ScalarProperty Name="AlarmInfo" ColumnName="AlarmInfo" />
+                <ScalarProperty Name="DateResult" ColumnName="DateResult" />
+                <ScalarProperty Name="TimeResult" ColumnName="TimeResult" />
+                <ScalarProperty Name="TriggerForce" ColumnName="TriggerForce" />
+                <ScalarProperty Name="HoldeForce" ColumnName="HoldeForce" />
+                <ScalarProperty Name="CycleTime" ColumnName="CycleTime" />
+                <ScalarProperty Name="FrecuencyEnd" ColumnName="FrecuencyEnd" />
+                <ScalarProperty Name="FrecuencyStart" ColumnName="FrecuencyStart" />
+                <ScalarProperty Name="FrecuencyMax" ColumnName="FrecuencyMax" />
+                <ScalarProperty Name="FrecuencyMin" ColumnName="FrecuencyMin" />
+                <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+                <ScalarProperty Name="TotalColapse" ColumnName="TotalColapse" />
+                <ScalarProperty Name="WeldColapse" ColumnName="WeldColapse" />
+                <ScalarProperty Name="TotalAbsolute" ColumnName="TotalAbsolute" />
+                <ScalarProperty Name="WeldAbsolute" ColumnName="WeldAbsolute" />
+                <ScalarProperty Name="Downspeed" ColumnName="Downspeed" />
+                <ScalarProperty Name="Energy" ColumnName="Energy" />
+                <ScalarProperty Name="PeakPower" ColumnName="PeakPower" />
+                <ScalarProperty Name="WeldTime" ColumnName="WeldTime" />
+                <ScalarProperty Name="Preset" ColumnName="Preset" />
+                <ScalarProperty Name="CycleCount" ColumnName="CycleCount" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="EstacionId" ColumnName="EstacionId" />
+                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+                <ScalarProperty Name="ResultadoId" ColumnName="ResultadoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

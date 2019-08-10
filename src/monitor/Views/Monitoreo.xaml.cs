@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,13 +64,15 @@ namespace monitor.Views
 
             InitializeComponent();
             Initialize();
-;        }
+            ;
+        }
 
         private void Initialize()
-        {  
+        {
             InitializeHeader();
             InitializeTimerCycle();
-            InitializeTimerCurrentTime(); 
+            InitializeTimerCurrentTime();
+            InitializeTimerSoldadora();
         }
         private void InitializeHeader()
         {
@@ -148,8 +153,15 @@ namespace monitor.Views
             dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
             dispatcherTimer.Start();
         }
+        private void InitializeTimerSoldadora()
+        {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(SoldadoraTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
+            dispatcherTimer.Start();
+        }
         private async Task<XpsDocument> ConvertPowerPointToXps(string pptFilename, string xpsFilename)
-        { 
+        {
             Presentation presentation;
             try
             {
@@ -161,7 +173,7 @@ namespace monitor.Views
             }
             catch (Exception ex)
             {
-               await ConvertPowerPointToXps(pptFilename, xpsFilename);
+                await ConvertPowerPointToXps(pptFilename, xpsFilename);
             }
 
             return new XpsDocument(xpsFilename, FileAccess.Read);
@@ -178,27 +190,95 @@ namespace monitor.Views
 
             WarningMessageGrid.Visibility = Visibility.Collapsed;
         }
-        private void InSoldadoraData(int cycle, double pkpwr, double totalAbs, double energy, double weldForce)
+        private async void MakePost()
         {
+            string data = @"{""Sid"":0}";
+            Dictionary<int, string> Properties = await Post($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
+
+            InSoldadoraData(Properties);
+        }
+
+        public async Task<Dictionary<int, string>> Post(string URL, string data)
+        {
+            Dictionary<int, string> Properties = null;
             try
             {
+                //Request
+                HttpClient client = new HttpClient();
+                var content = new StringContent(data, Encoding.UTF8, "application/json");
+                HttpResponseMessage httpResponse = await client.PostAsync(URL, content);
+                if (httpResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new Exception(String.Format("Server error (HTTP {0}: {1}).", httpResponse.StatusCode, httpResponse.ReasonPhrase));
+                }
+                else
+                {
+                    var jsonstring = await httpResponse.Content.ReadAsStringAsync();
+
+                    //Ejemplo de string de respuesta
+                    // var jsonstring = @"{""ErrorCode"":0,""1"":832,""2"":""N / A"",""3"":""-- - "",""4"":0,""5"":0,""6"":""No"",""7"":""DEFAULT"",""8"":""DEFAULT"",""9"":""DEFAULT"",""10"":0.149,""11"":16.9,""12"":12.1,""14"":2.4,""15"":2.2937,""16"":2.2977,""17"":0.0231,""18"":0.0271,""19"":80,""22"":""-- - "",""23"":51,""24"":70,""25"":40160,""26"":40194,""27"":40176,""28"":40173,""29"":"" -3"",""30"":1.675,""31"":82,""32"":12,""33"":""XVH19050545E"",""34"":""19050085"",""35"":""10:51:10"",""36"":""08 - 07 - 19"",""37"":""Preset0 * ""}";
+                    //Ejemplo de string de respuesta con error
+                    //var jsonstring = @"{""ErrorCode"":23}";
+
+                    //Regex para extraer la propiedad "ErrorCode" del string
+                    Regex regexObject = new Regex(@"""ErrorCode"":\d+,");
+                    var errorCode = regexObject.Match(jsonstring).ToString();
+
+                    //Si no hay match significa que hubo un error
+                    if (!string.IsNullOrEmpty(errorCode))
+                    {
+                        jsonstring = regexObject.Replace(jsonstring, "");
+                        Properties = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, string>>(jsonstring);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Properties;
+        }
+        private void InSoldadoraData(Dictionary<int, string> Properties)
+        {
+            try
+            {   
+                if(Properties == null)
+                {
+                    return;
+                }
                 ResultadoSoldadora resultadoSoldadora = new ResultadoSoldadora()
                 {
                     ModeloId = Modelo.ModeloId,
                     EstacionId = Estacion.EstacionId,
-                    Cycle = cycle,
-                    PkPwr = pkpwr,
-                    TotalAbs = totalAbs,
-                    Energy = energy,
-                    WeldForce = weldForce,
-                    FechaHora = DateTime.Now
+                    FechaHora = DateTime.Now,
+                    CycleCount = int.Parse(Properties[1]),
+                    Preset = Properties[4],
+                    WeldTime = Properties[10],
+                    PeakPower = Properties[11],
+                    Energy = Properties[12],
+                    Downspeed = Properties[14],
+                    WeldAbsolute = Properties[15],
+                    TotalAbsolute = Properties[16],
+                    WeldColapse = Properties[17],
+                    TotalColapse = Properties[18],
+                    Pressure = Properties[24],
+                    FrecuencyMin = Properties[25],
+                    FrecuencyMax = Properties[26],
+                    FrecuencyStart  = Properties[27],
+                    FrecuencyEnd = Properties[28],
+                    CycleTime = Properties[30],
+                    HoldeForce = Properties[31],
+                    TriggerForce = Properties[32],
+                    TimeResult = Properties[35],
+                    DateResult = Properties[36],
+                    AlarmInfo = Properties.Keys.Any(a => a == 38) ? Properties[38] : "",
                 };
 
                 ResultadoSoldadoraRepository.InsertResultadoSoldadora(resultadoSoldadora);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar datos de soldadora. - Error: " + ex.Message);
+                //MessageBox.Show("Error al registrar datos de soldadora. - Error: " + ex.Message);
             }
         }
         private void AddPieza(int state)
@@ -281,7 +361,10 @@ namespace monitor.Views
             lblPiezasHoraActual.Content = piezasHoraActual;
             lblPiezasHoraAnterior.Content = piezasHoraAnterior;
         }
-
+        private void SoldadoraTimer_Tick(object sender, EventArgs e)
+        {
+                MakePost();
+        }
         //Botones auxiliares
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -302,7 +385,7 @@ namespace monitor.Views
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            InSoldadoraData(1, 1.2, 14.1, 12, 23.2);
+            MakePost();
         }
     }
 }
