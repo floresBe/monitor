@@ -9,12 +9,12 @@
         <EntityTypeShape EntityType="MonitoreoModel.Modelo" Width="1.5" PointX="0.75" PointY="5" />
         <EntityTypeShape EntityType="MonitoreoModel.Pieza" Width="1.5" PointX="6" PointY="5" />
         <EntityTypeShape EntityType="MonitoreoModel.PiezasTomadas" Width="1.5" PointX="3" PointY="12.5" />
-        <EntityTypeShape EntityType="MonitoreoModel.ResultadoSoldadora" Width="1.5" PointX="3" PointY="4.75" />
         <EntityTypeShape EntityType="MonitoreoModel.Usuario" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="MonitoreoModel.FK_PiezaEstacion" />
-        <AssociationConnector Association="MonitoreoModel.FK_ResultadoSoldadoraEstacion" />
         <AssociationConnector Association="MonitoreoModel.FK_PiezaModelo" />
         <AssociationConnector Association="MonitoreoModel.FK_PiezasModelo" />
+        <EntityTypeShape EntityType="MonitoreoModel.ResultadoSoldadora" Width="1.5" PointX="9" PointY="1.125" />
+        <AssociationConnector Association="MonitoreoModel.FK_ResultadoSoldadoraEstacion" />
         <AssociationConnector Association="MonitoreoModel.FK_ResultadoSoldadoraModelo" />
       </Diagram>
     </edmx:Diagrams>

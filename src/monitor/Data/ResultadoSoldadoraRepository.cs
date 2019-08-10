@@ -31,9 +31,12 @@ namespace monitor.Data
         public bool InsertResultadoSoldadora(ResultadoSoldadora ResultadoSoldadora)
         {
             try
-            { 
-                _monitoreoEntities.ResultadoSoldadora.Add(ResultadoSoldadora);
-                _monitoreoEntities.SaveChanges();
+            {
+                if (!_monitoreoEntities.ResultadoSoldadora.Any(a => a.CycleCount == ResultadoSoldadora.CycleCount && a.DateResult == ResultadoSoldadora.DateResult))
+                {
+                    _monitoreoEntities.ResultadoSoldadora.Add(ResultadoSoldadora);
+                    _monitoreoEntities.SaveChanges(); 
+                }
                 return true;
             }
             catch (Exception ex)
