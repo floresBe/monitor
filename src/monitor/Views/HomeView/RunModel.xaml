@@ -53,7 +53,7 @@
                 </Grid>
 
                 <Button x:Name="btnSiguiente" Grid.Row="2" Content="Siguiente" Margin="0,5" Background="#72bb53" Click="BtnSiguiente_Click"></Button>
-                <Button x:Name="btnCancelar" Grid.Row="3" Content="Cancelar" Margin="0,5" Background="#ff3823" Click="BtnCancelar_Click"></Button>
+                <Button x:Name="btnCancelarSeleccionModelo" Grid.Row="3" Content="Cancelar" Margin="0,5" Background="#ff3823" Click="BtnCancelarSeleccionModelo_Click"></Button>
 
             </Grid>
 

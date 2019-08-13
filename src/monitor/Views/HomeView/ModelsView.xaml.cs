@@ -22,7 +22,10 @@ namespace monitor.Views.HomeView
     {
         public ModelsView()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            App.CargarEstacionesDisponibles();
         } 
     }
+
+    
 }

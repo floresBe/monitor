@@ -192,10 +192,17 @@ namespace monitor.Views
         }
         private async void MakePost()
         {
-            string data = @"{""Sid"":0}";
-            Dictionary<int, string> Properties = await Post($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
+            try
+            {
+                string data = @"{""Sid"":0}";
+                Dictionary<int, string> Properties = await Post($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
 
-            InSoldadoraData(Properties);
+                InSoldadoraData(Properties);
+            }
+            catch (Exception)
+            {
+                 
+            }
         }
 
         public async Task<Dictionary<int, string>> Post(string URL, string data)
