@@ -24,9 +24,7 @@ namespace monitor.Views.HomeView
         private ModeloRepository _modeloRepository = new ModeloRepository();
 
         Modelo modelo;
-        string PID;
-
-        System.Windows.Forms.Screen[] screens;
+        string PID; 
 
         int id;
 
@@ -41,9 +39,10 @@ namespace monitor.Views.HomeView
         }
         private void Initialize()
         {
-            cbModelos.ItemsSource = _modeloRepository.GetModelos();
-            CargarEstacionesDisponibles();
-
+            //Obtiene modelos desde base de datos
+            cbModelos.ItemsSource = _modeloRepository.GetModelos(); 
+            estacionesItems.ItemsSource = App.estaciones.Where(a => a.isRunning);
+      
             //Elegir id de la pantalla 
             if (App.id < 4)
             {
@@ -57,13 +56,13 @@ namespace monitor.Views.HomeView
             }
 
             //Si la pantalla ya tiene un modelo corriendo, cargar los datos. 
-            if (App.modelRunnings.Where(w => w.RunId == id).First().isRunning)
+            if (App.modelsRunning.Where(w => w.RunId == id).First().isRunning)
             {
                 btnIniciar.Visibility = Visibility.Collapsed;
                 grdModeloCorriendo.Visibility = Visibility.Visible;
 
-                modelo = App.modelRunnings.Where(w => w.RunId == id).First().model;
-                PID = App.modelRunnings.Where(w => w.RunId == id).First().PID;
+                modelo = App.modelsRunning.Where(w => w.RunId == id).First().model;
+                PID = App.modelsRunning.Where(w => w.RunId == id).First().PID;
 
                 lblModelo.Content = modelo.NumeroModelo;
                 lblPID.Content = PID;
@@ -109,10 +108,13 @@ namespace monitor.Views.HomeView
             //Muestra lista de estaciones
             grdEstaciones.Visibility = Visibility.Visible; 
         }
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        private void BtnCancelarSeleccionModelo_Click(object sender, RoutedEventArgs e)
         {
+            //Se esconde Combo modelo y textbox PID
             grdIniciarModelo.Visibility = Visibility.Collapsed;
             btnIniciar.Visibility = Visibility.Visible;
+            //Reiniciar valores
+            ReiniciarValores();
         }
         //Pagina 3
         private void EstacionesItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -138,6 +140,9 @@ namespace monitor.Views.HomeView
             grdEstaciones.Visibility = Visibility.Collapsed;
             //Se muestra nuevamente grid modelo + PID
             grdIniciarModelo.Visibility = Visibility.Visible;
+
+
+            estacionesItems.UnselectAll(); 
         }
         private async void BtnIniciarModelo_Click(object sender, RoutedEventArgs e)
         {  
@@ -180,15 +185,7 @@ namespace monitor.Views.HomeView
                 }
 
                 //Reiniciar valores.
-                txtPID.Text = null;
-                cbModelos.SelectedItem = null;
-
-                App.modelRunnings.Where(w => w.RunId == id).First().isRunning = false;
-                App.modelRunnings.Where(w => w.RunId == id).First().PID = "";
-                App.modelRunnings.Where(w => w.RunId == id).First().model = null;
-
-                estacionesItems.UnselectAll(); 
-                CargarEstacionesDisponibles();
+                ReiniciarValores();
 
                 grdModeloCorriendo.Visibility = Visibility.Collapsed;
                 grdPiezasTomadas.Visibility = Visibility.Visible;
@@ -244,24 +241,9 @@ namespace monitor.Views.HomeView
             lblPiezasTomadas.Visibility = Visibility.Collapsed;
             grdPiezasTomadas.Visibility = Visibility.Collapsed;
             btnIniciar.Visibility = Visibility.Visible;
-        } 
-       
-        private void CargarEstacionesDisponibles()
-        {
-            screens = System.Windows.Forms.Screen.AllScreens;
-
-            foreach (var estacion in App.estaciones)
-            {
-                //Verifica si la estacion tiene su monitor conectado. 
-                if (screens.Any(a => a.DeviceName == estacion.Monitor))
-                {
-                    estacion.isRunning = true;
-                }
-            }
-            //Muestra estaciones disponibles
-            estacionesItems.ItemsSource = App.estaciones.Where(a => a.isRunning);
-          
         }
+
+        
         private async Task AbrirEstaciones()
         {
             Loading.Procesando("Abriendo estaciones...");
@@ -289,7 +271,7 @@ namespace monitor.Views.HomeView
                     Loading.Procesando($"Buscando monitor {estacion.Monitor} ...");
                     await Task.Delay(100);
 
-                    var screen = screens.Where(w => w.DeviceName == estacion.Monitor).FirstOrDefault();
+                    var screen = App.screens.Where(w => w.DeviceName == estacion.Monitor).FirstOrDefault();
                     estacion.PID = PID;
 
                     //Crear pantalla de monitoreo.
@@ -319,9 +301,9 @@ namespace monitor.Views.HomeView
                     Loading.Procesando($"Listo!");
                     await Task.Delay(1000);
 
-                    App.modelRunnings.Where(w => w.RunId == id).First().isRunning = true;
-                    App.modelRunnings.Where(w => w.RunId == id).First().model = modelo;
-                    App.modelRunnings.Where(w => w.RunId == id).First().PID = PID;
+                    App.modelsRunning.Where(w => w.RunId == id).First().isRunning = true;
+                    App.modelsRunning.Where(w => w.RunId == id).First().model = modelo;
+                    App.modelsRunning.Where(w => w.RunId == id).First().PID = PID;
                 }
             }
             catch (Exception ex)
@@ -360,7 +342,24 @@ namespace monitor.Views.HomeView
                 MessageBox.Show("Ocurrio un error al registrar piezas. - Error:" + ex.Message);
             }
         }
-       
 
+        private void ReiniciarValores()
+        {
+            txtPID.Text = null;
+            cbModelos.SelectedItem = null;
+
+            App.modelsRunning.Where(w => w.RunId == id).First().isRunning = false;
+            App.modelsRunning.Where(w => w.RunId == id).First().PID = "";
+            App.modelsRunning.Where(w => w.RunId == id).First().model = null;
+
+            estacionesItems.UnselectAll();
+            foreach (var item in App.estaciones.Where(a => a.isRunning))
+            {
+               
+            }
+
+            //Muestra estaciones disponibles
+            estacionesItems.ItemsSource = App.estaciones.Where(a => a.isRunning);
+        } 
     }
 }
