@@ -34,7 +34,7 @@ namespace monitor.ViewModels
             }
         }
 
-        public PiezasPorModeloViewModel()
+        public PiezasPorModeloViewModel(DateTime desde, DateTime hasta, string modelo, string estacion, int descontadosIng, int calidad, int produccion)
         {
             System.Data.DataTable dataSource = new System.Data.DataTable();
             DataSet ds = new DataSet();
@@ -46,16 +46,16 @@ namespace monitor.ViewModels
             using (var da = new SqlDataAdapter(cmd))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Desde", "20190101");
-                cmd.Parameters.AddWithValue("@Hasta", "20191010");
-                cmd.Parameters.AddWithValue("@Modelo", "A");
-                cmd.Parameters.AddWithValue("@Estacion", "1");
+                cmd.Parameters.AddWithValue("@Desde", desde.ToString("yyyyMMdd"));
+                cmd.Parameters.AddWithValue("@Hasta", hasta.ToString("yyyyMMdd"));
+                cmd.Parameters.AddWithValue("@Modelo", modelo);
+                cmd.Parameters.AddWithValue("@Estacion", estacion);
                 da.Fill(dataSource);
             }
 
             ds.Tables.Add(dataSource);
 
-            var report = new Reports.PiezasPorModelo(DateTime.Now, DateTime.Now,23,7,11);
+            var report = new Reports.PiezasPorModelo(desde, hasta,descontadosIng,calidad,produccion);
 
             report.DataSource = ds;
 

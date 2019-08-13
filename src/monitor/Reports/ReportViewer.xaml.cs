@@ -19,18 +19,25 @@ namespace monitor.Reports
     /// </summary>
     public partial class ReportViewer : Window
     {
-        public ReportViewer(int reportContext)
+        public ReportViewer(int reportContext, Dictionary<string, string> parameters)
         {
             InitializeComponent();
-            SetDataContext(reportContext);
+            SetDataContext(reportContext,parameters);
         }
 
-        private void SetDataContext(int value)
+        private void SetDataContext(int value, Dictionary<string,string> parameters)
         {
             switch (value)
             {
                 case 1:
-                    DataContext = new ViewModels.PiezasPorModeloViewModel();
+                    DateTime desde = DateTime.Parse(parameters["desde"].ToString());
+                    DateTime hasta = DateTime.Parse(parameters["hasta"].ToString());
+                    string modelo = parameters["modelo"].ToString();
+                    string estacion = parameters["estacion"].ToString();
+                    int descontadosIng = int.Parse(parameters["descontadosIng"].ToString());
+                    int calidad = int.Parse(parameters["calidad"].ToString());
+                    int produccion = int.Parse(parameters["produccion"].ToString());
+                    DataContext = new ViewModels.PiezasPorModeloViewModel(desde,hasta,modelo,estacion, descontadosIng,calidad,produccion);
                     break;
 
 
