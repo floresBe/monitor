@@ -153,11 +153,11 @@ namespace monitor.Views.EstacionesView
             {
                 return false;
             }
-            //if (cbSoldadora.IsChecked.Value && string.IsNullOrWhiteSpace(tbIPSoldadora.Text))
-            //{
-            //    return false;
-            //}
-            if(string.IsNullOrEmpty(cbSegundos.Text))
+            if (cbSoldadora.IsChecked.Value && string.IsNullOrWhiteSpace(tbIPSoldadora.Text))
+            {
+                return false;
+            }
+            if (string.IsNullOrEmpty(cbSegundos.Text))
             {
                 return false;
             }

@@ -73,7 +73,10 @@ namespace monitor.Views
             InitializeHeader();
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
-            InitializeTimerSoldadora();
+            if (Estacion.Soldador == 1)
+            {
+                InitializeTimerSoldadora(); 
+            }
         }
         private void InitializeHeader()
         {
@@ -165,12 +168,10 @@ namespace monitor.Views
         {
             Presentation presentation;
             try
-            {
-
+            { 
                 presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
                 presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS);
-                presentation.Close();
-
+                presentation.Close(); 
             }
             catch (Exception ex)
             {
