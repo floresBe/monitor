@@ -60,6 +60,10 @@ namespace monitor.Reports
                     PiezasPorModeloView piezasPorModeloPage = new PiezasPorModeloView();
                     mainPage.NavigationService.Navigate(piezasPorModeloPage);
                     break;
+                case "detallado piezas":
+                    PiezasDetalladoView piezasDetalladoPage = new PiezasDetalladoView();
+                    mainPage.NavigationService.Navigate(piezasDetalladoPage);
+                    break;
                 case "salir":
                     Close();
                     break;

@@ -27,17 +27,35 @@ namespace monitor.Reports
 
         private void SetDataContext(int value, Dictionary<string,string> parameters)
         {
+            DateTime desde;
+            DateTime hasta;
+            string modelo;
+            string estacion;
+            int descontadosIng;
+            int calidad;
+            int produccion; ;
+
             switch (value)
             {
                 case 1:
-                    DateTime desde = DateTime.Parse(parameters["desde"].ToString());
-                    DateTime hasta = DateTime.Parse(parameters["hasta"].ToString());
-                    string modelo = parameters["modelo"].ToString();
-                    string estacion = parameters["estacion"].ToString();
-                    int descontadosIng = int.Parse(parameters["descontadosIng"].ToString());
-                    int calidad = int.Parse(parameters["calidad"].ToString());
-                    int produccion = int.Parse(parameters["produccion"].ToString());
+                    desde = DateTime.Parse(parameters["desde"].ToString());
+                    hasta = DateTime.Parse(parameters["hasta"].ToString());
+                    modelo = parameters["modelo"].ToString();
+                    estacion = parameters["estacion"].ToString();
+                    descontadosIng = int.Parse(parameters["descontadosIng"].ToString());
+                    calidad = int.Parse(parameters["calidad"].ToString());
+                    produccion = int.Parse(parameters["produccion"].ToString());
                     DataContext = new ViewModels.PiezasPorModeloViewModel(desde,hasta,modelo,estacion, descontadosIng,calidad,produccion);
+                    break;  
+                case 2:
+                    desde = DateTime.Parse(parameters["desde"].ToString());
+                    hasta = DateTime.Parse(parameters["hasta"].ToString());
+                    modelo = parameters["modelo"].ToString();
+                    estacion = parameters["estacion"].ToString();
+                    descontadosIng = int.Parse(parameters["descontadosIng"].ToString());
+                    calidad = int.Parse(parameters["calidad"].ToString());
+                    produccion = int.Parse(parameters["produccion"].ToString());
+                    DataContext = new ViewModels.PiezasDetalladoViewModel(desde, hasta, modelo, estacion, descontadosIng, calidad, produccion);
                     break;
 
 
