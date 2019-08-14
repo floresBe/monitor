@@ -16,6 +16,7 @@ namespace monitor.Data
     {
         public int PiezasId { get; set; }
         public string ModeloId { get; set; }
+        public Nullable<int> PID { get; set; }
         public Nullable<int> Ingenieria { get; set; }
         public Nullable<int> Calidad { get; set; }
         public Nullable<int> Produccion { get; set; }

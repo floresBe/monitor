@@ -340,6 +340,7 @@ namespace monitor.Views.HomeView
 
                 PiezasTomadas piezasTomadas = new PiezasTomadas()
                 {
+                    PID = int.Parse(PID),
                     Ingenieria = ingenieria,
                     Calidad = calidad,
                     Produccion = produccion,

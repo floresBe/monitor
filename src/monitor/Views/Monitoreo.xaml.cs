@@ -43,6 +43,7 @@ namespace monitor.Views
         int piezasMalas;
 
         DateTime timeCycle;
+        int nCycleTest = 0;
 
         List<XpsDocument> xpsDocuments;
         string ruta;
@@ -157,7 +158,7 @@ namespace monitor.Views
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(SoldadoraTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
         }
         private async Task<XpsDocument> ConvertPowerPointToXps(string pptFilename, string xpsFilename)
@@ -192,10 +193,17 @@ namespace monitor.Views
         }
         private async void MakePost()
         {
-            string data = @"{""Sid"":0}";
-            Dictionary<int, string> Properties = await Post($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
+            try
+            {
+                string data = @"{""Sid"":0}";
+                Dictionary<int, string> Properties = await FakePost($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
 
-            InSoldadoraData(Properties);
+                InSoldadoraData(Properties);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public async Task<Dictionary<int, string>> Post(string URL, string data)
@@ -213,18 +221,14 @@ namespace monitor.Views
                 }
                 else
                 {
-                    var jsonstring = await httpResponse.Content.ReadAsStringAsync();
-
-                    //Ejemplo de string de respuesta
-                    // var jsonstring = @"{""ErrorCode"":0,""1"":832,""2"":""N / A"",""3"":""-- - "",""4"":0,""5"":0,""6"":""No"",""7"":""DEFAULT"",""8"":""DEFAULT"",""9"":""DEFAULT"",""10"":0.149,""11"":16.9,""12"":12.1,""14"":2.4,""15"":2.2937,""16"":2.2977,""17"":0.0231,""18"":0.0271,""19"":80,""22"":""-- - "",""23"":51,""24"":70,""25"":40160,""26"":40194,""27"":40176,""28"":40173,""29"":"" -3"",""30"":1.675,""31"":82,""32"":12,""33"":""XVH19050545E"",""34"":""19050085"",""35"":""10:51:10"",""36"":""08 - 07 - 19"",""37"":""Preset0 * ""}";
-                    //Ejemplo de string de respuesta con error
-                    //var jsonstring = @"{""ErrorCode"":23}";
+                    //Obtener respuesta
+                    var jsonstring = await httpResponse.Content.ReadAsStringAsync(); 
 
                     //Regex para extraer la propiedad "ErrorCode" del string
                     Regex regexObject = new Regex(@"""ErrorCode"":\d+,");
-                    var errorCode = regexObject.Match(jsonstring).ToString();
-
+                    
                     //Si no hay match significa que hubo un error
+                    var errorCode = regexObject.Match(jsonstring).ToString();
                     if (!string.IsNullOrEmpty(errorCode))
                     {
                         jsonstring = regexObject.Replace(jsonstring, "");
@@ -238,11 +242,33 @@ namespace monitor.Views
             }
             return Properties;
         }
+        public async Task<Dictionary<int, string>> FakePost(string URL, string data)
+        {
+            Dictionary<int, string> Properties = null; 
+
+            //Ejemplo de string de respuesta
+            var jsonstring = @"{""ErrorCode"":0,""1"":" + nCycleTest++ + @",""2"":""N / A"",""3"":""-- - "",""4"":0,""5"":0,""6"":""No"",""7"":""DEFAULT"",""8"":""DEFAULT"",""9"":""DEFAULT"",""10"":0.149,""11"":16.9,""12"":12.1,""14"":2.4,""15"":2.2937,""16"":2.2977,""17"":0.0231,""18"":0.0271,""19"":80,""22"":""-- - "",""23"":51,""24"":70,""25"":40160,""26"":40194,""27"":40176,""28"":40173,""29"":"" -3"",""30"":1.675,""31"":82,""32"":12,""33"":""XVH19050545E"",""34"":""19050085"",""35"":""10:51:10"",""36"":""08 - 07 - 19"",""37"":""Preset0 * ""}";
+            //Ejemplo de string de respuesta con error
+            //var jsonstring = @"{""ErrorCode"":23}";
+
+            //Regex para extraer la propiedad "ErrorCode" del string
+            Regex regexObject = new Regex(@"""ErrorCode"":\d+,");
+            var errorCode = regexObject.Match(jsonstring).ToString();
+
+            //Si no hay match significa que hubo un error
+            if (!string.IsNullOrEmpty(errorCode))
+            {
+                jsonstring = regexObject.Replace(jsonstring, "");
+                Properties = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, string>>(jsonstring);
+            }
+
+            return Properties;
+        }
         private void InSoldadoraData(Dictionary<int, string> Properties)
         {
             try
-            {   
-                if(Properties == null)
+            {
+                if (Properties == null)
                 {
                     return;
                 }
@@ -264,7 +290,7 @@ namespace monitor.Views
                     Pressure = Properties[24],
                     FrecuencyMin = Properties[25],
                     FrecuencyMax = Properties[26],
-                    FrecuencyStart  = Properties[27],
+                    FrecuencyStart = Properties[27],
                     FrecuencyEnd = Properties[28],
                     CycleTime = Properties[30],
                     HoldeForce = Properties[31],
@@ -314,7 +340,7 @@ namespace monitor.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
+                // MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
             }
         }
         private void NextPageTimer_Tick(object sender, EventArgs e)
@@ -363,7 +389,7 @@ namespace monitor.Views
         }
         private void SoldadoraTimer_Tick(object sender, EventArgs e)
         {
-                MakePost();
+            MakePost();
         }
         //Botones auxiliares
         private void Button_Click(object sender, RoutedEventArgs e)
