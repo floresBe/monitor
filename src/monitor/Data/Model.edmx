@@ -48,6 +48,7 @@
           </Key>
           <Property Name="PiezasId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModeloId" Type="varchar" MaxLength="5" />
+          <Property Name="PID" Type="int" />
           <Property Name="Ingenieria" Type="int" />
           <Property Name="Calidad" Type="int" />
           <Property Name="Produccion" Type="int" />
@@ -191,7 +192,6 @@
           <EntitySet Name="Estacion" EntityType="MonitoreoModel.Estacion" />
           <EntitySet Name="Modelo" EntityType="MonitoreoModel.Modelo" />
           <EntitySet Name="Pieza" EntityType="MonitoreoModel.Pieza" />
-          <EntitySet Name="PiezasTomadas" EntityType="MonitoreoModel.PiezasTomadas" />
           <EntitySet Name="Usuario" EntityType="MonitoreoModel.Usuario" />
           <AssociationSet Name="FK_PiezaEstacion" Association="MonitoreoModel.FK_PiezaEstacion">
             <End Role="Estacion" EntitySet="Estacion" />
@@ -201,10 +201,6 @@
             <End Role="Modelo" EntitySet="Modelo" />
             <End Role="Pieza" EntitySet="Pieza" />
           </AssociationSet>
-          <AssociationSet Name="FK_PiezasModelo" Association="MonitoreoModel.FK_PiezasModelo">
-            <End Role="Modelo" EntitySet="Modelo" />
-            <End Role="PiezasTomadas" EntitySet="PiezasTomadas" />
-          </AssociationSet>
           <EntitySet Name="ResultadoSoldadora" EntityType="MonitoreoModel.ResultadoSoldadora" />
           <AssociationSet Name="FK_ResultadoSoldadoraEstacion" Association="MonitoreoModel.FK_ResultadoSoldadoraEstacion">
             <End Role="Estacion" EntitySet="Estacion" />
@@ -213,6 +209,11 @@
           <AssociationSet Name="FK_ResultadoSoldadoraModelo" Association="MonitoreoModel.FK_ResultadoSoldadoraModelo">
             <End Role="Modelo" EntitySet="Modelo" />
             <End Role="ResultadoSoldadora" EntitySet="ResultadoSoldadora" />
+          </AssociationSet>
+          <EntitySet Name="PiezasTomadas" EntityType="MonitoreoModel.PiezasTomadas" />
+          <AssociationSet Name="FK_PiezasModelo" Association="MonitoreoModel.FK_PiezasModelo">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="PiezasTomadas" EntitySet="PiezasTomadas" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Estacion">
@@ -242,8 +243,8 @@
           <Property Name="Estatus" Type="Byte" />
           <Property Name="FechaHora" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Pieza" Relationship="MonitoreoModel.FK_PiezaModelo" FromRole="Modelo" ToRole="Pieza" />
-          <NavigationProperty Name="PiezasTomadas" Relationship="MonitoreoModel.FK_PiezasModelo" FromRole="Modelo" ToRole="PiezasTomadas" />
           <NavigationProperty Name="ResultadoSoldadora" Relationship="MonitoreoModel.FK_ResultadoSoldadoraModelo" FromRole="Modelo" ToRole="ResultadoSoldadora" />
+          <NavigationProperty Name="PiezasTomadas" Relationship="MonitoreoModel.FK_PiezasModelo" FromRole="Modelo" ToRole="PiezasTomadas" />
         </EntityType>
         <EntityType Name="Pieza">
           <Key>
@@ -258,18 +259,6 @@
           <Property Name="FechaHora" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Estacion" Relationship="MonitoreoModel.FK_PiezaEstacion" FromRole="Pieza" ToRole="Estacion" />
           <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_PiezaModelo" FromRole="Pieza" ToRole="Modelo" />
-        </EntityType>
-        <EntityType Name="PiezasTomadas">
-          <Key>
-            <PropertyRef Name="PiezasId" />
-          </Key>
-          <Property Name="PiezasId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ModeloId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Ingenieria" Type="Int32" />
-          <Property Name="Calidad" Type="Int32" />
-          <Property Name="Produccion" Type="Int32" />
-          <Property Name="FechaHora" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_PiezasModelo" FromRole="PiezasTomadas" ToRole="Modelo" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -303,18 +292,6 @@
               <PropertyRef Name="ModeloId" />
             </Principal>
             <Dependent Role="Pieza">
-              <PropertyRef Name="ModeloId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PiezasModelo">
-          <End Type="MonitoreoModel.Modelo" Role="Modelo" Multiplicity="0..1" />
-          <End Type="MonitoreoModel.PiezasTomadas" Role="PiezasTomadas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Modelo">
-              <PropertyRef Name="ModeloId" />
-            </Principal>
-            <Dependent Role="PiezasTomadas">
               <PropertyRef Name="ModeloId" />
             </Dependent>
           </ReferentialConstraint>
@@ -375,6 +352,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PiezasTomadas">
+          <Key>
+            <PropertyRef Name="PiezasId" />
+          </Key>
+          <Property Name="PiezasId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModeloId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PID" Type="Int32" />
+          <Property Name="Ingenieria" Type="Int32" />
+          <Property Name="Calidad" Type="Int32" />
+          <Property Name="Produccion" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Modelo" Relationship="MonitoreoModel.FK_PiezasModelo" FromRole="PiezasTomadas" ToRole="Modelo" />
+        </EntityType>
+        <Association Name="FK_PiezasModelo">
+          <End Type="MonitoreoModel.Modelo" Role="Modelo" Multiplicity="0..1" />
+          <End Type="MonitoreoModel.PiezasTomadas" Role="PiezasTomadas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="ModeloId" />
+            </Principal>
+            <Dependent Role="PiezasTomadas">
+              <PropertyRef Name="ModeloId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -421,18 +423,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PiezasTomadas">
-            <EntityTypeMapping TypeName="MonitoreoModel.PiezasTomadas">
-              <MappingFragment StoreEntitySet="PiezasTomadas">
-                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
-                <ScalarProperty Name="Produccion" ColumnName="Produccion" />
-                <ScalarProperty Name="Calidad" ColumnName="Calidad" />
-                <ScalarProperty Name="Ingenieria" ColumnName="Ingenieria" />
-                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
-                <ScalarProperty Name="PiezasId" ColumnName="PiezasId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="MonitoreoModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
@@ -474,6 +464,19 @@
                 <ScalarProperty Name="EstacionId" ColumnName="EstacionId" />
                 <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
                 <ScalarProperty Name="ResultadoId" ColumnName="ResultadoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PiezasTomadas">
+            <EntityTypeMapping TypeName="MonitoreoModel.PiezasTomadas">
+              <MappingFragment StoreEntitySet="PiezasTomadas">
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Produccion" ColumnName="Produccion" />
+                <ScalarProperty Name="Calidad" ColumnName="Calidad" />
+                <ScalarProperty Name="Ingenieria" ColumnName="Ingenieria" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="ModeloId" ColumnName="ModeloId" />
+                <ScalarProperty Name="PiezasId" ColumnName="PiezasId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

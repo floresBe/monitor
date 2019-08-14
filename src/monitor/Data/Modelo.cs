@@ -18,8 +18,8 @@ namespace monitor.Data
         public Modelo()
         {
             this.Pieza = new HashSet<Pieza>();
-            this.PiezasTomadas = new HashSet<PiezasTomadas>();
             this.ResultadoSoldadora = new HashSet<ResultadoSoldadora>();
+            this.PiezasTomadas = new HashSet<PiezasTomadas>();
         }
     
         public string ModeloId { get; set; }
@@ -32,8 +32,8 @@ namespace monitor.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pieza> Pieza { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PiezasTomadas> PiezasTomadas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResultadoSoldadora> ResultadoSoldadora { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PiezasTomadas> PiezasTomadas { get; set; }
     }
 }
