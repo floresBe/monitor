@@ -195,17 +195,16 @@ namespace monitor.Views
         {
             try
             {
-                string data = @"{""Sid"":0}";
+                string data = @"{""Sid"":0}"; 
                 Dictionary<int, string> Properties = await FakePost($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
 
                 InSoldadoraData(Properties);
             }
             catch (Exception)
             {
-
+ 
             }
-        }
-
+        } 
         public async Task<Dictionary<int, string>> Post(string URL, string data)
         {
             Dictionary<int, string> Properties = null;

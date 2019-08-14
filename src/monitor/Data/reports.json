@@ -2,6 +2,11 @@
   {
     "Title": "Por Modelo",
     "Icon": "Assets/reporting.png",
+    "Nivel": 0
+  },
+    {
+    "Title": "Detallado Piezas",
+    "Icon": "Assets/reporting.png",
     "Nivel":  0
   }
 ]

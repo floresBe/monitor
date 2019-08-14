@@ -225,6 +225,12 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UsuarioRepository.cs" />
+    <Compile Include="Reports\PiezasDetallado.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\PiezasDetallado.Designer.cs">
+      <DependentUpon>PiezasDetallado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\PiezasPorModelo.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -237,6 +243,7 @@
     <Compile Include="Reports\ReportViewer.xaml.cs">
       <DependentUpon>ReportViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\PiezasDetalladoViewModel.cs" />
     <Compile Include="ViewModels\PiezasPorModeloViewModel.cs" />
     <Compile Include="Views\EstacionesView\IndexEstacion.xaml.cs">
       <DependentUpon>IndexEstacion.xaml</DependentUpon>
@@ -264,6 +271,9 @@
     </Compile>
     <Compile Include="Views\ModelosView\RegisterModel.xaml.cs">
       <DependentUpon>RegisterModel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportsView\PiezasDetalladoView.xaml.cs">
+      <DependentUpon>PiezasDetalladoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportsView\PiezasPorModeloView.xaml.cs">
       <DependentUpon>PiezasPorModeloView.xaml</DependentUpon>
@@ -331,6 +341,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReportsView\PiezasDetalladoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ReportsView\PiezasPorModeloView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -374,6 +388,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Reports\PiezasDetallado.resx">
+      <DependentUpon>PiezasDetallado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\PiezasPorModelo.resx">
       <DependentUpon>PiezasPorModelo.cs</DependentUpon>
     </EmbeddedResource>
