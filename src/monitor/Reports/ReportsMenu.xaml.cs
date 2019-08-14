@@ -45,7 +45,6 @@ namespace monitor.Reports
             }
 
             menuItems.ItemsSource = items;
-            //menuItems.SelectedItem = items.FirstOrDefault();
         }
 
 
@@ -53,16 +52,20 @@ namespace monitor.Reports
         {
             Item itemSelected = (Item)menuItems.SelectedItem;
 
-            switch (itemSelected.Title.ToLower())
+            switch (itemSelected.Id)
             {
 
-                case "por modelo":
+                case "rptModelo":
                     PiezasPorModeloView piezasPorModeloPage = new PiezasPorModeloView();
                     mainPage.NavigationService.Navigate(piezasPorModeloPage);
                     break;
-                case "detallado piezas":
+                case "rptDetalladoPiezas":
                     PiezasDetalladoView piezasDetalladoPage = new PiezasDetalladoView();
                     mainPage.NavigationService.Navigate(piezasDetalladoPage);
+                    break;
+                case "rptDetalladoSoldadora":
+                    SoldadoraDetalladoView soldadoraDetalladoPage = new SoldadoraDetalladoView();
+                    mainPage.NavigationService.Navigate(soldadoraDetalladoPage);
                     break;
                 case "salir":
                     Close();

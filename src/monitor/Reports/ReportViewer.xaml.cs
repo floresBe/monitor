@@ -57,7 +57,13 @@ namespace monitor.Reports
                     produccion = int.Parse(parameters["produccion"].ToString());
                     DataContext = new ViewModels.PiezasDetalladoViewModel(desde, hasta, modelo, estacion, descontadosIng, calidad, produccion);
                     break;
-
+                case 3:
+                    desde = DateTime.Parse(parameters["desde"].ToString());
+                    hasta = DateTime.Parse(parameters["hasta"].ToString());
+                    modelo = parameters["modelo"].ToString();
+                    estacion = parameters["estacion"].ToString();
+                    DataContext = new ViewModels.SoldadoraResultadoViewModel(desde, hasta, modelo, estacion);
+                    break;
 
             }
         }

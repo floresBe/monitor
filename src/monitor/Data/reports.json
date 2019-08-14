@@ -2,11 +2,25 @@
   {
     "Title": "Por Modelo",
     "Icon": "Assets/reporting.png",
-    "Nivel": 0
+    "Nivel": 0,
+    "Id": "rptModelo"
   },
-    {
+  {
     "Title": "Detallado Piezas",
     "Icon": "Assets/reporting.png",
-    "Nivel":  0
+    "Nivel": 0,
+    "Id": "rptDetalladoPiezas"
+  },
+  {
+    "Title": "Detallado soldadora",
+    "Icon": "Assets/reporting.png",
+    "Nivel": 0,
+    "Id": "rptDetalladoSoldadora"
+  },
+
+  {
+    "Title": "Salir",
+    "Icon": "Assets/logout.png",
+    "Nivel": 2
   }
 ]

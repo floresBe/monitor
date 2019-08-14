@@ -129,5 +129,6 @@ namespace monitor
         public string Title { get; set; }
         public string Icon { get; set; }
         public int Nivel { get; set; }
+        public string Id { get; set; }
     }
 }

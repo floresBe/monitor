@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="ReporteResultadoSoldadora" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="ReporteResultadoSoldadora" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="General">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Estacion" type="xs:string" minOccurs="0" />
+              <xs:element name="Modelo" type="xs:string" minOccurs="0" />
+              <xs:element name="CycleCount" type="xs:string" minOccurs="0" />
+              <xs:element name="Preset " type="xs:string" minOccurs="0" />
+              <xs:element name="WeldTime" type="xs:string" minOccurs="0" />
+              <xs:element name="PeakPower" type="xs:string" minOccurs="0" />
+              <xs:element name="Energy" type="xs:string" minOccurs="0" />
+              <xs:element name="Downspeed" type="xs:string" minOccurs="0" />
+              <xs:element name="WeldAbsolute" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalAbsolute" type="xs:string" minOccurs="0" />
+              <xs:element name="WeldColapse" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalColapse" type="xs:string" minOccurs="0" />
+              <xs:element name="Pressure" type="xs:string" minOccurs="0" />
+              <xs:element name="FrecuencyMin" type="xs:string" minOccurs="0" />
+              <xs:element name="FrecuencyMax" type="xs:string" minOccurs="0" />
+              <xs:element name="FrecuencyStart" type="xs:string" minOccurs="0" />
+              <xs:element name="FrecuencyEnd" type="xs:string" minOccurs="0" />
+              <xs:element name="CycleTime" type="xs:string" minOccurs="0" />
+              <xs:element name="HoldeForce" type="xs:string" minOccurs="0" />
+              <xs:element name="TriggerForce" type="xs:string" minOccurs="0" />
+              <xs:element name="TimeResult" type="xs:string" minOccurs="0" />
+              <xs:element name="DateResult" type="xs:string" minOccurs="0" />
+              <xs:element name="AlarmInfo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
