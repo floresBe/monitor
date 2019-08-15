@@ -17,10 +17,10 @@
     "Nivel": 0,
     "Id": "rptDetalladoSoldadora"
   },
-
-  {
-    "Title": "Salir",
-    "Icon": "Assets/logout.png",
-    "Nivel": 2
+    {
+    "Title": "Top Piezas Malas",
+    "Icon": "Assets/reporting.png",
+    "Nivel": 0,
+    "Id": "rptPiezasMalas"
   }
 ]
