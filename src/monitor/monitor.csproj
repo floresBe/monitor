@@ -237,6 +237,12 @@
     <Compile Include="Reports\PiezasPorModelo.Designer.cs">
       <DependentUpon>PiezasPorModelo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\PiezasTopMalas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\PiezasTopMalas.Designer.cs">
+      <DependentUpon>PiezasTopMalas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ReportsMenu.xaml.cs">
       <DependentUpon>ReportsMenu.xaml</DependentUpon>
     </Compile>
@@ -250,6 +256,7 @@
       <DependentUpon>SoldadoraResultado.cs</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PiezasDetalladoViewModel.cs" />
+    <Compile Include="ViewModels\PiezasMalasViewModel.cs" />
     <Compile Include="ViewModels\PiezasPorModeloViewModel.cs" />
     <Compile Include="ViewModels\SoldadoraResultadoViewModel.cs" />
     <Compile Include="Views\EstacionesView\IndexEstacion.xaml.cs">
@@ -281,6 +288,9 @@
     </Compile>
     <Compile Include="Views\ReportsView\PiezasDetalladoView.xaml.cs">
       <DependentUpon>PiezasDetalladoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportsView\PiezasMalasView.xaml.cs">
+      <DependentUpon>PiezasMalasView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportsView\PiezasPorModeloView.xaml.cs">
       <DependentUpon>PiezasPorModeloView.xaml</DependentUpon>
@@ -355,6 +365,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReportsView\PiezasMalasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ReportsView\PiezasPorModeloView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -407,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\PiezasPorModelo.resx">
       <DependentUpon>PiezasPorModelo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\PiezasTopMalas.resx">
+      <DependentUpon>PiezasTopMalas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SoldadoraResultado.resx">
       <DependentUpon>SoldadoraResultado.cs</DependentUpon>

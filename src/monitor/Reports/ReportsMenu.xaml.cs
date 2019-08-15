@@ -67,6 +67,10 @@ namespace monitor.Reports
                     SoldadoraDetalladoView soldadoraDetalladoPage = new SoldadoraDetalladoView();
                     mainPage.NavigationService.Navigate(soldadoraDetalladoPage);
                     break;
+                case "rptPiezasMalas":
+                    PiezasMalasView piezasMalasPage = new PiezasMalasView();
+                    mainPage.NavigationService.Navigate(piezasMalasPage);
+                    break;
                 case "salir":
                     Close();
                     break;
