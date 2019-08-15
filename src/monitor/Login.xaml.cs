@@ -45,19 +45,18 @@ namespace monitor
 
         private void Login_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ValidateConnection())
+            if (LoadLogin())
             {
                 Init();
-                Start();                
+                Start();
+
+                return;
             }
-            else
-            {
-                MessageBox.Show("No se pudo conectar con el servidor, revise su conexión e intente nuevamente.");
-                Close();
-            }
+
+            Close();
         }
 
-        private bool ValidateConnection()
+        private bool LoadLogin()
         {
             try
             {
@@ -72,17 +71,18 @@ namespace monitor
                         {
                             TipoEmpleado = 1,
                         };
+
                         MainWindow main = new MainWindow();
-                        Application.Current.MainWindow = main;
-                        Stop();
-                        Close();
+                        Application.Current.MainWindow = main;  
                         main.Show();
                     });
+                    return false;
                 }
                 return true;
             }
             catch (ArgumentNullException)
             {
+                MessageBox.Show("No se pudo conectar con el servidor, revise su conexión e intente nuevamente."); 
                 return false;
             }
         }
