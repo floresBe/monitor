@@ -22,5 +22,11 @@
     "Icon": "Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptPiezasMalas"
+  },
+    {
+    "Title": "Tiempo de ciclo",
+    "Icon": "Assets/reporting.png",
+    "Nivel": 0,
+    "Id": "rptTiempoCiclo"
   }
 ]

@@ -31,7 +31,7 @@ namespace monitor.Reports
         private void ReportsMenu_Loaded(object sender, RoutedEventArgs e)
         {
             LoadMenus();
-            lblTitle.Content = "Reprtes";
+            lblTitle.Content = "Reportes";
             menuItems.SelectionChanged += menuItems_SelectionChanged;
         }
 
@@ -70,6 +70,10 @@ namespace monitor.Reports
                 case "rptPiezasMalas":
                     PiezasMalasView piezasMalasPage = new PiezasMalasView();
                     mainPage.NavigationService.Navigate(piezasMalasPage);
+                    break;
+                case "rptTiempoCiclo":
+                    TiempoCicloView tiempoCicloPage = new TiempoCicloView();
+                    mainPage.NavigationService.Navigate(tiempoCicloPage);
                     break;
                 case "salir":
                     Close();

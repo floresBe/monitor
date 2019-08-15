@@ -71,6 +71,13 @@ namespace monitor.Reports
                     estacion = parameters["estacion"].ToString();
                     DataContext = new ViewModels.PiezasMalasViewModel(desde, hasta, modelo, estacion);
                     break;
+                case 5:
+                    desde = DateTime.Parse(parameters["desde"].ToString());
+                    hasta = DateTime.Parse(parameters["hasta"].ToString());
+                    modelo = parameters["modelo"].ToString();
+                    estacion = parameters["estacion"].ToString();
+                    DataContext = new ViewModels.TiempoCicloViewModel(desde, hasta, modelo, estacion);
+                    break;
 
             }
         }

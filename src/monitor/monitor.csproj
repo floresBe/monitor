@@ -255,10 +255,17 @@
     <Compile Include="Reports\SoldadoraResultado.Designer.cs">
       <DependentUpon>SoldadoraResultado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\TiempoCiclo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\TiempoCiclo.Designer.cs">
+      <DependentUpon>TiempoCiclo.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\PiezasDetalladoViewModel.cs" />
     <Compile Include="ViewModels\PiezasMalasViewModel.cs" />
     <Compile Include="ViewModels\PiezasPorModeloViewModel.cs" />
     <Compile Include="ViewModels\SoldadoraResultadoViewModel.cs" />
+    <Compile Include="ViewModels\TiempoCicloViewModel.cs" />
     <Compile Include="Views\EstacionesView\IndexEstacion.xaml.cs">
       <DependentUpon>IndexEstacion.xaml</DependentUpon>
     </Compile>
@@ -297,6 +304,9 @@
     </Compile>
     <Compile Include="Views\ReportsView\SoldadoraDetalladoView.xaml.cs">
       <DependentUpon>SoldadoraDetalladoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportsView\TiempoCicloView.xaml.cs">
+      <DependentUpon>TiempoCicloView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsuariosView\IndexUser.xaml.cs">
       <DependentUpon>IndexUser.xaml</DependentUpon>
@@ -377,6 +387,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReportsView\TiempoCicloView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UsuariosView\IndexUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -427,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\SoldadoraResultado.resx">
       <DependentUpon>SoldadoraResultado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TiempoCiclo.resx">
+      <DependentUpon>TiempoCiclo.cs</DependentUpon>
     </EmbeddedResource>
     <Resource Include="Assets\home.png" />
     <Resource Include="Assets\logout.png" />
