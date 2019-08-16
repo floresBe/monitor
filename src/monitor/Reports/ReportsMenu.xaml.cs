@@ -75,6 +75,10 @@ namespace monitor.Reports
                     TiempoCicloView tiempoCicloPage = new TiempoCicloView();
                     mainPage.NavigationService.Navigate(tiempoCicloPage);
                     break;
+                case "rptPiezasTomadas":
+                    PiezasTomadasView piezasTomadasPage = new PiezasTomadasView();
+                    mainPage.NavigationService.Navigate(piezasTomadasPage);
+                    break;
                 case "salir":
                     Close();
                     break;

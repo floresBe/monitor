@@ -1,0 +1,60 @@
+﻿<Page x:Class="monitor.Views.ReportsView.PiezasTomadasView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:monitor.Views.ReportsView"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="PiezasTomadasView">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width=".2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0,5">
+            <Label FontSize="24">Desde</Label>
+            <DatePicker Name="dpDesde" FontSize="24"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="0,5">
+            <Label FontSize="24">Hasta</Label>
+            <DatePicker Name="dpHasta" FontSize="24"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="0,5">
+            <Label FontSize="24">Modelo</Label>
+            <ComboBox Name="cbModelo" FontSize="24">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox FontSize="24" IsChecked="{Binding IsSelected}"
+                       Width="20" HorizontalAlignment="Center">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+                            <TextBlock FontSize="24" Text="{Binding DisplayValue}"
+                       Width="100" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        
+        <Grid Grid.Row="2" Grid.Column="0" Margin="0,10" Grid.ColumnSpan="3" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnGenerar" Background="#f5f104" Padding="5" Click="btnGenerar_Click">Generar Reporte</Button>
+        </Grid>
+    </Grid>
+
+</Page>
