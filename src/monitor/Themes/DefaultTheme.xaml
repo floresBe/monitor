@@ -39,7 +39,16 @@
     <Style TargetType="{x:Type Button}">
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="Foreground" Value="White"/>
-
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="1" Direction="400" Color="#BABABA" Opacity="0.5" BlurRadius="1"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
     </Style>
 
 </ResourceDictionary>
