@@ -31,7 +31,7 @@ namespace monitor.ViewModels
             }
         }
 
-        public SoldadoraResultadoViewModel(DateTime desde, DateTime hasta, string modelo, string estacion)
+        public SoldadoraResultadoViewModel(DateTime desde, DateTime hasta, string modelo, string estacion, string nModelo)
         {
             System.Data.DataTable dataSource = new System.Data.DataTable();
             DataSet ds = new DataSet();
@@ -52,7 +52,7 @@ namespace monitor.ViewModels
 
             ds.Tables.Add(dataSource);
 
-            var report = new Reports.SoldadoraResultado(desde, hasta, modelo);
+            var report = new Reports.SoldadoraResultado(desde, hasta, nModelo);
 
             report.DataSource = ds;
 

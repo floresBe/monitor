@@ -31,7 +31,7 @@ namespace monitor.ViewModels
             }
         }
 
-        public PiezasDetalladoViewModel(DateTime desde, DateTime hasta, string modelo, string estacion, int descontadosIng, int calidad, int produccion)
+        public PiezasDetalladoViewModel(DateTime desde, DateTime hasta, string modelo, string estacion, string nModelo)
         {
             System.Data.DataTable dataSource = new System.Data.DataTable();
             DataSet ds = new DataSet();
@@ -52,7 +52,7 @@ namespace monitor.ViewModels
 
             ds.Tables.Add(dataSource);
 
-            var report = new Reports.PiezasDetallado(desde, hasta, descontadosIng, calidad, produccion,modelo);
+            var report = new Reports.PiezasDetallado(desde, hasta, nModelo);
 
             report.DataSource = ds;
 

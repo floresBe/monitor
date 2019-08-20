@@ -18,7 +18,6 @@ namespace monitor.Reports
             lblDesde.Text = desde.ToString("d/M/yyy");
             lblHasta.Text = hasta.ToString("d/M/yyy");
             lblModelo.Text = modelo;
-
         }
 
     }

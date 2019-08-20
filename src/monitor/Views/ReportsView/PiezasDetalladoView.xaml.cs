@@ -59,15 +59,11 @@ namespace monitor.Views.ReportsView
             }
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string modelo = string.Empty;
-            string estacion = string.Empty;
-            //foreach (ComboBoxItem item in cbModelo.ItemsSource)
-            //{
-            //    if (item.IsSelected)
-            //    {
-            //        modelo += item.Id + ",";
-            //    }
-            //}
+            string nModelo = string.Empty;
+            string estacion = string.Empty; 
+
             modelo = (cbModelo.SelectedItem as ComboBoxItem).Id;
+            nModelo = (cbModelo.SelectedItem as ComboBoxItem).DisplayValue;
 
             foreach (ComboBoxItem item in cbEstacion.ItemsSource)
             {
@@ -78,8 +74,9 @@ namespace monitor.Views.ReportsView
             }
             estacion = estacion.Remove(estacion.Length - 1, 1);
             parameters["desde"] = dpDesde.ToString();
-            parameters["hasta"] = dpHasta.ToString(); ;
+            parameters["hasta"] = dpHasta.ToString(); 
             parameters["modelo"] = modelo;
+            parameters["nModelo"] = nModelo;
             parameters["estacion"] = estacion.Replace("#", "");
             parameters["descontadosIng"] = "0";
             parameters["calidad"] = "0";

@@ -29,21 +29,8 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="0,5">
             <Label FontSize="24">Modelo</Label>
-            <ComboBox Name="cbModelo" FontSize="24">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox FontSize="24" IsChecked="{Binding IsSelected}"
-                       Width="20" HorizontalAlignment="Center">
-                                <CheckBox.LayoutTransform>
-                                    <ScaleTransform ScaleX="2" ScaleY="2" />
-                                </CheckBox.LayoutTransform>
-                            </CheckBox>
-                            <TextBlock FontSize="24" Text="{Binding DisplayValue}"
-                       Width="100" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
+            <ComboBox Name="cbModelo" DisplayMemberPath="DisplayValue" FontSize="24">
+                
             </ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,5">

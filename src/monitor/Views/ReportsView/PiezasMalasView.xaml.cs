@@ -78,8 +78,7 @@ namespace monitor.Views.ReportsView
             parameters["desde"] = dpDesde.ToString();
             parameters["hasta"] = dpHasta.ToString(); ;
             parameters["modelo"] = modelo;
-            parameters["estacion"] = estacion.Replace("#", "");
-
+            parameters["estacion"] = estacion.Replace("#", "");  
             Reports.ReportViewer reportViewer = new Reports.ReportViewer(4, parameters);
 
             reportViewer.Show();

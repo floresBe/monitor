@@ -1,4 +1,5 @@
-﻿using System;
+﻿using monitor.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,14 +59,9 @@ namespace monitor.Views.ReportsView
             }
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string modelo = string.Empty;
+            string nModelo = string.Empty;
             string estacion = string.Empty;
-            foreach (ComboBoxItem item in cbModelo.ItemsSource)
-            {
-                if (item.IsSelected)
-                {
-                    modelo += item.Id + ",";
-                }
-            }
+            
             foreach (ComboBoxItem item in cbEstacion.ItemsSource)
             {
                 if (item.IsSelected)
@@ -73,13 +69,15 @@ namespace monitor.Views.ReportsView
                     estacion += item.Id + ",";
                 }
             }
-            modelo = modelo.Remove(modelo.Length - 1, 1);
+            modelo =  (cbModelo.SelectedItem as ComboBoxItem).Id;
+            nModelo = (cbModelo.SelectedItem as ComboBoxItem).DisplayValue;
+           
             estacion = estacion.Remove(estacion.Length - 1, 1);
             parameters["desde"] = dpDesde.ToString();
             parameters["hasta"] = dpHasta.ToString(); ;
             parameters["modelo"] = modelo;
-            parameters["estacion"] = estacion.Replace("#", "");
-
+            parameters["nModelo"] = nModelo;
+            parameters["estacion"] = estacion.Replace("#", ""); 
             Reports.ReportViewer reportViewer = new Reports.ReportViewer(3, parameters);
 
             reportViewer.Show();
@@ -98,7 +96,7 @@ namespace monitor.Views.ReportsView
                 MessageBox.Show("Seleccione una fecha final valida.");
                 return false;
             }
-            if (!(cbModelo.ItemsSource as List<ComboBoxItem>).Any(a => a.IsSelected))
+            if (cbModelo.SelectedItem == null)
             {
                 MessageBox.Show("Seleccione por lo menos un modelo.");
                 return false;

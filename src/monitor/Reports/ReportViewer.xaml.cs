@@ -30,39 +30,33 @@ namespace monitor.Reports
             DateTime desde;
             DateTime hasta;
             string modelo;
+            string nModelo;
             string estacion;
-            int descontadosIng;
-            int calidad;
-            int produccion; ;
-
+             
             switch (value)
             {
                 case 1:
                     desde = DateTime.Parse(parameters["desde"].ToString());
                     hasta = DateTime.Parse(parameters["hasta"].ToString());
                     modelo = parameters["modelo"].ToString();
-                    estacion = parameters["estacion"].ToString();
-                    descontadosIng = int.Parse(parameters["descontadosIng"].ToString());
-                    calidad = int.Parse(parameters["calidad"].ToString());
-                    produccion = int.Parse(parameters["produccion"].ToString());
-                    DataContext = new ViewModels.PiezasPorModeloViewModel(desde,hasta,modelo,estacion, descontadosIng,calidad,produccion);
+                    estacion = parameters["estacion"].ToString(); 
+                    DataContext = new ViewModels.PiezasPorModeloViewModel(desde,hasta,modelo,estacion);
                     break;  
                 case 2:
                     desde = DateTime.Parse(parameters["desde"].ToString());
                     hasta = DateTime.Parse(parameters["hasta"].ToString());
                     modelo = parameters["modelo"].ToString();
-                    estacion = parameters["estacion"].ToString();
-                    descontadosIng = int.Parse(parameters["descontadosIng"].ToString());
-                    calidad = int.Parse(parameters["calidad"].ToString());
-                    produccion = int.Parse(parameters["produccion"].ToString());
-                    DataContext = new ViewModels.PiezasDetalladoViewModel(desde, hasta, modelo, estacion, descontadosIng, calidad, produccion);
+                    estacion = parameters["estacion"].ToString(); 
+                    nModelo = parameters["nModelo"].ToString(); 
+                    DataContext = new ViewModels.PiezasDetalladoViewModel(desde, hasta, modelo, estacion, nModelo);
                     break;
                 case 3:
                     desde = DateTime.Parse(parameters["desde"].ToString());
-                    hasta = DateTime.Parse(parameters["hasta"].ToString());
-                    modelo = parameters["modelo"].ToString();
+                    hasta = DateTime.Parse(parameters["hasta"].ToString()); 
                     estacion = parameters["estacion"].ToString();
-                    DataContext = new ViewModels.SoldadoraResultadoViewModel(desde, hasta, modelo, estacion);
+                    modelo = parameters["modelo"].ToString();
+                    nModelo = parameters["nModelo"].ToString();
+                    DataContext = new ViewModels.SoldadoraResultadoViewModel(desde, hasta, modelo, estacion, nModelo);
                     break;
                 case 4:
                     desde = DateTime.Parse(parameters["desde"].ToString());
