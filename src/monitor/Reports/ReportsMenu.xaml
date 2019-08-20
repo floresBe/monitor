@@ -82,6 +82,8 @@
 
             </Frame>
 
+            <Image x:Name="imgReport" Grid.Row="1" Margin="50" Source="/monitor;component/Assets/report.png" Opacity="0.15" />
+
         </Grid>
     </Grid>
 

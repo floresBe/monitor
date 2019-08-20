@@ -32,7 +32,7 @@ namespace monitor.Data
         {
             try
             {
-                if (!_monitoreoEntities.ResultadoSoldadora.Any(a => a.CycleCount == ResultadoSoldadora.CycleCount && a.DateResult == ResultadoSoldadora.DateResult))
+                if (!_monitoreoEntities.ResultadoSoldadora.Any(a => a.CycleCount == ResultadoSoldadora.CycleCount && a.DateResult == ResultadoSoldadora.DateResult && ResultadoSoldadora.EstacionId == a.EstacionId))
                 {
                     _monitoreoEntities.ResultadoSoldadora.Add(ResultadoSoldadora);
                     _monitoreoEntities.SaveChanges(); 

@@ -466,7 +466,9 @@
     <Resource Include="Assets\logout.png" />
     <Resource Include="Assets\models.png" />
     <Resource Include="Assets\monitoring.png" />
-    <Resource Include="Assets\reporting.png" />
+    <Resource Include="Assets\reporting.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\user.png" />
     <Resource Include="Assets\warning.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -474,6 +476,7 @@
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\information.png" />
     <Resource Include="Assets\loading.gif" />
+    <Resource Include="Assets\report.png" />
     <Content Include="Data\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model.Context.cs</LastGenOutput>

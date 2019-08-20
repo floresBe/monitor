@@ -52,6 +52,8 @@ namespace monitor.Reports
         {
             Item itemSelected = (Item)menuItems.SelectedItem;
 
+            imgReport.Visibility = Visibility.Collapsed;
+
             switch (itemSelected.Id)
             {
 

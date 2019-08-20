@@ -1,37 +1,37 @@
 ﻿[
   {
     "Title": "Por Modelo",
-    "Icon": "Assets/reporting.png",
+    "Icon": "/monitor;component/Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptModelo"
   },
   {
     "Title": "Detallado Piezas",
-    "Icon": "Assets/reporting.png",
+    "Icon": "/monitor;component/Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptDetalladoPiezas"
   },
   {
     "Title": "Piezas Tomadas",
-    "Icon": "Assets/reporting.png",
+    "Icon": "/monitor;component/Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptPiezasTomadas"
   },
   {
     "Title": "Detallado soldadora",
-    "Icon": "Assets/reporting.png",
+    "Icon": "/monitor;component/Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptDetalladoSoldadora"
   },
   {
     "Title": "Top Piezas Malas",
-    "Icon": "Assets/reporting.png",
+    "Icon": "/monitor;component/Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptPiezasMalas"
   },
   {
     "Title": "Tiempo de ciclo",
-    "Icon": "Assets/reporting.png",
+    "Icon": "/monitor;component/Assets/reporting.png",
     "Nivel": 0,
     "Id": "rptTiempoCiclo"
   }
