@@ -39,8 +39,7 @@
                                     <ScaleTransform ScaleX="2" ScaleY="2" />
                                 </CheckBox.LayoutTransform>
                             </CheckBox>
-                            <TextBlock FontSize="24" Text="{Binding DisplayValue}"
-                       Width="100" />
+                            <TextBlock FontSize="24" Text="{Binding DisplayValue}" />
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

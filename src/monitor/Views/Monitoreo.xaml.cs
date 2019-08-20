@@ -154,7 +154,7 @@ namespace monitor.Views
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(CurrentTimeTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
+            dispatcherTimer.Interval = new TimeSpan(1, 0, 0);
             dispatcherTimer.Start();
         }
         private void InitializeTimerSoldadora()
