@@ -82,7 +82,7 @@ namespace monitor.Views.ReportsView
             parameters["estacion"] = estacion.Replace("#","");
             parameters["descontadosIng"] = "0";
             parameters["calidad"] = "0";
-            parameters["produccion"] = "0";
+            parameters["produccion"] = "0"; 
             Reports.ReportViewer reportViewer = new Reports.ReportViewer(1,parameters);
 
             reportViewer.Show();

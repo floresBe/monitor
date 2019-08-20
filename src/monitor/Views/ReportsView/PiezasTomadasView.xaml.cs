@@ -68,8 +68,8 @@ namespace monitor.Views.ReportsView
             modelo = modelo.Remove(modelo.Length - 1, 1); 
             parameters["desde"] = dpDesde.ToString();
             parameters["hasta"] = dpHasta.ToString(); 
-            parameters["modelo"] = modelo; 
-
+            parameters["modelo"] = modelo;
+            parameters["nModelo"] = "";
             Reports.ReportViewer reportViewer = new Reports.ReportViewer(6, parameters);
 
             reportViewer.Show();
