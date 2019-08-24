@@ -73,7 +73,9 @@ namespace monitor.Data
         {
             try
             {
-                if (_monitoreoEntities.Estacion.Any(a => a.Nombre == estacion.Nombre && a.EstacionId != estacion.EstacionId))
+                List<Estacion> estaciones = GetEstaciones();
+                Estacion estacion1 = estaciones.Where(a => a.Nombre == estacion.Nombre && a.EstacionId != estacion.EstacionId).FirstOrDefault();
+                if (estacion1 != null)
                 {
                     throw new Exception("Ya existe una estación con ese nombre.");
                 }

@@ -95,8 +95,10 @@
                     </Button>
                 </Grid>
                 <TextBox FontSize="18" Name="cbSegundos" PreviewTextInput="CbSegundos_PreviewTextInput" Style="{StaticResource placeHolder}" Tag="Segundos transición"/>
-                <Label Content="IP PLC" FontSize="18" Visibility="Collapsed"></Label>
-                <TextBox Name="tbIPPLC"  Visibility="Collapsed" PreviewTextInput="TbIPPLC_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="IP PLC" FontSize="18"/>
+               
+                <Label Content="IP PLC" FontSize="18"></Label>
+                <TextBox Name="tbIPPLC" PreviewTextInput="TbIPPLC_PreviewTextInput"  Style="{StaticResource placeHolder}" Tag="IP PLC" FontSize="18"/>
+               
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>

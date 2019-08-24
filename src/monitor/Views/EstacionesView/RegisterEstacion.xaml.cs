@@ -145,10 +145,10 @@ namespace monitor.Views.EstacionesView
             {
                 return false;
             }
-            //if (string.IsNullOrWhiteSpace(tbIPPLC.Text))
-            //{
-            //    return false;
-            //}
+            if (string.IsNullOrWhiteSpace(tbIPPLC.Text))
+            {
+                return false;
+            }
             if (cbMonitor.SelectedItem == null)
             {
                 return false;

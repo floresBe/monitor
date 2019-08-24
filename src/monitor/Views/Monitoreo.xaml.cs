@@ -68,14 +68,23 @@ namespace monitor.Views
             ;
         }
 
+        //Inicializa
         private void Initialize()
         {
             InitializeHeader();
             InitializeTimerCycle();
             InitializeTimerCurrentTime();
+
+            //Si la estación utiliza soldadora inicializa lectura. 
             if (Estacion.Soldador == 1)
             {
-                InitializeTimerSoldadora(); 
+                InitializeTimerSoldadora();
+            }
+            //Si la estación tiene asignado un PLC inicializa lectura.
+            if (!string.IsNullOrEmpty(Estacion.IPPLC))
+            {
+                //Pendiente lectura.
+                return;
             }
         }
         private void InitializeHeader()
@@ -148,6 +157,7 @@ namespace monitor.Views
         }
         private void InitializeTimeCycle()
         {
+            //Regresa el temporizador a 00:00:00
             timeCycle = DateTime.Today;
         }
         private void InitializeTimerCurrentTime()
@@ -164,14 +174,60 @@ namespace monitor.Views
             dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
         }
+
+        //Eventos 
+        private void NextPageTimer_Tick(object sender, EventArgs e)
+        {
+            if (page < pages)
+            {
+                DocumentviewPowerPoint.NextPage();
+                page++;
+                return;
+            }
+
+            if (document < documents)
+            {
+                document++;
+                ShowNewDocument();
+                return;
+            }
+
+            document = 1;
+            ShowNewDocument();
+        }
+        private void CycleTimer_Tick(object sender, EventArgs e)
+        {
+            lblTiempoCiclo.Content = timeCycle.ToString("HH:mm:ss");
+            timeCycle = timeCycle.AddSeconds(1);
+        }
+        private void CurrentTimeTimer_Tick(object sender, EventArgs e)
+        {
+            piezasHoraAnterior = piezasHoraActual;
+            piezasHoraActual = 0;
+
+            piezasBuenas = 0;
+            lblBuenasHoraActual.Content = piezasBuenas;
+
+            piezasMalas = 0;
+            lblMalasHoraActual.Content = piezasMalas;
+
+            lblPiezasHoraActual.Content = piezasHoraActual;
+            lblPiezasHoraAnterior.Content = piezasHoraAnterior;
+        }
+        private void SoldadoraTimer_Tick(object sender, EventArgs e)
+        {
+            GetSoldadoraData();
+        }
+
+        //Metodos
         private async Task<XpsDocument> ConvertPowerPointToXps(string pptFilename, string xpsFilename)
         {
             Presentation presentation;
             try
-            { 
+            {
                 presentation = powerPointApp.Presentations.Open(pptFilename, MsoTriState.msoTrue, MsoTriState.msoFalse, MsoTriState.msoFalse);
                 presentation.ExportAsFixedFormat(xpsFilename, PpFixedFormatType.ppFixedFormatTypeXPS);
-                presentation.Close(); 
+                presentation.Close();
             }
             catch (Exception ex)
             {
@@ -179,6 +235,12 @@ namespace monitor.Views
             }
 
             return new XpsDocument(xpsFilename, FileAccess.Read);
+        }
+        private void ShowNewDocument()
+        {
+            DocumentviewPowerPoint.Document = xpsDocuments[document - 1].GetFixedDocumentSequence();
+            page = 1;
+            pages = DocumentviewPowerPoint.PageCount;
         }
         private void InPLCData(string modelo, string state)
         {
@@ -192,20 +254,56 @@ namespace monitor.Views
 
             WarningMessageGrid.Visibility = Visibility.Collapsed;
         }
-        private async void MakePost()
+        private void AddPieza(int state)
         {
             try
             {
-                string data = @"{""Sid"":0}"; 
+                Pieza pieza = new Pieza()
+                {
+                    EstacionId = Estacion.EstacionId,
+                    Estado = state,
+                    ModeloId = Modelo.ModeloId,
+                    PID = int.Parse(Estacion.PID),
+                    TiempoCiclo = lblTiempoCiclo.Content.ToString(),
+                    FechaHora = DateTime.Now
+                };
+
+                PiezaRepository.InsertPieza(pieza);
+
+                InitializeTimeCycle();
+
+                piezasHoraActual += 1;
+                lblPiezasHoraActual.Content = piezasHoraActual;
+
+                if (state == 1)
+                {
+                    piezasBuenas += 1;
+                    lblBuenasHoraActual.Content = piezasBuenas;
+                    return;
+                }
+
+                piezasMalas += 1;
+                lblMalasHoraActual.Content = piezasMalas;
+            }
+            catch (Exception ex)
+            {
+                // MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
+            }
+        }
+        private async void GetSoldadoraData()
+        {
+            try
+            {
+                string data = @"{""Sid"":0}";
                 Dictionary<int, string> Properties = await FakePost($"http://{Estacion.IPSoldador}/Services/GetWeldResult", data);
 
-                InSoldadoraData(Properties);
+                AddSoldadoraResultado(Properties);
             }
             catch (Exception)
             {
- 
+
             }
-        } 
+        }
         public async Task<Dictionary<int, string>> Post(string URL, string data)
         {
             Dictionary<int, string> Properties = null;
@@ -222,11 +320,11 @@ namespace monitor.Views
                 else
                 {
                     //Obtener respuesta
-                    var jsonstring = await httpResponse.Content.ReadAsStringAsync(); 
+                    var jsonstring = await httpResponse.Content.ReadAsStringAsync();
 
                     //Regex para extraer la propiedad "ErrorCode" del string
                     Regex regexObject = new Regex(@"""ErrorCode"":\d+,");
-                    
+
                     //Si no hay match significa que hubo un error
                     var errorCode = regexObject.Match(jsonstring).ToString();
                     if (!string.IsNullOrEmpty(errorCode))
@@ -244,7 +342,7 @@ namespace monitor.Views
         }
         public async Task<Dictionary<int, string>> FakePost(string URL, string data)
         {
-            Dictionary<int, string> Properties = null; 
+            Dictionary<int, string> Properties = null;
 
             //Ejemplo de string de respuesta
             var jsonstring = @"{""ErrorCode"":0,""1"":" + nCycleTest++ + @",""2"":""N / A"",""3"":""-- - "",""4"":0,""5"":0,""6"":""No"",""7"":""DEFAULT"",""8"":""DEFAULT"",""9"":""DEFAULT"",""10"":0.149,""11"":16.9,""12"":12.1,""14"":2.4,""15"":2.2937,""16"":2.2977,""17"":0.0231,""18"":0.0271,""19"":80,""22"":""-- - "",""23"":51,""24"":70,""25"":40160,""26"":40194,""27"":40176,""28"":40173,""29"":"" -3"",""30"":1.675,""31"":82,""32"":12,""33"":""XVH19050545E"",""34"":""19050085"",""35"":""10:51:10"",""36"":""08 - 07 - 19"",""37"":""Preset0 * ""}";
@@ -264,7 +362,7 @@ namespace monitor.Views
 
             return Properties;
         }
-        private void InSoldadoraData(Dictionary<int, string> Properties)
+        private void AddSoldadoraResultado(Dictionary<int, string> Properties)
         {
             try
             {
@@ -307,111 +405,31 @@ namespace monitor.Views
                 //MessageBox.Show("Error al registrar datos de soldadora. - Error: " + ex.Message);
             }
         }
-        private void AddPieza(int state)
-        {
-            try
-            {
-                Pieza pieza = new Pieza()
-                {
-                    EstacionId = Estacion.EstacionId,
-                    Estado = state,
-                    ModeloId = Modelo.ModeloId,
-                    PID = int.Parse(Estacion.PID),
-                    TiempoCiclo = lblTiempoCiclo.Content.ToString(),
-                    FechaHora = DateTime.Now
-                };
-
-                PiezaRepository.InsertPieza(pieza);
-
-                InitializeTimeCycle();
-
-                piezasHoraActual += 1;
-                lblPiezasHoraActual.Content = piezasHoraActual;
-
-                if (state == 1)
-                {
-                    piezasBuenas += 1;
-                    lblBuenasHoraActual.Content = piezasBuenas;
-                    return;
-                }
-
-                piezasMalas += 1;
-                lblMalasHoraActual.Content = piezasMalas;
-            }
-            catch (Exception ex)
-            {
-                // MessageBox.Show("Error al registrar pieza. - Error: " + ex.Message);
-            }
-        }
-        private void NextPageTimer_Tick(object sender, EventArgs e)
-        {
-            if (page < pages)
-            {
-                DocumentviewPowerPoint.NextPage();
-                page++;
-                return;
-            }
-
-            if (document < documents)
-            {
-                document++;
-                ShowNewDocument();
-                return;
-            }
-
-            document = 1;
-            ShowNewDocument();
-        }
-        private void ShowNewDocument()
-        {
-            DocumentviewPowerPoint.Document = xpsDocuments[document - 1].GetFixedDocumentSequence();
-            page = 1;
-            pages = DocumentviewPowerPoint.PageCount;
-        }
-        private void CycleTimer_Tick(object sender, EventArgs e)
-        {
-            lblTiempoCiclo.Content = timeCycle.ToString("HH:mm:ss");
-            timeCycle = timeCycle.AddSeconds(1);
-        }
-        private void CurrentTimeTimer_Tick(object sender, EventArgs e)
-        {
-            piezasHoraAnterior = piezasHoraActual;
-            piezasHoraActual = 0;
-
-            piezasBuenas = 0;
-            lblBuenasHoraActual.Content = piezasBuenas;
-
-            piezasMalas = 0;
-            lblMalasHoraActual.Content = piezasMalas;
-
-            lblPiezasHoraActual.Content = piezasHoraActual;
-            lblPiezasHoraAnterior.Content = piezasHoraAnterior;
-        }
-        private void SoldadoraTimer_Tick(object sender, EventArgs e)
-        {
-            MakePost();
-        }
+         
         //Botones auxiliares
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AddPieza(1);
-
+            GetSoldadoraData();
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             AddPieza(0);
+            GetSoldadoraData();
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             InPLCData("#", "1");
+            GetSoldadoraData();
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             InPLCData(Modelo.ModeloId, "0");
+            GetSoldadoraData();
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            MakePost();
+            GetSoldadoraData();
         }
     }
 }
